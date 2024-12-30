@@ -44,11 +44,16 @@
 				</div>
 				
 				<div id="video-mask">
-				    <div id="TTS-item" name="TTS-item">XXXXX</div>
+					
+					<div id="TTS-title" name="TTS-title">TTS Selection</div>
 					<div class="btn_wrapper">
 						<img src="./icon/bottom.png" alt="" />
 					</div>
-					
+		
+				    
+					<div class="TTS-item">
+						<!-- 选择项在此处动态添加 -->
+					</div>
 				</div>
 				
 				<div id="FeatureArea">
@@ -142,23 +147,8 @@
 				
 				<!-- 人物切换区  -->
 				<div class="swiper-container" id='swiper3'>
-				      <div class="swiper-wrapper">
-				         <!--<div class="swiper-slide">-->
-				         <!--  <img src="./icon/avatar1.png" alt="" />-->
-				         <!--</div>-->
-				         <!--<div class="swiper-slide">-->
-				         <!--  <img src="./icon/avatar1.png" alt="" />-->
-				         <!--</div>-->
-				         <!--<div class="swiper-slide">-->
-				         <!--  <img src="./icon/avatar1.png" alt="" />-->
-				         <!--</div>-->
-				         <!--<div class="swiper-slide">-->
-				         <!--    <img src="./icon/avatar1.png" alt="" />-->
-				         <!--</div>-->
-				         <!--<div class="swiper-slide">-->
-				         <!--  <img src="./icon/avatar1.png" alt="" />-->
-				         <!--</div>     -->
-				       </div>
+				      <div class="swiper-wrapper"> 
+				      </div>
 				</div> 
 				<div class="swiper-button-prev swiper-button-white btn_3" id="prev3"></div>
 				<div class="swiper-button-next swiper-button-white btn_3" id="next3"></div>
@@ -329,7 +319,7 @@
 
 <script src="client_wn.js"></script>
 <!-- <script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script> -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
 <script src="swiper.min.js"></script>
 
 <script>
@@ -452,8 +442,9 @@
 	// 	});
 	   
 	   clothesItem.addEventListener('click',function(){
+		  changeAvatar('')
 	       // 隐藏所有swiper
-		   $('.img_container').removeClass('selected');
+		  /* $('.img_container').removeClass('selected');
 		   
 	       [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
 	           swiper.classList.remove('show');
@@ -470,7 +461,7 @@
 	               swiperBox4.classList.add('show');
 	               prevButton4.classList.add('show');
 	               nextButton4.classList.add('show');
-	           }
+	           }*/
 	   });
 	   
 	   // 获取 #video-mask 元素
@@ -490,16 +481,17 @@
 	        }
 	    });
 		
-		// 获取 .btn_wrapper 元素
-		var btnWrapper = document.querySelector('.btn_wrapper');
-	
-		// 为 .btn_wrapper 添加点击事件监听器
-		btnWrapper.addEventListener('click', function() {
-		    // 获取 img 元素的 alt 属性作为名字
-		    var imgAlt = btnWrapper.querySelector('img').getAttribute('alt');
-		    
-		    // 打印名字
-		    console.log('Button Name:', imgAlt);
+		document.querySelector('.btn_wrapper').addEventListener('click', function() {
+			
+		  // 获取TTS-item元素
+		  var ttsItem = document.querySelector('.TTS-item');
+		
+		  // 切换元素的expanded类
+		  if (ttsItem.classList.contains('expanded')) {
+		    ttsItem.classList.remove('expanded');
+		  } else {
+		    ttsItem.classList.add('expanded');
+		  }
 		});
 	   
 	});
@@ -564,11 +556,7 @@
 	
 	/*功能元素选中*/
 	$(document).ready(function() {
-	    
-	    start();
-		
-		
-		
+	     
 	   // 功能元素选中
 	    $('.option-item').click(function() { 
 			/*整体获取和删除*/
@@ -939,25 +927,13 @@
     			}
     		},
     		slideChangeTransitionEnd: function () {
-    		    console.log("切换音色",this.activeIndex)
-    		    let index = this.activeIndex > datatVoices.length ? (this.activeIndex - datatVoices.length ) : this.activeIndex
+    		    console.log("切换音色",this.activeIndex)   
+				let len = datatVoices.length;
+        		let index = this.activeIndex %  len;
     		    
-        		if(datatVoices.length > 0 && datatVoices[index]){
-        		    avatarVoice = datatVoices[index].value;  
-					console.log(avatarVoice);
+        		if(isConnected && datatVoices.length > 0 && datatVoices[index]){
+        		    changeAvatarVoice(datatVoices[index].value); //切换声音
         		}
-        		 
-        		
-    		    // 获取当前激活的slide的索引
-    		  //  var activeIndex = this.activeIndex;
-    	
-    		  //  // 获取当前激活的slide元素
-    		  //  var activeSlide = this.slides[activeIndex];
-    	
-    		  //  // 获取当前激活的slide中的图片元素
-    		  //  var activeImage = activeSlide.querySelector('img');
-    	
-    		  //  // 打印图片的src属性 
     		}
     	  }, 
     	  navigation: {
@@ -1009,25 +985,13 @@
         		},
         		slideChangeTransitionEnd: function () {
         		    console.log("切换人物",this.activeIndex)
+					let len = dataAvatars.length - 1
 					
-					let index = this.activeIndex > dataAvatars.length ? (this.activeIndex - dataAvatars.length ) : this.activeIndex
-					
-					if(dataAvatars.length > 0 && dataAvatars[index]){
-					    avatarName = dataAvatars[index].value;  
-						console.log(avatarName);
-					}
-					
-        		    // 获取当前激活的slide的索引
-        		  //  var activeIndex = this.activeIndex;
-        	
-        		  //  // 获取当前激活的slide元素
-        		  //  var activeSlide = this.slides[activeIndex];
-        	
-        		  //  // 获取当前激活的slide中的图片元素
-        		  //  var activeImage = activeSlide.querySelector('img');
-        	
-        		  //  // 打印图片的src属性
-        		  //  console.log(activeImage.src);  
+					let index =  this.activeIndex % len;//this.activeIndex > len ? (this.activeIndex - len ) : this.activeIndex
+				 
+					if(dataAvatars.length > 0 && dataAvatars[index] && isConnected){ 
+						changeAvatar(dataAvatars[index].value);//切换角色
+					} 
         		},
         	  },
         	  navigation: {
@@ -1263,12 +1227,14 @@
         
         let avatars = '';
 		let vimgs = ['avatar1','avatar2','avatar3','avatar4'],aindex = 0;
-		let countAvatar = 0; // 用于跟踪已处理的元素数量
-		
+		let countAvatar = 0; // 用于跟踪已处理的元素数量 
         options.avatars.forEach(avatar => {
 			if (countAvatar < 4) { // 只处理前四个元素
-			    console.log('create avatar');
 			    const imgSrc = `./icon/${vimgs[aindex]}.png`;
+			    console.log('create avatar',imgSrc);
+				
+				// console.log("当前创立的是"+dataAvatars[countAvatar]);
+				
 			    avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="" />  </div>`;
 			    aindex++; // 更新索引
 			    countAvatar++; // 增加已处理元素的计数
@@ -1290,18 +1256,37 @@
         datatVoices = options.ttsVoices;
 		
 		
+		console.log()
          
         $('#swiper3 .swiper-wrapper').html(avatars); 
         
-
-        // 填充 TTS Selection 选择框
-        const ttsSelect = document.getElementById('tts-selection');
+        /*---------------------TTS-item条目创建--------------------------*/
+        const ttsItemContainer = document.querySelector('.TTS-item');
+        
+        // 清空TTS-item容器中现有的选择项，避免重复添加
+        ttsItemContainer.innerHTML = '';
+        
+        // 遍历ttsModules数组
         options.ttsModules.forEach(tts => {
-            /*const option = document.createElement('option');
-            option.value = tts.value;
-            option.textContent = tts.label;
-            ttsSelect.appendChild(option);*/
+          // 创建一个新的selection-item div
+          const selectionItem = document.createElement('div');
+          selectionItem.className = 'selection-item';
+          selectionItem.textContent = tts.label; // 设置显示的文字描述
+          selectionItem.setAttribute('data-value', tts.value); // 存储值，可以通过getAttribute('data-value')访问
+        
+          // 为选择项添加点击事件
+          selectionItem.addEventListener('click', function() {
+            // 处理选中项的逻辑
+            console.log('选中的值是：', this.getAttribute('data-value'));
+           
+        	// changeTtsSelection(data-value);
+          });
+        
+          // 将新创建的div添加到TTS-item容器中
+          ttsItemContainer.appendChild(selectionItem);
         });
+		
+		
 
         // 填充 TTS Sound 选择框 音色的切换
         const voiceSelect = document.getElementById('avatar-voice');
@@ -1479,7 +1464,7 @@
     
 </script>
 <script>
-     let mediaRecorder;
+    let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;  // 添加录音状态标志
 
