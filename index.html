@@ -746,8 +746,6 @@
 
 <!-- 为了分别获取元素这里设置3个js来单独控制 -->
 <script>
-      // 背景选择部分
-	  var slideChangeFlag = false;
 	  
 	  effect = 1
 	  var swiper1 = new Swiper('#swiper1', {
@@ -788,10 +786,6 @@
 		},
 		slideChangeTransitionEnd: function () {
 			
-			if (slideChangeFlag === false) {
-				slideChangeFlag = true;
-			    return; // 不执行后续操作
-			  }
 			  
 			  // 获取当前激活的slide的索引
 			  var activeIndex = this.activeIndex;

@@ -373,6 +373,14 @@
     body.dark-mode {
         background-color: #1a1a1a;
     }
+	
+	.dark-mode .bot-message::before{
+		border-color: transparent #3e4643 transparent transparent;
+	}
+	
+	.dark-mode .user-message::before {
+	    border-color: transparent  transparent transparent #4768db;
+	}
 
     .dark-mode .outer-container {
         background: #2d2d2d;
