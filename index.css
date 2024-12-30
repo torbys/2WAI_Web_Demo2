@@ -860,6 +860,7 @@
 	
 	/*右下标签栏*/
 	.bottom-icon{
+		color: white;
 		display: flex;
 		align-items: center;
 		justify-content: center;
