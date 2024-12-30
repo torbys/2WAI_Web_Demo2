@@ -228,8 +228,9 @@
 				
 				<!-- 按钮包裹的提交 -->
 			   <button type="submit" class="btn btn-default" >
-				   <img class="submit" src="./icon/submit.png" alt="submit" />
+				   <img class="submit" src="./icon/base_submit.png" alt="submit" />
 			   </button>
+			   
 			   <div class="gap"></div>		<!-- 间隔竖线 -->
 			   
 			   <div class="more" id="moreButton">
@@ -354,17 +355,10 @@
 	// 外部监听器，用于在视频播放结束后更换视频源
 	var videoElement = document.getElementById('video');
 	videoElement.addEventListener('ended', function() {
-	    // 检查当前视频源是否为like.mp4
-	    if (videoElement.src.endsWith('like.mp4')) {
-	        // 视频播放结束后更换视频源为hand.mp4
-	        videoElement.src = './video/hand.mp4';
-	        videoElement.play(); // 播放hand.mp4
-	    } else {
-	        // 视频播放结束后更换视频源为base.mp4并设置循环播放
-	        videoElement.src = './video/base.mp4';
-	        videoElement.loop = true; 
-	        videoElement.play(); // 播放base.mp4
-	    }
+	    // 视频播放结束后更换视频源为base.mp4并设置循环播放
+	    videoElement.src = './video/base.mp4';
+	    videoElement.loop = true; 
+	    videoElement.play(); // 播放base.mp4    
 	});
 	
 	// // 为hand_item添加点击事件
@@ -1075,7 +1069,7 @@
             .addClass('message-avatar')
             .attr('src', './icon/icon.png')
             .attr('alt', isUser ? 'User' : 'Bot');
-        
+    
         const content = $('<div>')
             .addClass('message-content')
             .text(message);
@@ -1084,48 +1078,73 @@
         $('#chat-messages').append(messageDiv);
         $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
     }
+	
+	var submitBtn = $('button[type="submit"]');
+	var messageTextarea = $('#message');
+	var submitImg = './icon/submit.png'; // 绿色按钮的图片路径
+	var baseSubmitImg = './icon/base_submit.png'; // 灰色按钮的图片路径
+	var canSubmit = 0; // 提交标志，默认为0
+
+	// 监听textarea输入事件
+	messageTextarea.on('input', function() {
+	    var message = $(this).val().trim();
+	    if (message === '') {
+	        // 如果textarea为空，设置flag为0，显示灰色图片，禁用按钮
+	        canSubmit = 0;
+	        submitBtn.prop('disabled', true);
+	        submitBtn.find('img').attr('src', baseSubmitImg);
+	    } else {
+	        // 如果textarea不为空，设置flag为1，显示绿色图片，启用按钮
+	        canSubmit = 1;
+	        submitBtn.prop('disabled', false);
+	        submitBtn.find('img').attr('src', submitImg);
+	    }
+	});
 
   $('#echo-form').on('submit', function(e) {
       e.preventDefault();
-      var message = $('#message').val();
-      // 添加用户消息到聊天框
-      addMessage(message, true);
-      
-      console.log('Sending: ' + message);
-      console.log('sessionid: ',sessionid);
-	  
-	  
-	  /*网络获取机械人回复*/
-      fetch(host+'/human', {
-            body: JSON.stringify({
-                text: message,
-                type: 'chat',
-                interrupt: true,
-                sessionid:sessionid,
-                avatarName:avatarName,
-                ttsSelection:ttsSelection,
-                avatarVoice:avatarVoice,
-                chunkSize:document.getElementById('chunk-size-input').value
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST'
-      })
-      .then(response => response.json())
-      .then(data => {
-          // 添加机器人的回复消息
-          const llmResponse = data.res || "No valid response was returned！";
-          addMessage(llmResponse, false);
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          // 可选：显示错误消息
-          addMessage("Sorry, an error occurred. Please try again later.", false);
-      });
-      
-      // 清空入框并将焦点重新放在输入框上
-      $('#message').val('');
+	  if (canSubmit === 1) {
+		  var message = $('#message').val();
+		  // 添加用户消息到聊天框
+		  addMessage(message, true);
+		  
+		  console.log('Sending: ' + message);
+		  console.log('sessionid: ',sessionid);
+		  
+		  
+		  /*网络获取机械人回复*/
+		  fetch(host+'/human', {
+		        body: JSON.stringify({
+		            text: message,
+		            type: 'chat',
+		            interrupt: true,
+		            sessionid:sessionid,
+		            avatarName:avatarName,
+		            ttsSelection:ttsSelection,
+		            avatarVoice:avatarVoice,
+		            chunkSize:document.getElementById('chunk-size-input').value
+		        }),
+		        headers: {
+		            'Content-Type': 'application/json'
+		        },
+		        method: 'POST'
+		  })
+		  .then(response => response.json())
+		  .then(data => {
+		      // 添加机器人的回复消息
+		      const llmResponse = data.res || "No valid response was returned！";
+		      addMessage(llmResponse, false);
+		  })
+		  .catch(error => {
+		      console.error('Error:', error);
+		      // 可选：显示错误消息
+		      addMessage("Sorry, an error occurred. Please try again later.", false);
+		  });
+		  
+		  // 清空入框并将焦点重新放在输入框上
+		  $('#message').val('');
+		  canSubmit=0;
+	  }
   });
 
     $('#record_wrapper').click(function() {
@@ -1295,19 +1314,20 @@
         options.ttsVoices.forEach(voice => {
 			console.log('cearte sound')
 			
+			const nameInBrackets = voice.label.match(/\((.*?)\)/) ? voice.label.match(/\((.*?)\)/)[1] : '';
             ttsVoices += `<div class="swiper-slide">
-				           <div class="color_img" style="background-color: ${vcolors[vindex]};">
-				             <img src="./icon/voiceLine.png" alt="" />
-				           </div>
-				         </div>`;
-			vindex += 1;
-			if(vindex > 4){
-			    vindex = 0
-			} 
-        });  
+                               <div class="color_img" style="background-color: ${vcolors[vindex]};">
+                                 <img src="./icon/voiceLine.png" alt="" />
+                                 <div>${nameInBrackets}</div> <!-- 在这里插入括号里的名字 -->
+                               </div>
+                             </div>`;
+            vindex += 1;
+            if (vindex > 4) {
+                vindex = 0;
+            }
+        });
         
         $('#swiper2 .swiper-wrapper').html(ttsVoices);
-        
         
         initSwiper(countAvatar);
 		
@@ -1462,13 +1482,18 @@
     // 定期检查视频高度（以防其他情况导致的变化）
     setInterval(adjustChatContainerHeight, 1000);
     
+	
+	
 </script>
 <script>
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;  // 添加录音状态标志
 
-    $('#btn_start_record').click(function() {
+	//record_wrapper
+	//stop_wrapper
+	
+    $('#record_wrapper').click(function() {
         if (isRecording) return;
         
         navigator.mediaDevices.getUserMedia({ audio: true })
@@ -1499,7 +1524,7 @@
                 // 更新按钮状态和文本
                 $(this).prop('disabled', true);
                 $(this).html('<i class="fas fa-microphone"></i> Recording...');
-                $('#btn_stop_record').prop('disabled', false);
+                $('#stop_wrapper').prop('disabled', false);
             })
             .catch(error => {
                 console.error('Error accessing microphone:', error);
@@ -1508,7 +1533,7 @@
             });
     });
 
-    $('#btn_stop_record').click(function() {
+    $('#stop_wrapper').click(function() {
         if (!isRecording) return;
         
         if (mediaRecorder && mediaRecorder.state !== 'inactive') {
@@ -1517,7 +1542,7 @@
             
             // 更新按钮状态
             $(this).prop('disabled', true);
-            $('#btn_start_record').prop('disabled', false)
+            $('#record_wrapper').prop('disabled', false)
                 .html('<i class="fas fa-microphone"></i> Start Recording'); // 恢复按钮文本
             
             // 保存录音文件
