@@ -43,6 +43,14 @@
 					</div>
 				</div>
 				
+				<div id="video-mask">
+				    <div id="TTS-item" name="TTS-item">XXXXX</div>
+					<div class="btn_wrapper">
+						<img src="./icon/bottom.png" alt="" />
+					</div>
+					
+				</div>
+				
 				<div id="FeatureArea">
 					<div class="Featureitem" id="change_item">
 						<img src="./icon/change.png" alt="" />
@@ -50,9 +58,9 @@
 					<div class="Featureitem" id="clothes_item">
 						<img src="./icon/clothes.png" alt="" />
 					</div>
-					<div class="Featureitem" id="hand_item">
+					<!-- <div class="Featureitem" id="hand_item">
 						<img src="./icon/hand.png" alt="" />
-					</div>
+					</div> -->
 					<!-- <div class="Featureitem" id="like_item">
 						<img src="./icon/like.png" alt="" />
 					</div> -->
@@ -64,7 +72,7 @@
 				</video>-->
 				
                 <audio id="audio" autoplay="true"></audio>
-                <video id="video"  autoplay="true" playsinline="true"></video>
+                <video id="video"  autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
 				
 				<div class="bottom-icon">
 					Zoom
@@ -177,7 +185,7 @@
 					       </div>
 					</div> 
 					<div class="swiper-button-prev swiper-button-white btn_4" id="prev4"></div>
-					<div class="swiper-button-next swiper-button-white btn_4" id="prev4"></div>
+					<div class="swiper-button-next swiper-button-white btn_4" id="next4"></div>
 				</div>
 				
             </div>
@@ -205,16 +213,21 @@
 				
 			    <textarea class="form-control" id="message" placeholder="Type your message here..."></textarea>
 				
-				<div id="recordGroup" class="hidden">
+				<div id="recordGroup1" class="hidden">
 				    <div id="record_wrapper">
 				        <img id="recording" src="./icon/recording.png" alt="microphone" />
 				    </div>
-				    <div id="stop_wrapper">
-				        <div id="stop_record"></div>
-				    </div>
 				    <img id="recordLine" src="./icon/recordLine.png" alt="Line" />
-					<img id="activeLine" src="./icon/vioce_active.gif" alt="动画演示">
 				</div>
+				
+				<div id="recordGroup2" class="hidden">
+					<div id="stop_wrapper">
+					    <div id="stop_record"></div>
+					</div>
+					<img id="activeLine" src="./icon/vioce_active.gif" alt="动画演示">
+					<div id="recordTime">0.00</div>
+				</div>
+				
 
 
 				<!-- <div>
@@ -303,14 +316,15 @@
 <script>
     //const host = 'https://wxqawnt5040hm5-7862.proxy.runpod.net'; 
     const host = 'http://47.96.160.235:7862'; 
-    var avatarName = "avatar1";  
-    var ttsSelection = "tts1";   
-    var avatarVoice = "voice1"; 
-    var sessionid = "";
-    var isConnected = false;
+	
+    var avatarName = "avatar1";  	//会话人物
+    var ttsSelection = "tts1";   	//会话模块
+    var avatarVoice = "voice1"; 	//会话声音
+    var sessionid = "";				//会话id
+    var isConnected = false;		//链接状态
     
-    var dataAvatars = [];
-    var datatVoices = [];
+    var dataAvatars = [];			//获取的模型人物名字集合
+    var datatVoices = [];			//获取的声音集合
 </script>
 
 <script src="client_wn.js"></script>
@@ -325,7 +339,7 @@
 	   var numberBoxContainer = document.querySelector('.number-box-container');
 	   
 	   // 确保.number-box-container是可见的
-	   numberBoxContainer.style.display = 'block'; // 或者 'inline-block', 'flex' 等，取决于你的布局需求
+	   numberBoxContainer.style.display = 'block'; 
 	   
 	   var sliderWidth = e.target.offsetWidth;
 	   var numberBoxLeft = (value / e.target.max) * (sliderWidth - 100) + 'px';
@@ -342,6 +356,7 @@
 	     numberBoxContainer.style.display = 'none';
 	   }, 500); // 1000毫秒后隐藏，可以根据需要调整这个时间
 	});
+
 </script>
 
 <script>
@@ -354,7 +369,7 @@
 	        // 视频播放结束后更换视频源为hand.mp4
 	        videoElement.src = './video/hand.mp4';
 	        videoElement.play(); // 播放hand.mp4
-	    } else if (videoElement.src.endsWith('hand.mp4')) {
+	    } else {
 	        // 视频播放结束后更换视频源为base.mp4并设置循环播放
 	        videoElement.src = './video/base.mp4';
 	        videoElement.loop = true; 
@@ -362,15 +377,15 @@
 	    }
 	});
 	
-	// 为hand_item添加点击事件
-	document.getElementById('hand_item').addEventListener('click', function() {
-	   // var video = document.getElementById('video');
+	// // 为hand_item添加点击事件
+	// document.getElementById('hand_item').addEventListener('click', function() {
+	//    // var video = document.getElementById('video');
 	    
-	   // // 首先播放like.mp4
-	   // video.src = './video/like.mp4';
-	   // video.loop = false; // 取消循环播放
-	   // video.play(); // 开始播放视频
-	});
+	//    // // 首先播放like.mp4
+	//    // video.src = './video/like.mp4';
+	//    // video.loop = false; // 取消循环播放
+	//    // video.play(); // 开始播放视频
+	// });
 	
 	/*
 	// 为 'avatar-voice' 添加点击事件监听器
@@ -396,43 +411,99 @@
 	    var avatarBackground = document.getElementById('avatar-background');
 	    var avatarVoice = document.getElementById('avatar-voice');
 	    var avatarName = document.getElementById('avatar-name'); // 获取 'avatar-name' 元素
+		var clothesItem =document.getElementById('clothes_item');
 	    var swiperBox1 = document.getElementById('swiper1');
 	    var swiperBox2 = document.getElementById('swiper2');
 	    var swiperBox3 = document.getElementById('swiper3'); // 获取 'swiper3' 容器
-	    var prevButton = document.querySelector('.swiper-button-prev');
-	    var nextButton = document.querySelector('.swiper-button-next');
+		var swiperBox4 = document.getElementById('swiper4'); 
+	    var prevButton4 = document.getElementById('prev4');
+	    var nextButton4 = document.getElementById('next4');
+		var prevButton = document.querySelector('.swiper-button-prev');
+		var nextButton = document.querySelector('.swiper-button-next');
 	
-	    // 为 'avatar-background' 添加点击事件监听器
-	    avatarBackground.addEventListener('click', function() {
-	        // 隐藏所有swiper
-	        [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
-	            swiper.classList.remove('show');
-	        });
-	        prevButton.classList.remove('show');
-	        nextButton.classList.remove('show');
+	//     // 为 'avatar-background' 添加点击事件监听器
+	//     avatarBackground.addEventListener('click', function() {
+	//         // 隐藏所有swiper
+	//         [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
+	//             swiper.classList.remove('show');
+	//         });
+	//         prevButton.classList.remove('show');
+	//         nextButton.classList.remove('show');
 	
-	        // 显示swiper1
-	        swiperBox1.classList.add('show');
-	        prevButton.classList.add('show');
-	        nextButton.classList.add('show');
-	    });
+	//         // 显示swiper1
+	//         swiperBox1.classList.add('show');
+	//         prevButton.classList.add('show');
+	//         nextButton.classList.add('show');
+	//     });
 	
-		// 为 'avatar-name' 添加点击事件监听器
-		avatarName.addEventListener('click', function() {
-		    // 隐藏所有swiper
-		    [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
-		        swiper.classList.remove('show');
-		    });
-		    prevButton.classList.remove('show');
-		    nextButton.classList.remove('show');
+	// 	// 为 'avatar-name' 添加点击事件监听器
+	// 	avatarName.addEventListener('click', function() {
+	// 	    // 隐藏所有swiper
+	// 	    [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
+	// 	        swiper.classList.remove('show');
+	// 	    });
+	// 	    prevButton.classList.remove('show');
+	// 	    nextButton.classList.remove('show');
 			
-		    // 显示swiper3
-		    swiperBox3.classList.add('show');
-		    prevButton.classList.add('show');
-		    nextButton.classList.add('show');
+	// 	    // 显示swiper3
+	// 	    swiperBox3.classList.add('show');
+	// 	    prevButton.classList.add('show');
+	// 	    nextButton.classList.add('show');
+	// 	});
+	   
+	   clothesItem.addEventListener('click',function(){
+	       // 隐藏所有swiper
+		   $('.img_container').removeClass('selected');
+		   
+	       [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
+	           swiper.classList.remove('show');
+	       });
+	       prevButton.classList.remove('show');
+	       nextButton.classList.remove('show');
+	   	
+	       if (swiperBox4.classList.contains('show')) {
+	               // 如果swiper4是显示的，隐藏它
+	               swiperBox4.classList.remove('show');
+	               prevButton4.classList.remove('show');
+	               nextButton4.classList.remove('show');
+	           } else {
+	               swiperBox4.classList.add('show');
+	               prevButton4.classList.add('show');
+	               nextButton4.classList.add('show');
+	           }
+	   });
+	   
+	   // 获取 #video-mask 元素
+	    var videoMask = document.getElementById('video-mask');
+	    // 获取 #tts-selection 元素
+	    var ttsSelection = document.getElementById('tts-selection');
+	
+	    // 为 #tts-selection 添加点击事件监听器
+	    ttsSelection.addEventListener('click', function() {
+	        // 检查 #video-mask 的高度是否已经设置为100%
+	        if (videoMask.style.height === '100%') {
+	            // 如果已经设置为100%，则将其高度设置回0px
+	            videoMask.style.height = '0px';
+	        } else {
+	            // 如果没有设置为100%，则将其高度设置为100%
+	            videoMask.style.height = '100%';
+	        }
+	    });
+		
+		// 获取 .btn_wrapper 元素
+		var btnWrapper = document.querySelector('.btn_wrapper');
+	
+		// 为 .btn_wrapper 添加点击事件监听器
+		btnWrapper.addEventListener('click', function() {
+		    // 获取 img 元素的 alt 属性作为名字
+		    var imgAlt = btnWrapper.querySelector('img').getAttribute('alt');
+		    
+		    // 打印名字
+		    console.log('Button Name:', imgAlt);
 		});
 	   
 	});
+	
 	
 	
 	
@@ -477,13 +548,13 @@
 		}
 		
 		 // 检查more_img的src是否已经更换为line.png
-		        if ($('#more_img').attr('src') === './icon/line.png') {
-		            // 如果是line.png，则切换回more.png
-		            $('#more_img').attr('src', './icon/more.png');
-		        } else {
-		            // 否则，切换到line.png
-		            $('#more_img').attr('src', './icon/line.png');
-		        }
+		if ($('#more_img').attr('src') === './icon/line.png') {
+		    // 如果是line.png，则切换回more.png
+		    $('#more_img').attr('src', './icon/more.png');
+		} else {
+		    // 否则，切换到line.png
+		    $('#more_img').attr('src', './icon/line.png');
+		}
 		
 	    // $('#options-container').toggle(); // 使用 jQuery 的 toggle 方法来切换显示和隐藏
 	});
@@ -495,6 +566,9 @@
 	$(document).ready(function() {
 	    
 	    start();
+		
+		
+		
 	   // 功能元素选中
 	    $('.option-item').click(function() { 
 			/*整体获取和删除*/
@@ -557,16 +631,17 @@
 	});
 
 	
-	/*声音切换*/
-	var voiceFlag = true; 
+	/*-----------------------------录音图片切换----------------------*/
+	var voiceFlag = true;
 	
 	function changeImage() {
-		console.log("yes");
+		
 		
 	    // 获取图片元素
 	    var image = document.getElementById('voice-image');
 		
 		voiceFlag=!voiceFlag;
+
 	    var newSrc =voiceFlag? './icon/voice.png' : './icon/left.png'; // 根据 voiceFlag 的值选择图片
 	
 	    // 添加过渡效果
@@ -580,42 +655,92 @@
 	    }, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
 		
 		var message = document.getElementById('message');
-		var recordGroup = document.getElementById('recordGroup');
+		var recordGroup1 = document.getElementById('recordGroup1');
+		var recordGroup2 = document.getElementById('recordGroup2');
 		var voiceImage = document.getElementById('voice-image');
 	
 		// 切换显示状态
 		if (message.classList.contains('hidden')) {
 		    message.classList.remove('hidden');
-		    recordGroup.classList.add('hidden');
+		    recordGroup1.classList.add('hidden');
+			recordGroup2.classList.add('hidden');
 		} else {
 		    message.classList.add('hidden');
-		    recordGroup.classList.remove('hidden');
+		    recordGroup1.classList.remove('hidden');
 		}
 		
+		 // 获取 #record_wrapper 元素
 		var recordWrapper = document.getElementById('record_wrapper');
-		var stopWrapper = document.getElementById('stop_wrapper');
-		var activeLine = document.getElementById('activeLine');
-			
+		const recordTime = document.getElementById('recordTime');
+		// 计时器变量
+		let timer = null;
+		let timeValue = 0;
+		
+		// 更新时间的函数
+		function updateTime() {
+		  timeValue += 0.01;
+		  recordTime.textContent = timeValue.toFixed(2); // 保留两位小数
+		}
+		
+		// 计时器开始的函数
+		function startTimer() {
+		  timer = setInterval(updateTime, 1000); // 每秒更新时间
+		}
+		
+		// 计时器停止并重置的函数
+		function stopTimer() {
+		  clearInterval(timer);
+		  timeValue = 0;
+		  recordTime.textContent = '0.00';
+		}
+		
+		// 为 #record_wrapper 添加点击事件监听器
 		recordWrapper.addEventListener('click', function() {
-		    // 切换 record_wrapper 和 stop_wrapper 的显示状态
-		    if (recordWrapper.classList.contains('show')) {
-		        recordWrapper.classList.remove('show');
-		        stopWrapper.classList.add('show');
-		        activeLine.classList.add('show');
+		    // 获取 #recordGroup1 和 #recordGroup2 元素
+		    var recordGroup1 = document.getElementById('recordGroup1');
+		    var recordGroup2 = document.getElementById('recordGroup2');
+
+		    // 给 #recordGroup1 添加 hidden 类，使其隐藏
+		    recordGroup1.classList.add('hidden');
+
+		    // 移除 #recordGroup2 的 hidden 类，使其显示
+		    recordGroup2.classList.remove('hidden');
+			
+			if (!recordGroup2.classList.contains('hidden')) {
+			    startTimer();
+			  } else {
+			    // 如果recordGroup2是hidden，则重置时间
+			    stopTimer();
+			  }
+		});
+		
+		// 监听recordGroup2的显示状态变化，以重置时间
+		recordGroup2.addEventListener('click', function() {
+			
+			recordGroup2.classList.add('hidden');
+			message.classList.remove('hidden');
+			
+			var newSrc =!voiceFlag? './icon/voice.png' : './icon/left.png'; // 根据 voiceFlag 的值选择图片
+			image.classList.add('changing');
+			
+			// 移除过渡效果类，这将在 CSS 中触发过渡
+			setTimeout(function() {
+				// 设置图片新源
+				image.src = newSrc;
+			    image.classList.remove('changing');
+			}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+			
+		    if (recordGroup2.classList.contains('hidden')) {
+		      stopTimer();
 		    } else {
-		        recordWrapper.classList.add('show');
-		        stopWrapper.classList.remove('show');
-		        activeLine.classList.remove('show');
+		      startTimer();
 		    }
 		});
 		
+		
 	}
 	
-	document.addEventListener('DOMContentLoaded', function() {
-	    var voiceImage = document.getElementById('voice-image');
-	    voiceImage.addEventListener('click', changeImage);
-	});
-	
+	/*切换背景的请求*/
 	function changeBg(imgurl)
 	{
 	    let arr = imgurl.split('/');  
@@ -736,7 +861,7 @@
 	   		}
 	   	},
 	   	slideChangeTransitionEnd: function () {
-	   	    console.log(44444,this.activeIndex)
+	   	    console.log("切换衣服",this.activeIndex)
 	   	 //    let index = this.activeIndex > datatVoices.length ? (this.activeIndex - datatVoices.length ) : this.activeIndex
 	   	    
 	   		// if(datatVoices.length > 0 && datatVoices[index]){
@@ -798,11 +923,12 @@
     			}
     		},
     		slideChangeTransitionEnd: function () {
-    		    console.log(111111,this.activeIndex)
+    		    console.log("切换音色",this.activeIndex)
     		    let index = this.activeIndex > datatVoices.length ? (this.activeIndex - datatVoices.length ) : this.activeIndex
     		    
         		if(datatVoices.length > 0 && datatVoices[index]){
         		    avatarVoice = datatVoices[index].value;  
+					console.log(avatarVoice);
         		}
         		 
         		
@@ -866,7 +992,7 @@
         			}
         		},
         		slideChangeTransitionEnd: function () {
-        		    console.log(33333,this.activeIndex)
+        		    console.log("切换人物",this.activeIndex)
 					
 					let index = this.activeIndex > dataAvatars.length ? (this.activeIndex - dataAvatars.length ) : this.activeIndex
 					
@@ -955,6 +1081,9 @@
       
       console.log('Sending: ' + message);
       console.log('sessionid: ',sessionid);
+	  
+	  
+	  /*网络获取机械人回复*/
       fetch(host+'/human', {
             body: JSON.stringify({
                 text: message,
@@ -1139,6 +1268,8 @@
         if (options.ttsVoices.length > 0) {
             avatarVoice = options.ttsVoices[0].value;
         }
+		
+		/*选则填充好后再触发一次切换视频流*/
         start();
     }
 
@@ -1202,7 +1333,7 @@
 
 	function changeImagedark() {
 	    // 获取所有类名为 'voice_img' 的 img 元素
-	    const images = document.querySelectorAll('.voice_img');
+	    var images = document.querySelectorAll('.voice_img');
 	  
 	    // 遍历这些 img 元素
 	    images.forEach(image => {
@@ -1215,6 +1346,20 @@
 				image.src = image.src.replace('/voice_dark.png', '/voice.png');
 			}
 	    });
+		
+		images = document.querySelectorAll('#FeatureArea .Featureitem img');
+		// 遍历这些 img 元素
+		console.log('yes');
+		images.forEach(image => {
+			
+		    if (flag) {
+		        // 替换 src 为暗色模式的图片
+		        image.src = image.src.replace('.png', '_dark.png'); // 假设暗色图标的命名规则是在原图标名称后加 '_dark'
+		    } else {
+		        // 替换 src 为浅色模式的图片
+		        image.src = image.src.replace('_dark.png', '.png');
+		    }
+		});
 	}
 	
 </script>

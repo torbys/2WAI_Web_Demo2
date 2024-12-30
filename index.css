@@ -651,7 +651,68 @@
 		align-items: center;
 		justify-content: center;
 		margin:0px 15px;
-		z-index: 100;
+		z-index: 102;
+	}
+	
+	#video-mask{
+		overflow: hidden;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 0px;
+		transition: all 1s;
+		background-color: rgba(255, 255, 255, 0.8); 
+		z-index: 101;
+		@supports (filter: blur(1px)) {
+		    /* 现代浏览器支持CSS模糊效果 */
+		}
+		@supports not (filter: blur(1px)) {
+		    /* 现代浏览器不支持CSS模糊效果 */
+		}
+		
+	}
+	
+	#TTS-item{
+		transition: all 1s;
+		position: absolute;
+		left: 250px;
+		top: 100px;
+		font-size: 26px;
+		font-weight: 600;
+		z-index: 102;
+	}
+	
+	.btn_wrapper{
+		transition: all 1s;
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		left: 340px;
+		top: 108px;
+		width: 20px;
+		height: 20px;
+		background-color: #d9d9d9;
+		border-radius: 50%;
+		z-index: 103;
+	}
+	
+	.btn_wrapper:hover{
+		transform: scale(1.1);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+	}
+	
+	.btn_wrapper:active{
+		transform: scale(0.9);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* 更深的阴影效果 */
+	}
+	
+	.btn_wrapper img{
+		z-index: 101;
+		width: 50%;
+		height: 50%;
+		object-fit: cover;
 	}
 	
 	.tips{
@@ -896,7 +957,41 @@
 	  transition-property:all;
 	}
 	
+	#swiper4 .swiper-slide {
+	  text-align: center;
+	  font-size: 18px;
+	  background: #fff;
+	  
+	  width: 100px;
+	  height: 100px;
+	  border-radius: 12px;
+	  overflow: hidden;
+	  object-fit: cover;
+	  
+	  
+	  /* Center slide text vertically */
+	  display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: -webkit-flex;
+	  display: flex;
+	  -webkit-box-pack: center;
+	  -ms-flex-pack: center;
+	  -webkit-justify-content: center;
+	  justify-content: center;
+	  -webkit-box-align: center;
+	  -ms-flex-align: center;
+	  -webkit-align-items: center;
+	  align-items: center;
+	  transition-property:all;
+	}
+	
 	.#swiper1 img, #swiper3 img{
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	
+	#swiper4 img{
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -910,9 +1005,18 @@
 	.swiper-button-prev, .swiper-button-next {
 	  opacity: 0; /* 初始透明度 */
 	  transition: all 1s ease; /* 定义过渡效果 */
-	  bottom:50px;
+	  top: 910px;
 	  display: none;
 	}
+	
+	#prev4,#next4{
+		bottom:890px ;
+	}
+	
+	#prev1,#next1{
+		top:880px;
+	}
+	
 	.swiper-button-prev.show ,.swiper-button-next.show  {
 	    display: block !important;
 		opacity: 1; /* 初始透明度 */
@@ -928,6 +1032,7 @@
 	
 	/*录音效果*/
 	#stop_record{
+		z-index: 14;
 		height: 25px;
 		width: 25px;
 		border-radius: 8px;
@@ -937,7 +1042,7 @@
 	}
 	
 	#stop_wrapper{
-		position: absolute;
+		z-index: 15;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -945,16 +1050,25 @@
 		height: 50px;
 		width: 50px;
 		border-radius: 50%;
-		left: 0px;
 		background-color: red;
-		opacity: 0;
+		cursor: pointer; /* 显示为可点击状态 */
 	}
 	
-	#recordGroup, #message {
+	#stop_wrapper:hover{
+		transform: scale(1.1);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+	}
+	
+	#stop_wrapper:active{
+		transform: scale(0.9);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* 更深的阴影效果 */
+	}
+	
+	#recordGroup1,#recordGroup2,#message {
 	    transition: all 0.5s ease-in-out;
 	}
 	
-	#recordGroup{
+	#recordGroup1{
 		position: absolute;
 		display: flex;
 		justify-content: center;
@@ -963,6 +1077,15 @@
 		top:8px;
 	}
 	
+	#recordGroup2{
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		flex-direction: row;
+		left: 100px;
+		top:8px;
+		z-index: 100;
+	}
 	
 	
 	#record_wrapper{
@@ -977,12 +1100,12 @@
 		background-color: #5865f2;
 	}
 			
-	#record_wrapper::hover{
+	#record_wrapper:hover{
 		transform: scale(1.1);
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 	}
 	
-	#record_wrapper::active{
+	#record_wrapper:active{
 		transform: scale(0.9);
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* 更深的阴影效果 */
 	}
@@ -996,8 +1119,6 @@
 	  object-fit: cover; /* 保持图片的宽高比，可能会裁剪图片 */
 	}
 	
-	
-	
 	#recordLine{
 		margin-top: 15px;
 		height: 20px;
@@ -1008,8 +1129,43 @@
 		position: absolute;
 		margin-top: 15px;
 		height: 20px;
-		width: 160px;
-		opacity: 0;
+		width: 200px;
+		left: 10px;
+		object-fit: cover;
+	}
+	
+	#recordTime{
+		position: absolute;
+		left: 190px;
+		margin-top: 13px;
+	}
+	
+	#image-container{
+		margin-top: 3px;
+		margin-right: 10px;
+		width: 30px;
+		height: 30px;
+		display: flex;
+		justify-content: center; /* 水平居中 */
+		align-items: center; /* 垂直居中 */
+		border-radius: 50%;
+		transition: all 1s;
+	}
+	
+	#image-container:hover{
+		transform: scale(1.1);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+	}
+	.voice_img{
+		margin-right: 2px;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	
+	#image-container:active{
+		transform: scale(0.9);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* 更深的阴影效果 */
 	}
 	
 	/*下方的maxlength部件*/
