@@ -957,6 +957,15 @@
 	  transition-property:all;
 	}
 	
+	/* #swiper3 .swiper-slide{
+		width: 100px;
+		height: 100px;
+	} */
+	
+	.active-border{
+		border: 5px solid white; /* 白色边框 */
+	}
+	
 	#swiper4 .swiper-slide {
 	  text-align: center;
 	  font-size: 18px;

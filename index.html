@@ -84,24 +84,24 @@
 					<div class="swiper-container" id='swiper1'>
 					     <div class="swiper-wrapper">
 						   <div class="swiper-slide">
-						   	   <img src="https://waverlyc.xiaomy.net/img/back/6.png" alt="" />
+						   	   <img src="./icon/1.png" alt="" />
 						   </div>
 					       <div class="swiper-slide">
-							   <img src=https://waverlyc.xiaomy.net/img/back/1.png" alt="" />
+							   <img src="./icon/2.png" alt="" />
 						   </div>
 					       <div class="swiper-slide">
-							   <img src="https://waverlyc.xiaomy.net/img/back/2.png" alt="" />
+							   <img src="./icon/3.png" alt="" />
 						   </div>
 					       <div class="swiper-slide">
-							   <img src="https://waverlyc.xiaomy.net/img/back/3.png" alt="" />
+							   <img src="./icon/4.png" alt="" />
 						   </div>
 					       <div class="swiper-slide">
-							   <img src="https://waverlyc.xiaomy.net/img/back/4.png" alt="" />
+							   <img src="./icon/5.png" alt="" />
 						   </div>	 
 						   <div class="swiper-slide">
-						   		<img src="https://waverlyc.xiaomy.net/img/back/5.png" alt="" />
+						   		<img src="./icon/6.png" alt="" />
 						   </div>	 
-					     </div>
+					     </div> 
 					</div> 
 					<div class="swiper-button-prev swiper-button-white btn_1" id="prev1"></div>
 					<div class="swiper-button-next swiper-button-white btn_1" id="next1"></div>
@@ -882,8 +882,24 @@
 	   var swiper2 ;
 	   var swiper3;
 	   
-	  function initSwiper()
+	  function initSwiper(countA)
 	  {
+		
+		 // 根据 countA 设置幻灯片的样式
+		  if (countA === 4) {
+		    var style = document.createElement('style');
+		    style.type = 'text/css';
+		    style.innerHTML = `
+		      #swiper3 .swiper-slide {
+		        width: 100px;
+		        height: 100px;
+		      }
+		    `;
+		    document.head.appendChild(style);
+		  }
+		  
+		  
+		  
 	      // 声音选择部分
     	effect = 1
 	    swiper2 = new Swiper('#swiper2', {
@@ -958,7 +974,7 @@
 	      swiper3 = new Swiper('#swiper3', {
         	  loop: true,
         	  speed: 1500,
-        	  slidesPerView: 5,
+        	  slidesPerView: countA,
         	  spaceBetween: 30,
         	  centeredSlides : true,
         	  watchSlidesProgress : true,
@@ -972,7 +988,7 @@
         				    slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
         					
         					if(effect == 1){
-        					    slide.transform('scale('+(1 - Math.abs(progress)/8)+')');  
+        					    slide.transform('scale('+(1 - Math.abs(progress)/8)+')'); 
         					}else if(effect == 2){
         						slide.css('opacity',(1-Math.abs(progress)/6));
         					    slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');  
@@ -1012,7 +1028,7 @@
         	
         		  //  // 打印图片的src属性
         		  //  console.log(activeImage.src);  
-        		}
+        		},
         	  },
         	  navigation: {
         		nextEl: '#next3',
@@ -1023,6 +1039,38 @@
         	       clickable: true,
         	     },
         	   });
+			   
+		function addThumbnailClickEvents(swiperInstance, selector) {
+		  var thumbnails = document.querySelectorAll(selector + ' .swiper-slide');
+		  thumbnails.forEach(function(slide, index) {
+			// 添加鼠标悬停事件
+			slide.addEventListener('mouseenter', function(e) {
+			  e.stopPropagation();
+			  // 鼠标悬停时改变鼠标样式
+			  e.target.style.cursor = 'pointer';
+			});
+	
+			// 添加鼠标离开事件
+			slide.addEventListener('mouseleave', function(e) {
+			  e.stopPropagation();
+			  // 鼠标离开时恢复鼠标样式
+			  e.target.style.cursor = 'default';
+			});  
+			  
+		    slide.addEventListener('click', function(e) {
+		      // 阻止事件冒泡
+		      e.stopPropagation();
+		      // 跳转到对应的幻灯片
+		      swiperInstance.slideTo(index);
+		    });
+		  });
+		}
+		
+		// 调用函数为每个 Swiper 实例添加点击事件
+		addThumbnailClickEvents(swiper1, '#swiper1');
+		addThumbnailClickEvents(swiper2, '#swiper2');
+		addThumbnailClickEvents(swiper3, '#swiper3');
+		addThumbnailClickEvents(swiper4, '#swiper4');
 	      
 	  }
 </script>
@@ -1116,7 +1164,7 @@
       $('#message').val('');
   });
 
-    $('#btn_start_record').click(function() {
+    $('#record_wrapper').click(function() {
         // 开始录制
         console.log('Starting recording...');
         fetch('/record', {
@@ -1130,8 +1178,8 @@
         }).then(function(response) {
             if (response.ok) {
                 console.log('Recording started.');
-                $('#btn_start_record').prop('disabled', true);
-                $('#btn_stop_record').prop('disabled', false);
+                $('#record_wrapper').prop('disabled', true);
+                $('#stop_wrapper').prop('disabled', false);
                 // $('#btn_download').prop('disabled', true);
             } else {
                 console.error('Failed to start recording.');
@@ -1141,7 +1189,7 @@
         });
     });
 
-    $('#btn_stop_record').click(function() {
+    $('#stop_wrapper').click(function() {
         // 结束录制
         //console.log('Stopping recording...');
         fetch('/record', {
@@ -1155,8 +1203,8 @@
         }).then(function(response) {
             if (response.ok) {
                 console.log('Recording stopped.');
-                $('#btn_start_record').prop('disabled', false);
-                $('#btn_stop_record').prop('disabled', true);
+                $('#record_wrapper').prop('disabled', false);
+                $('#stop_wrapper').prop('disabled', true);
                 // $('#btn_download').prop('disabled', false);
             } else {
                 console.error('Failed to stop recording.');
@@ -1203,7 +1251,7 @@
 <script>
     // 在现有的 JavaScript 代码中添加
 	
-	
+	console.log("选项初始化链接开始")
 	/*---------------------------动态调整轮播图数量-----------------------------*/
     async function loadOptions() {
         const response = await fetch(host+'/options.json');
@@ -1214,14 +1262,34 @@
         const avatarSelect = document.getElementById('avatar-name');
         
         let avatars = '';
+		let vimgs = ['avatar1','avatar2','avatar3','avatar4'],aindex = 0;
+		let countAvatar = 0; // 用于跟踪已处理的元素数量
+		
         options.avatars.forEach(avatar => {
-			console.log('cearte1')
-            avatars += `<div class="swiper-slide">  <img src="./icon/avatar1.png" alt="" />  </div>` 
+			if (countAvatar < 4) { // 只处理前四个元素
+			    console.log('create avatar');
+			    const imgSrc = `./icon/${vimgs[aindex]}.png`;
+			    avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="" />  </div>`;
+			    aindex++; // 更新索引
+			    countAvatar++; // 增加已处理元素的计数
+			    if (aindex >= vimgs.length) {
+			        aindex = 0; // 如果索引超出数组长度，重置为0
+			    }
+			} else {
+			    return; // 一旦处理了四个元素，就退出循环
+			}
         });
+		
+		
+		// swiper3.params.slidesPerView = count; // 更新参数
+		// swiper3.update(); // 应用新的参数
+		
         
         
         dataAvatars = options.avatars;
         datatVoices = options.ttsVoices;
+		
+		
          
         $('#swiper3 .swiper-wrapper').html(avatars); 
         
@@ -1240,7 +1308,7 @@
         let ttsVoices= "";
         let vcolors = ['#dc4b4b','#4bc05e','#4b66c0','#ffda48','#aa6de8'],vindex = 0;
         options.ttsVoices.forEach(voice => {
-			console.log('cearte2')
+			console.log('cearte sound')
 			
             ttsVoices += `<div class="swiper-slide">
 				           <div class="color_img" style="background-color: ${vcolors[vindex]};">
@@ -1256,7 +1324,7 @@
         $('#swiper2 .swiper-wrapper').html(ttsVoices);
         
         
-        initSwiper();
+        initSwiper(countAvatar);
 		
         // 设置默认选中项
         if (options.avatars.length > 0) {
@@ -1270,10 +1338,12 @@
         }
 		
 		/*选则填充好后再触发一次切换视频流*/
+		console.log("选项初始化链接结束")
         start();
     }
 
     // Initialize options
+	
     loadOptions();
  
     // 同步滑块和输入框的值
