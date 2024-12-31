@@ -115,10 +115,11 @@
 					<div class="swiper-button-next swiper-button-white btn_1" id="next1"></div>
 				</div>
 				
+				
 				<!-- 声音切换区  -->
 				<div class="swiper-container" id='swiper2'>
 				      <div class="swiper-wrapper">
-				         <!--<div class="swiper-slide">
+				         <!-- <div class="swiper-slide">
 				           <div class="color_img" style="background-color: #dc4b4b;">
 				             <img src="./icon/voiceLine.png" alt="" />
 				           </div>
@@ -142,7 +143,7 @@
 				           <div class="color_img" style="background-color: #aa6de8;">
 				             <img src="./icon/voiceLine.png" alt="" />
 				           </div>
-				         </div> -->    
+				         </div>    -->
 				       </div>
 				</div> 
 				<div class="swiper-button-prev swiper-button-white btn_2" id="prev2"></div>
@@ -353,47 +354,47 @@
 </script>
 
 <script>
-	// 添加视频高度监听和聊天容器高度整功能
-	function adjustChatContainerHeight() {
-	    const video = document.querySelector('#video');
-	    const chatContainer = document.querySelector('.chat-container');
-	    const form = document.querySelector('#echo-form'); // 确保你的表单有一个ID
-	    if (video && chatContainer && form) {
-	        const videoHeight = video.offsetHeight;
-	        const formHeight = form.offsetHeight;
-	        const adjustedHeight = videoHeight - formHeight-50px;
+	// // 添加视频高度监听和聊天容器高度整功能
+	// function adjustChatContainerHeight() {
+	//     const video = document.querySelector('#video');
+	//     const chatContainer = document.querySelector('.chat-container');
+	//     const form = document.querySelector('#echo-form'); // 确保你的表单有一个ID
+	//     if (video && chatContainer && form) {
+	//         const videoHeight = video.offsetHeight;
+	//         const formHeight = form.offsetHeight;
+	//         const adjustedHeight = videoHeight - formHeight-50px;
 	
-	        if (adjustedHeight > 0) {
-	            chatContainer.style.height = `${adjustedHeight}px`;
-	            chatContainer.style.minHeight = `${adjustedHeight}px`;
-	            chatContainer.style.maxHeight = `${videoHeight}px`; // 你可以根据需要调整最大高度
-	        } else {
-	            // 如果计算出的高度小于或等于0，你可以设置一个最小高度或者直接使用视频的高度
-	            chatContainer.style.height = `${videoHeight}px`;
-	            chatContainer.style.minHeight = `${videoHeight}px`;
-	            chatContainer.style.maxHeight = `${videoHeight}px`;
-	        }
-	    }
-	}
+	//         if (adjustedHeight > 0) {
+	//             chatContainer.style.height = `${adjustedHeight}px`;
+	//             chatContainer.style.minHeight = `${adjustedHeight}px`;
+	//             chatContainer.style.maxHeight = `${videoHeight}px`; // 你可以根据需要调整最大高度
+	//         } else {
+	//             // 如果计算出的高度小于或等于0，你可以设置一个最小高度或者直接使用视频的高度
+	//             chatContainer.style.height = `${videoHeight}px`;
+	//             chatContainer.style.minHeight = `${videoHeight}px`;
+	//             chatContainer.style.maxHeight = `${videoHeight}px`;
+	//         }
+	//     }
+	// }
 	
-	// 监听视频加载事件
-	document.querySelector('#video').addEventListener('loadedmetadata', () => {
-	    setTimeout(adjustChatContainerHeight, 100); // 迟一点执行以确保视频尺寸已更新
-	});
+	// // 监听视频加载事件
+	// document.querySelector('#video').addEventListener('loadedmetadata', () => {
+	//     setTimeout(adjustChatContainerHeight, 100); // 迟一点执行以确保视频尺寸已更新
+	// });
 	
-	// 创建 ResizeObserver 来监听视频尺寸变化
-	const resizeObserver = new ResizeObserver(entries => {
-	    adjustChatContainerHeight();
-	});
+	// // 创建 ResizeObserver 来监听视频尺寸变化
+	// const resizeObserver = new ResizeObserver(entries => {
+	//     adjustChatContainerHeight();
+	// });
 	
-	// 开始观察视频元素
-	resizeObserver.observe(document.querySelector('#video'));
+	// // 开始观察视频元素
+	// resizeObserver.observe(document.querySelector('#video'));
 	
-	// 监听窗口大小变化
-	window.addEventListener('resize', adjustChatContainerHeight);
+	// // 监听窗口大小变化
+	// window.addEventListener('resize', adjustChatContainerHeight);
 	
-	// 定期检查视频高度（以防其他情况导致的变化）
-	setInterval(adjustChatContainerHeight, 1000);
+	// // 定期检查视频高度（以防其他情况导致的变化）
+	// setInterval(adjustChatContainerHeight, 1000);
 </script>
 
 <script>
@@ -586,20 +587,21 @@
 		
 		var chatContainer = document.querySelector('.chat-container');
 		
-		    // 根据当前的最大高度设置.chat-container的高度
-		chatContainer.style.maxHeight = currentMaxHeight + 'px';
+		 // 切换当前的最大高度
+		 if (chatContainer.classList.contains('active')) {
+		   chatContainer.classList.remove('active');
+		 } else {
+		   chatContainer.classList.add('active');
+		 }
 		
-		    // 切换当前的最大高度
-		currentMaxHeight = currentMaxHeight === 750 ? 940 : 750;
-		
-		 // 检查more_img的src是否已经更换为line.png
-		if ($('#more_img').attr('src') === './icon/line.png') {
-		    // 如果是line.png，则切换回more.png
-		    $('#more_img').attr('src', './icon/more.png');
-		} else {
-		    // 否则，切换到line.png
-		    $('#more_img').attr('src', './icon/line.png');
-		}
+		//  // 检查more_img的src是否已经更换为line.png
+		// if ($('#more_img').attr('src') === './icon/line.png') {
+		//     // 如果是line.png，则切换回more.png
+		//     $('#more_img').attr('src', './icon/more.png');
+		// } else {
+		//     // 否则，切换到line.png
+		//     $('#more_img').attr('src', './icon/line.png');
+		// }
 		
 		
 	});
@@ -803,69 +805,74 @@
 <!-- 为了分别获取元素这里设置3个js来单独控制 -->
 <script>
 	  
-	  effect = 1
-	  var swiper1 = new Swiper('#swiper1', {
-	  loop: true,
-	  speed: 1500,
-	  slidesPerView: 5,
-	  spaceBetween: 30,
-	  centeredSlides : true,
-	  watchSlidesProgress : true,
-	  on: {
-	    setTranslate: function(){
-			slides = this.slides
-			for(i=0; i< slides.length; i++){
-				slide = slides.eq(i)
-				progress = slides[i].progress
-				//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
-				    slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
-					
-					if(effect == 1){
-					    slide.transform('scale('+(1 - Math.abs(progress)/8)+')');  
-					}else if(effect == 2){
-						slide.css('opacity',(1-Math.abs(progress)/6));
-					    slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');  
-					}
-					else if(effect == 3){
-					    slide.transform('rotate('+ progress*30+'deg)');  
-					}else if(effect == 4){
-						slide.css('background','rgba('+ (255 - Math.abs(progress)*20) +','+ (127 + progress*32) +',' + Math.abs(progress)*64 + ')');
-					}
-					
-				}	
-		},
-		setTransition: function(transition) {
-			for (var i = 0; i < this.slides.length; i++) {
-				var slide = this.slides.eq(i)
-				slide.transition(transition);
-			}
-		},
-		slideChangeTransitionEnd: function () {
+	effect = 1
+		  var swiper1 = new Swiper('#swiper1', {
+		  loop: true,
+		  speed: 1500,
+		  slidesPerView: 5,
+		  spaceBetween: 30,
+		  centeredSlides : true,
+		  watchSlidesProgress : true,
+		  on: {
+		    setTranslate: function(){
+				slides = this.slides
+				for(i=0; i< slides.length; i++){
+					slide = slides.eq(i)
+					progress = slides[i].progress
+					//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
+					    slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
+						
+						if(effect == 1){
+						    slide.transform('scale('+(1 - Math.abs(progress)/8)+')');  
+						}else if(effect == 2){
+							slide.css('opacity',(1-Math.abs(progress)/6));
+						    slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');  
+						}
+						else if(effect == 3){
+						    slide.transform('rotate('+ progress*30+'deg)');  
+						}else if(effect == 4){
+							slide.css('background','rgba('+ (255 - Math.abs(progress)*20) +','+ (127 + progress*32) +',' + Math.abs(progress)*64 + ')');
+						}
+						
+					}	
+			},
+			setTransition: function(transition) {
+				for (var i = 0; i < this.slides.length; i++) {
+					var slide = this.slides.eq(i)
+					slide.transition(transition);
+				}
+			},
+			slideChangeTransitionEnd: function () {
+				
+				  
+				  // 获取当前激活的slide的索引
+				  var activeIndex = this.activeIndex;
+				  for (var i = 0; i < this.slides.length; i++) {
+				          this.slides[i].classList.remove('swiper-slide-active');
+				        }
+				        // 给当前选中的滑块添加边框样式
+				  this.slides[this.activeIndex].classList.add('swiper-slide-active');
 			
-			  
-			  // 获取当前激活的slide的索引
-			  var activeIndex = this.activeIndex;
-		
-			  // 获取当前激活的slide元素
-			  var activeSlide = this.slides[activeIndex];
-		
-			  // 获取当前激活的slide中的图片元素
-			  var activeImage = activeSlide.querySelector('img');
-		
-			  // 打印图片的src属性
-			  console.log("执行切换" + activeImage.src);
-			  changeBg(activeImage.src); // 假设这是你定义的函数，用于改变背景图片
-		}
-	  },
-	  navigation: {
-		nextEl: '#next1',
-		prevEl: '#prev1',
-	  },
-	     pagination: {
-	       el: '.swiper-pagination',
-	       clickable: true,
-	     },
-	   });
+				  // 获取当前激活的slide元素
+				  var activeSlide = this.slides[activeIndex];
+			
+				  // 获取当前激活的slide中的图片元素
+				  var activeImage = activeSlide.querySelector('img');
+			
+				  // 打印图片的src属性
+				  console.log("执行切换" + activeImage.src);
+				  changeBg(activeImage.src); // 假设这是你定义的函数，用于改变背景图片
+			}
+		  },
+		  navigation: {
+			nextEl: '#next1',
+			prevEl: '#prev1',
+		  },
+		     pagination: {
+		       el: '.swiper-pagination',
+		       clickable: true,
+		     },
+		   });
 	   
 	   effect = 1
 	   swiper4 = new Swiper('#swiper4', {
@@ -905,6 +912,13 @@
 	   		}
 	   	},
 	   	slideChangeTransitionEnd: function () {
+			
+			for (var i = 0; i < this.slides.length; i++) {
+			        this.slides[i].classList.remove('swiper-slide-active');
+			}
+			      // 给当前选中的滑块添加边框样式
+			this.slides[this.activeIndex].classList.add('swiper-slide-active');
+			
 	   	    console.log("切换衣服",this.activeIndex)
 	   	 //    let index = this.activeIndex > datatVoices.length ? (this.activeIndex - datatVoices.length ) : this.activeIndex
 	   	    
@@ -941,8 +955,6 @@
 		    `;
 		    document.head.appendChild(style);
 		  }
-		  
-		  
 		  
 	      // 声音选择部分
     	effect = 1
@@ -984,6 +996,13 @@
     		},
     		slideChangeTransitionEnd: function () {
     		    console.log("切换音色",this.activeIndex)   
+				
+				for (var i = 0; i < this.slides.length; i++) {
+				        this.slides[i].classList.remove('swiper-slide-active');
+				      }
+				      // 给当前选中的滑块添加边框样式
+				this.slides[this.activeIndex].classList.add('swiper-slide-active');
+				
 				let len = datatVoices.length;
         		let index = this.activeIndex %  len;
     		    
@@ -1041,6 +1060,13 @@
         		},
         		slideChangeTransitionEnd: function () {
         		    console.log("切换人物",this.activeIndex)
+					
+					for (var i = 0; i < this.slides.length; i++) {
+					        this.slides[i].classList.remove('swiper-slide-active');
+					      }
+					      // 给当前选中的滑块添加边框样式
+					this.slides[this.activeIndex].classList.add('swiper-slide-active');
+					
 					let len = dataAvatars.length - 1
 					
 					let index =  this.activeIndex % len;//this.activeIndex > len ? (this.activeIndex - len ) : this.activeIndex
@@ -1059,40 +1085,43 @@
         	       clickable: true,
         	     },
         	   });
-			   
-		function addThumbnailClickEvents(swiperInstance, selector) {
-		  var thumbnails = document.querySelectorAll(selector + ' .swiper-slide');
-		  thumbnails.forEach(function(slide, index) {
-			// 添加鼠标悬停事件
-			slide.addEventListener('mouseenter', function(e) {
-			  e.stopPropagation();
-			  // 鼠标悬停时改变鼠标样式
-			  e.target.style.cursor = 'pointer';
-			});
-	
-			// 添加鼠标离开事件
-			slide.addEventListener('mouseleave', function(e) {
-			  e.stopPropagation();
-			  // 鼠标离开时恢复鼠标样式
-			  e.target.style.cursor = 'default';
-			});  
-			  
-		    slide.addEventListener('click', function(e) {
-		      // 阻止事件冒泡
-		      e.stopPropagation();
-		      // 跳转到对应的幻灯片
-		      swiperInstance.slideTo(index);
-		    });
-		  });
-		}
-		
-		// 调用函数为每个 Swiper 实例添加点击事件
-		addThumbnailClickEvents(swiper1, '#swiper1');
-		addThumbnailClickEvents(swiper2, '#swiper2');
-		addThumbnailClickEvents(swiper3, '#swiper3');
-		addThumbnailClickEvents(swiper4, '#swiper4');
-	      
 	  }
+	  
+	  function addThumbnailClickEvents(swiperInstance, selector) {
+	  	
+	    var thumbnails = document.querySelectorAll(selector + ' .swiper-slide');
+	    thumbnails.forEach(function(slide, index) {
+	  	// 添加鼠标悬停事件
+	  	slide.addEventListener('mouseenter', function(e) {
+	  	  e.stopPropagation();
+	  	  // 鼠标悬停时改变鼠标样式
+	  	  e.target.style.cursor = 'pointer';
+	  	});
+	  	
+	  	// 添加鼠标离开事件
+	  	slide.addEventListener('mouseleave', function(e) {
+	  	  e.stopPropagation();
+	  	  // 鼠标离开时恢复鼠标样式
+	  	  e.target.style.cursor = 'default';
+	  	});  
+	  	  
+	      slide.addEventListener('click', function(e) {
+	        // 阻止事件冒泡
+	        e.stopPropagation();
+	        // 跳转到对应的幻灯片
+	        swiperInstance.slideTo(index);
+	      });
+	    });
+	  }
+	  
+	  // 调用函数为每个 Swiper 实例添加点击事件
+	  addThumbnailClickEvents(swiper1, '#swiper1');
+	  addThumbnailClickEvents(swiper2, '#swiper2');
+	  addThumbnailClickEvents(swiper3, '#swiper3');
+	  addThumbnailClickEvents(swiper4, '#swiper4');
+	  
+	  
+	  
 </script>
  
        
@@ -1126,10 +1155,16 @@
         const messageDiv = $('<div>')
             .addClass('message')
             .addClass(isUser ? 'user-message' : 'bot-message');
+			
+		// 确定头像路径
+		let avatarPath = './icon/icon.png'; // 默认头像路径
+		if (!isUser) {
+		    avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
+		}
         
         const avatar = $('<img>')
             .addClass('message-avatar')
-            .attr('src', './icon/icon.png')
+            .attr('src',avatarPath)
             .attr('alt', isUser ? 'User' : 'Bot');
     
         const content = $('<div>')
@@ -1328,13 +1363,7 @@
 			} else {
 			    return; // 一旦处理了四个元素，就退出循环
 			}
-        });
-		
-		
-		// swiper3.params.slidesPerView = count; // 更新参数
-		// swiper3.update(); // 应用新的参数
-		
-        
+        });		
         
         dataAvatars = options.avatars;
         datatVoices = options.ttsVoices;
