@@ -114,7 +114,7 @@ function start() {
         if (!isConnected)(
             timeoutElement.classList.add('pop') // 显示连接超时提示
         )
-    }, 40000); // 40秒
+    }, 1000); // 40秒
 
 }
 
