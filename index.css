@@ -1,8 +1,11 @@
 * {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-family: Gotham Rounded, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+
+	
+
 
     .outer-container {
         max-width: 1200px;
@@ -70,7 +73,7 @@
     .chat-container {
 	   flex: 1;
        min-height: 0;
-       max-height: 940px;
+       max-height: 950px;
        border: none;
        background-color: #f2f2f2;
        padding: 20px;
@@ -78,10 +81,10 @@
        overflow-y: auto;
 	   padding-right: 10px; /* 为可能的滚动条留出空间 */
        overflow-x: hidden;
-       margin-bottom: 15px;
+       margin-bottom: 5px;
        position: relative;
        transition:all 0.3s;
-       width: calc(100% - 40px);
+       width: 100%;
        max-width: 100%;
        margin-left: auto;
        margin-right: auto;
@@ -133,11 +136,13 @@
 
     .message-content {
         padding: 10px 15px;
+		font-family: Gotham Rounded;
         border-radius: 12px;
         flex: 1;
-        font-size: 14.5px;
+		font-weight: 350;
+        font-size: 18px;
         line-height: 1.6;
-        letter-spacing: 0.2px;
+        /* letter-spacing: 0.2px; */
         word-wrap: break-word;
         white-space: pre-wrap;
         width: calc(100% - 44px);
@@ -189,6 +194,7 @@
 	}
 
     .welcome-message {
+		color: #7c7c7c;
         display: flex;
         align-items: center;
 		justify-content: center;
@@ -200,7 +206,7 @@
     }
 
     .welcome-message img {
-		margin: 0px 10px;
+		margin: 10px 10px 0px;
         width: 24px;
         height: 24px;
     }
@@ -308,6 +314,7 @@
         background: #e0e0e0;
         border-radius: 3px;
         -webkit-appearance: none;
+		cursor: pointer;
     }
 
     .slider-container input[type="range"]::-webkit-slider-thumb {
@@ -320,6 +327,7 @@
     }
 
     #media {
+		border-radius: 12px 0 0 12px;
         position: relative;
         width: 100%;
         flex: 1;
@@ -332,7 +340,7 @@
 		width: 100%;
 		height: auto;
         background: #f2f2f2;
-        border-radius: 12px;
+		border-radius: 12px 0 0 12px;
 		overflow: hidden; /* 隐藏超出部分 */
     }
 
@@ -439,7 +447,7 @@
     }
 
     .dark-mode .welcome-message {
-        background-color: #383838;
+        background-color: #2d2d2d;
         color: #e0e0e0;
     }
 
@@ -527,11 +535,11 @@
 		background-color: #4b4b4b;
 	}
 
-	.dark-mode .container textarea{
+	.dark-mode .inner-container textarea{
 		background-color: #454545;
 	}
 	
-	.dark-mode .container textarea::placeholder{
+	.dark-mode .inner-container textarea::placeholder{
 		color: white
 	}
 	
@@ -554,7 +562,8 @@
 	/*-------------------------------------------------------------修改部分------------------------------------------------------------*/
 	
 	/*上半部分整体布局*/
-	.container {
+	.inner-container {
+		position: relative;
 	    display: flex;
 	    padding: 0;
 	    max-width: none;
@@ -562,14 +571,14 @@
 	    align-items: stretch;
 	}
 	
-	.container form {
+	.inner-container form {
 	    display: flex;
 	    width: 100%;
 	    gap: 8px;
 	    align-items: flex-start;
 	}
 	
-	.container textarea {
+	.inner-container textarea {
 	    flex: 1;
 	    border: none;
 	    border-radius: 8px;
@@ -577,18 +586,19 @@
 	    background-color: #f2f2f2;
 	    font-size: 14.5px;
 	    letter-spacing: 0.2px;
-	    font-weight: 500;
+	    font-weight: 550;
 	    height: 30px;
-	    max-height: 25px;
+	    max-height: 30px;
 	    resize: none;
 	    line-height: 1.5;
 	    white-space: nowrap;
 	    overflow-x: auto;
 	    overflow-y: hidden;
 		transition: all 1s;
+		margin-top: 5px;
 	}
 	
-	.container button {
+	.inner-container button {
 	    height: 35px;
 	    border-radius: 8px;
 	    border: none;
@@ -603,9 +613,108 @@
 	    white-space: nowrap;
 	}
 	
-	.container button:hover {
+	.inner-container button:hover {
 	    background: transparent;
 	    transform: translateY(-1px);
+	}
+
+	.Error-Dialog{
+		opacity: 0;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: none;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		background-color: rgba(255,255,255, 0.4);
+		z-index: 111;
+		transition: all 0.3s;
+		@supports (filter: blur(5px)) {
+		    #video-mask {
+		        backdrop-filter:blur(5px);
+		    }
+		}
+		@supports not (filter: blur(5px)) {
+		    
+		}
+		transform: translateY(20px);
+	}
+
+	
+
+	.Error-Dialog .text{
+		margin-top: 5px;
+		color: white;
+		font-size: 28px;
+		font-weight: 600;
+	}
+
+	.loader {
+		width: 50px;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		border: 8px solid #fff;
+		animation:
+		  l20-1 0.8s infinite linear alternate,
+		  l20-2 1.6s infinite linear;
+	  }
+
+	  @keyframes l20-1{
+		 0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+		 12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+		 25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+		 50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+		 62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+		 75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+		 100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+	  }
+	  @keyframes l20-2{ 
+		0%    {transform:scaleY(1)  rotate(0deg)}
+		49.99%{transform:scaleY(1)  rotate(135deg)}
+		50%   {transform:scaleY(-1) rotate(0deg)}
+		100%  {transform:scaleY(-1) rotate(-135deg)}
+	  }
+
+	.Time-out{
+		border-radius: 12px;
+		position: absolute;
+		left:30%;
+		top:45%;
+		width: 500px;
+		height: 200px;
+		display: none;
+		opacity: 0;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		background-color: white;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s;
+		z-index: 120;
+		transform: translateY(20px);
+	}
+
+	.Time-out .text{
+		color: #000;
+		font-size: 48px;
+		font-weight: 600;
+	}
+
+	.Time-out button{
+		margin-top: 10px;
+		background-color: #1e88e5;
+		color: #000;
+		width: 50%;
+		height: 50px;
+		font-size: 36px;
+	}
+
+	.pop{
+		display: flex;
+		opacity: 1;
+		transform: translateY(0); 
+   		transition: all 0.3s ease;
 	}
 	
 	/*板块布局*/
@@ -651,7 +760,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		height: 50px;
+		height:auto;
 		border-top: 1px solid #e1e1e1;
 		position: relative;
 		transition: all 1s;
@@ -720,13 +829,14 @@
 		transition: all 1s;
 		background-color: rgba(255, 255, 255, 0.8); 
 		z-index: 101;
-		@supports (filter: blur(1px)) {
-		    /* 现代浏览器支持CSS模糊效果 */
+		@supports (filter: blur(5px)) {
+		    #video-mask {
+		        backdrop-filter:blur(5px);
+		    }
 		}
-		@supports not (filter: blur(1px)) {
-		    /* 现代浏览器不支持CSS模糊效果 */
+		@supports not (filter: blur(5px)) {
+		    
 		}
-		
 	}
 	
 	#TTS-title{
@@ -994,7 +1104,7 @@
 	  margin-left: auto;
 	  margin-right: auto;
 	  position: absolute;
-	  bottom: 40px;
+	  bottom: 0;
 	  left: 50px;
 	  visibility: hidden; /* 初始不可见 */
 	  opacity: 0; /* 初始透明度 */
@@ -1014,6 +1124,7 @@
 		  height: 120px;
 		  border-radius: 12px;
 		  overflow: hidden;
+		/*  border: 1px solid white; */
 		  
 		  /* Center slide text vertically */
 		  display: -webkit-box;
@@ -1029,7 +1140,7 @@
 		  -webkit-align-items: center;
 		  align-items: center;
 		  transition-property:all;
-		}
+	}
 	
 	#swiper2 .swiper-slide, #swiper3 .swiper-slide{
 	  text-align: center;
@@ -1099,6 +1210,7 @@
 	}
 	
 	#swiper1 img, #swiper3 img{
+		border: 1px solid white;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -1127,7 +1239,7 @@
 	}
 	
 	#prev1,#next1{
-		top:880px;
+		top: 910px;
 	}
 	
 	.swiper-button-prev.show ,.swiper-button-next.show  {
@@ -1142,6 +1254,7 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+		overflow: hidden;
 	}
 	
 	/*录音效果*/

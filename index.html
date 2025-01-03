@@ -21,13 +21,28 @@
             </button>
         </div>
     </div> -->
+	
+    <div class="inner-container">
 
-    <div class="container">
+		<div class="Time-out">
+			<div class="text">Connection Timeout</div>
+			<button>确定</button>
+		</div>
 
         <!-- z左侧视频面板 -->
-        <div class="panel-left">
+        <div class="panel-left ">
+			<!-- col-lg-12 -->
+			<div class="Error-Dialog">
+				<div class="loader"></div> 
+				<div class="text">Connection in progress...</div>
+			</div>	 
+
+		   <!-- <div class="change-Dialog">
+				<div class="loader"></div> 
+				<div class="text">Switching in progress...</div>
+		   </div> -->
 			
-            <div class="control-panel">
+           <div class="control-panel">
                 <div class="option">
                     <input id="use-stun" type="checkbox" checked/>
                     <label for="use-stun">Use STUN server</label>
@@ -117,45 +132,51 @@
 				
 				
 				<!-- 声音切换区  -->
-				<div class="swiper-container" id='swiper2'>
-				      <div class="swiper-wrapper">
-				         <!-- <div class="swiper-slide">
-				           <div class="color_img" style="background-color: #dc4b4b;">
-				             <img src="./icon/voiceLine.png" alt="" />
-				           </div>
-				         </div>
-				         <div class="swiper-slide">
-				           <div class="color_img" style="background-color: #4bc05e;">
-				             <img src="./icon/voiceLine.png" alt="" />
-				           </div>
-				         </div>
-				         <div class="swiper-slide">
-				           <div class="color_img" style="background-color: #4b66c0;">
-				             <img src="./icon/voiceLine.png" alt="" />
-				           </div>
-				         </div>
-				         <div class="swiper-slide">
-				           <div class="color_img" style="background-color: #ffda48;">
-				             <img src="./icon/voiceLine.png" alt="" />
-				           </div>
-				         </div>
-				         <div class="swiper-slide">
-				           <div class="color_img" style="background-color: #aa6de8;">
-				             <img src="./icon/voiceLine.png" alt="" />
-				           </div>
-				         </div>    -->
-				       </div>
-				</div> 
-				<div class="swiper-button-prev swiper-button-white btn_2" id="prev2"></div>
-				<div class="swiper-button-next swiper-button-white btn_2" id="next2"></div>
+				<div class="bannerWrapper">
+					<div class="swiper-container" id='swiper2'>
+					      <div class="swiper-wrapper">
+					         <div class="swiper-slide">
+					           <div class="color_img" style="background-color: #dc4b4b;">
+					             <img src="./icon/voiceLine.png" alt="" />
+					           </div>
+					         </div>
+					         <div class="swiper-slide">
+					           <div class="color_img" style="background-color: #4bc05e;">
+					             <img src="./icon/voiceLine_base.png" alt="" />
+					           </div>
+					         </div>
+					         <div class="swiper-slide">
+					           <div class="color_img" style="background-color: #4b66c0;">
+					             <img src="./icon/voiceLine_base.png" alt="" />
+					           </div>
+					         </div>
+					         <div class="swiper-slide">
+					           <div class="color_img" style="background-color: #ffda48;">
+					             <img src="./icon/voiceLine_base.png" alt="" />
+					           </div>
+					         </div>
+					         <div class="swiper-slide">
+					           <div class="color_img" style="background-color: #aa6de8;">
+					             <img src="./icon/voiceLine_base.png" alt="" />
+					           </div>
+					         </div>   
+					       </div>
+					</div> 
+					<div class="swiper-button-prev swiper-button-white btn_2" id="prev2"></div>
+					<div class="swiper-button-next swiper-button-white btn_2" id="next2"></div>
+				</div>
+				
 				
 				<!-- 人物切换区  -->
-				<div class="swiper-container" id='swiper3'>
-				      <div class="swiper-wrapper"> 
-				      </div>
-				</div> 
-				<div class="swiper-button-prev swiper-button-white btn_3" id="prev3"></div>
-				<div class="swiper-button-next swiper-button-white btn_3" id="next3"></div>
+				<div class="bannerWrapper">
+					<div class="swiper-container" id='swiper3'>
+					      <div class="swiper-wrapper"> 
+					      </div>
+					</div> 
+					<div class="swiper-button-prev swiper-button-white btn_3" id="prev3"></div>
+					<div class="swiper-button-next swiper-button-white btn_3" id="next3"></div>
+				</div>
+				
 				
 				<!-- 衣服更换区 -->
 				<div class="bannerWrapper">
@@ -188,7 +209,7 @@
         </div>
 
         <!-- 右侧聊天面板 -->
-        <div class="panel">
+        <div class="panel ">
 			
             <div class="chat-container" id="chat-messages">
                 <div class="welcome-message">
@@ -278,15 +299,15 @@
 				 
 				 <!-- 拖拉调节条 -->
 				 <div class="option-line">
-				 	<label for="chunk-size">Min Length</label>
-				 	<div class="slider-with-input">
-				 	    <div class="slider-container">
-				 	        <input type="range" id="chunk-size" class="form-control" min="0" max="30" step="1" value="10">
-				 			<div class="number-box-container" style="display: none;">
-				 			    <input type="number" id="chunk-size-input" class="form-control" min="0" max="30" value="10">
-				 			</div>
-				 	    </div>
-				 	</div>
+					<label for="chunk-size">Min Length</label>
+					<div class="slider-with-input">
+					    <div class="slider-container">
+					        <input type="range" id="chunk-size" class="form-control" min="0" max="30" step="1" value="10">
+							<div class="number-box-container" style="display: none;">
+							    <input type="number" id="chunk-size-input" class="form-control" min="0" max="30" value="10">
+							</div>
+					    </div>
+					</div>
 				 </div>
 				 
 			 </div>
@@ -319,12 +340,25 @@
     
     var dataAvatars = [];			//获取的模型人物名字集合
     var datatVoices = [];			//获取的声音集合
+	
+	 // 显示 loading 提示的函数
+	 function showLoading() {
+	  var loadingElement = document.querySelector('.Error-Dialog');
+      loadingElement.classList.add('pop');
+    }
+    
+    // 隐藏 loading 提示的函数
+    function hideLoading() {
+	  var loadingElement = document.querySelector('.Error-Dialog');
+      loadingElement.classList.remove('pop');
+    }
 </script>
 
 <script src="client_wn.js"></script>
 <!-- <script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script> -->
 <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
 <script src="swiper.min.js"></script>
+<script src="bootstrap.bundle.min.js"></script>
 
 <script>
 	/*max滑块的更改*/
@@ -351,6 +385,80 @@
 	   }, 500); // 1000毫秒后隐藏，可以根据需要调整这个时间
 	});
 
+	/*测试使用*/
+	effect = 1
+	swiper2 = new Swiper('#swiper2', {
+	  loop: true,
+	  speed: 1500,
+	  slidesPerView: 5,
+	  spaceBetween: 30,
+	  centeredSlides : true,
+	  watchSlidesProgress : true,
+	  on: {
+	    setTranslate: function(){
+			slides = this.slides
+			for(i=0; i< slides.length; i++){
+				slide = slides.eq(i)
+				progress = slides[i].progress
+				//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
+				    slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
+					
+					if(effect == 1){
+					    slide.transform('scale('+(1 - Math.abs(progress)/8)+')');  
+					}else if(effect == 2){
+						slide.css('opacity',(1-Math.abs(progress)/6));
+					    slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');  
+					}
+					else if(effect == 3){
+					    slide.transform('rotate('+ progress*30+'deg)');  
+					}else if(effect == 4){
+						slide.css('background','rgba('+ (255 - Math.abs(progress)*20) +','+ (127 + progress*32) +',' + Math.abs(progress)*64 + ')');
+					}
+					
+				}	
+		},
+		setTransition: function(transition) {
+			for (var i = 0; i < this.slides.length; i++) {
+				var slide = this.slides.eq(i)
+				slide.transition(transition);
+			}
+		},
+		slideChangeTransitionEnd: function () {
+		    console.log("切换音色",this.activeIndex)   
+			
+			
+			
+			for (var i = 0; i < this.slides.length; i++) {
+				var img = this.slides[i].querySelector('.color_img img');
+				img.src = './icon/voiceLine_base.png';
+			    this.slides[i].classList.remove('swiper-slide-active');
+				// 将所有滑块的图片设置为基础版本
+			}
+			
+			var activeImg = this.slides[this.activeIndex].querySelector('.color_img img');
+			activeImg.src = './icon/voiceLine.png';
+			      // 给当前选中的滑块添加边框样式
+			this.slides[this.activeIndex].classList.add('swiper-slide-active');
+			
+			
+			let len = datatVoices.length;
+			let index = this.activeIndex %  len;
+		    
+			if(isConnected && datatVoices.length > 0 && datatVoices[index]){
+			    changeAvatarVoice(datatVoices[index].value); //切换声音
+			}
+
+		}
+	  }, 
+	  navigation: {
+		nextEl: '#next2',
+		prevEl: '#prev2',
+	  },
+	     pagination: {
+	       el: '.swiper-pagination',
+	       clickable: true,
+	     },
+	   });
 </script>
 
 <script>
@@ -405,7 +513,7 @@
 	videoElement.addEventListener('ended', function() {
 	    // 视频播放结束后更换视频源为base.mp4并设置循环播放
 	    videoElement.src = './video/base.mp4';
-	    videoElement.loop = true; 
+	    videoElement.loop = true; 	
 	    videoElement.play(); // 播放base.mp4    
 	});
 	
@@ -1441,10 +1549,27 @@
         start();
     }
 
-    // Initialize options
 	
+    
+   
+
+	var button = document.querySelector('.Time-out button');
+
+    // 为按钮添加点击事件监听器
+    button.addEventListener('click', function() {
+        // 移除按钮父元素的 'pop' 类
+        this.parentElement.classList.remove('pop');
+    });
+
+    // Initialize options
+  
+
     loadOptions();
+
+	start();		//测试用start记得删除
  
+	
+
     // 同步滑块和输入框的值
     const chunkSizeSlider = document.getElementById('chunk-size');
     const chunkSizeInput = document.getElementById('chunk-size-input');
