@@ -2081,14 +2081,10 @@ body.dark-mode {
 		transition: width 0.1s;
 	}
 
-	#speak-button:active {
-		color: white !important;
-		background-color: black !important;
-	}
-
-	#speak-button:active::before {
-		color: white !important;
-		background-color: black !important;
+	#speak-button.pressed::before {
+		background-color: rgba(0, 0, 0, 0.1); /* 按下时背景颜色为黑色 */
+		
+		width: 100%; /* 按下时背景覆盖整个按钮 */
 	}
 
 

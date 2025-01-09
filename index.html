@@ -419,12 +419,6 @@
 			</div>
 		</div>
 
-		<div class="input-panel">
-			<button type="button" id="start" onclick="start()">Start</button>
-			<button type="button" id="stop" style="display: none" onclick="stop()">Stop</button>
-			<input type="hidden" id="sessionid" value="0">
-		</div>
-
 	</div>
 
 
@@ -2462,6 +2456,10 @@ function bindRecordEvents() {
     console.log("触摸开始....");
     event.preventDefault(); // 防止默认行为
 
+	// 添加按下效果
+	$(this).addClass('pressed');
+
+
     // 如果已经在录制中，直接返回
     if (isRecording) return;
 
@@ -2502,6 +2500,9 @@ function bindRecordEvents() {
 $('#speak-button').on('touchend', function (event) {
     console.log("触摸结束....");
     event.preventDefault(); // 防止默认行为
+
+	// 移除按下效果
+	$(this).removeClass('pressed');
 
     // 清除长按定时器
     if (longPressTimer) {
@@ -2614,6 +2615,7 @@ function checkBackgroundColor() {
             console.error('无法获取麦克风流:', error);
         });
     }else{
+		
 		removeRecordEvents()
 	}
 

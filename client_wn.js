@@ -44,6 +44,7 @@ function negotiate() {
     }).then((response) => {
         return response.json();
     }).then((answer) => {
+        
         sessionid = answer.sessionid
         
         return pc.setRemoteDescription(answer);
