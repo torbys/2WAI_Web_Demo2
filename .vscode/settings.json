@@ -1,0 +1,10 @@
+{
+    "liveServer.settings.CustomBrowser": "chrome",
+    "liveServer.settings.host": "loaclhost",
+    "liveServer.settings.proxy": {
+        "enable":true,
+        "baseUri":"/options",
+        "proxyUri":"https://6smelxw3s55ryw-7862.proxy.runpod.net/options"
+    },
+    "liveServer.settings.port": 
+}
