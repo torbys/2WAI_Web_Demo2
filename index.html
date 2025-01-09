@@ -2434,7 +2434,9 @@
 
 isRecording=false;
 let Record_flag = true; //判断是停止还是录音
-
+const longPressThreshold = 500; // 长按阈值，单位为毫秒
+// 长按定时器
+let longPressTimer = null;
 // 定义录音按钮的事件处理函数
 // function addRecordEvents() {
 
@@ -2456,10 +2458,15 @@ let Record_flag = true; //判断是停止还是录音
 // 绑定录音事件
 function bindRecordEvents() {
     console.log("绑定录音事件");
-    $('#speak-button').on('mousedown', function () {
-        console.log("按下....");
-        if (isRecording) return; // 如果已经在录制中，直接返回
+    $('#speak-button').on('touchstart', function (event) {
+    console.log("触摸开始....");
+    event.preventDefault(); // 防止默认行为
 
+    // 如果已经在录制中，直接返回
+    if (isRecording) return;
+
+    // 设置长按定时器
+    longPressTimer = setTimeout(() => {
         // 如果已经获取了麦克风流，则直接使用这个流，否则再次请求权限
         if (audioStream) {
             mediaRecorder = new MediaRecorder(audioStream);
@@ -2489,77 +2496,88 @@ function bindRecordEvents() {
                     isRecording = false; // 重置录制状态
                 });
         }
-    });
+    }, longPressThreshold);
+});
 
-    $('#speak-button').on('mouseup', function () {
-        console.log("放开...." + isRecording);
-        if (!isRecording) return; // 如果不在录制中，直接返回
-        console.log("?....");
+$('#speak-button').on('touchend', function (event) {
+    console.log("触摸结束....");
+    event.preventDefault(); // 防止默认行为
 
-        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-            mediaRecorder.stop(); // 停止录音
+    // 清除长按定时器
+    if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+    }
 
-            // 保存录音文件
-            mediaRecorder.onstop = () => {
-                console.log("收集开始....");
+    // 如果正在录制中，停止录制
+    if (isRecording) {
+        mediaRecorder.stop(); // 停止录音
 
-                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // 将音频数据转换为 Blob 对象
-                const fileName = generateRandomFileName('.wav'); // 生成随机文件名
-                const formData = new FormData(); // 创建 FormData 对象
+        // 保存录音文件
+        mediaRecorder.onstop = () => {
+            console.log("收集开始....");
 
-                // 设置音频播放器的源为刚刚的音频文件
-                const audioUrl = URL.createObjectURL(audioBlob);
-                $('#zoomVoice').attr('src', audioUrl);
-                $('#zoomVoice').attr('autoplay', 'autoplay');
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // 将音频数据转换为 Blob 对象
+            const fileName = generateRandomFileName('.wav'); // 生成随机文件名
+            const formData = new FormData(); // 创建 FormData 对象
 
-                formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
+            // 设置音频播放器的源为刚刚的音频文件
+            const audioUrl = URL.createObjectURL(audioBlob);
+            $('#zoomVoice').attr('src', audioUrl);
+            $('#zoomVoice').attr('autoplay', 'autoplay');
 
-                // 获取 voice-image-zoom 元素
-                const voiceImageZoom = document.getElementById('voice-image-zoom');
-                const voiceImageZoomParent = voiceImageZoom.parentNode;
+            formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
 
-                // 在发送请求前替换为加载动画
-                const loaderDiv = document.createElement('div');
-                loaderDiv.className = 'loader2';
-                loaderDiv.style.width = '50%'; // 设置加载动画的宽度
-                loaderDiv.style.height = '50%'; // 设置加载动画的高度
-                voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
+            // 获取 voice-image-zoom 元素
+            const voiceImageZoom = document.getElementById('voice-image-zoom');
+            const voiceImageZoomParent = voiceImageZoom.parentNode;
 
-                fetch('http://35.89.226.131:7864/uploadAudio', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('返回的数据是:', data); // 打印保存结果
+            // 在发送请求前替换为加载动画
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'loader2';
+            loaderDiv.style.width = '50%'; // 设置加载动画的宽度
+            loaderDiv.style.height = '50%'; // 设置加载动画的高度
+            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-                    // 请求成功后恢复原来的图片
-                    const newVoiceImageZoom = document.createElement('img');
-                    newVoiceImageZoom.id = 'voice-image-zoom';
-                    newVoiceImageZoom.className = 'voice_img';
-                    newVoiceImageZoom.src = './icon/pan.png';
-                    newVoiceImageZoom.alt = 'voice';
-                    newVoiceImageZoom.style.width = '50%';
-                    newVoiceImageZoom.style.height = '50%';
-                    voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+            fetch('http://35.89.226.131:7864/uploadAudio', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('返回的数据是:', data); // 打印保存结果
 
-                    simulateZoomSubmit(data.res);
-                    isRecording = false; // 重置录制状态
-                })
-                .catch(error => {
-                    console.error('Error saving audio:', error); // 打印保存错误信息
-                    alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
-                    isRecording = false; // 确保在错误情况下也重置状态
-                });
-            };
-        }
-    });
+                // 请求成功后恢复原来的图片
+                const newVoiceImageZoom = document.createElement('img');
+                newVoiceImageZoom.id = 'voice-image-zoom';
+                newVoiceImageZoom.className = 'voice_img';
+                newVoiceImageZoom.src = './icon/pan.png';
+                newVoiceImageZoom.alt = 'voice';
+                newVoiceImageZoom.style.width = '50%';
+                newVoiceImageZoom.style.height = '50%';
+                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+
+                simulateZoomSubmit(data.res);
+                isRecording = false; // 重置录制状态
+            })
+            .catch(error => {
+                console.error('Error saving audio:', error); // 打印保存错误信息
+                alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+                isRecording = false; // 确保在错误情况下也重置状态
+            });
+        };
+    }
+});
 }
 
 
 function removeRecordEvents() {
 	console.log("remove");
-    $('#speak-button').off('mousedown').off('mouseup');
+    $('#speak-button')
+        .off('mousedown')
+        .off('mouseup')
+        .off('touchstart')
+        .off('touchend');
 }
 
 // 获取麦克风流
@@ -2595,8 +2613,6 @@ function checkBackgroundColor() {
         }).catch(error => {
             console.error('无法获取麦克风流:', error);
         });
-
-		
     }else{
 		removeRecordEvents()
 	}
