@@ -120,6 +120,7 @@
 	display: flex;
 	align-items: flex-start;
 	gap: 12px;
+	
 }
 
 .message-avatar {
@@ -1158,11 +1159,13 @@ body.dark-mode {
 	justify-content: center;
 	margin: 0px 10px;
 	width: 100px;
+	
 }
 
 .img_container img {
 	height: 38px;
 	width: 38px;
+	opacity: 0.3;
 }
 
 .img_container {
@@ -1175,6 +1178,7 @@ body.dark-mode {
 	background-color: #d9d9d9;
 	border-radius: 12px;
 	transition: all 0.3s;
+	
 	/* 平滑背景颜色变化 */
 }
 
@@ -1743,7 +1747,7 @@ body.dark-mode {
 	}
 
 	.outer-container {
-		padding: 10px;
+		padding: 0px;
 	}
 
 	/* ********************* */
@@ -1787,6 +1791,9 @@ body.dark-mode {
     	overflow-x: hidden; /* 隐藏水平滚动条 */
 	}
 
+	
+
+	
 	/* .message-content::before{
 		display: block;
 		content: "";
@@ -1858,6 +1865,7 @@ body.dark-mode {
 	.img_container img{
 		width: 20px;
 		height: 20px;
+		opacity: 0.3;
 	}
 
 	.selected-filter {
@@ -1918,6 +1926,7 @@ body.dark-mode {
 		white-space: pre-wrap;
 		max-width: calc(100% - 44px);
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		/* opacity: 0.7; */
 	}
 
 	.user-message {
@@ -1986,9 +1995,9 @@ body.dark-mode {
 	}
 
 	#swiper1{
-		width: 200px;
-		top: 27%;
-		left: 20%;
+		width: 250px;
+		top: 32%;
+		left: 22%;
 	}
 
 	#swiper2,
@@ -2011,6 +2020,10 @@ body.dark-mode {
     
 	#image-container-zoom{
 		margin-right: 4px;
+	}
+
+	#image-container-zoom img{
+		opacity: 0.3;
 	}
 
 	#message2 {
@@ -2078,6 +2091,7 @@ body.dark-mode {
 	}
 
 
+
 	.show1 {
 		opacity: 1;
 		display: none;
@@ -2090,6 +2104,10 @@ body.dark-mode {
 		display: flex;
 		visibility: hidden;
 	}
+
+
+
+
     		/* .fade-out-up {
     			animation: fadeOutUp 1s forwards;
     		}

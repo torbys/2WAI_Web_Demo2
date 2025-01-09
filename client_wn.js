@@ -225,6 +225,45 @@ function resetSwiper1ToFirstSlide() {
     }, 1000); // 延迟1000毫秒（即1秒）执行
 }
 
+// 映射关系
+const avatarVoiceMapping = {
+    'avatar1': 'voice1',
+    'avatar5': 'voice1',
+    'avatar2': 'voice2',
+    'avatar3': 'voice3',
+    'avatar4': 'voice4',
+    'avatar8': 'voice4'
+};
+
+function updateAvatarVoice(avatarName) {
+
+    const newVoice = avatarVoiceMapping[avatarName];
+    if (avatarVoice === newVoice) {
+        return;
+    }
+
+    avatarVoice = newVoice;
+    console.log("re AvatarVoice is:", avatarVoice);
+
+    fetch(host + '/change_property', {
+        method: 'POST',
+        body: JSON.stringify(
+            {
+                sessionid:sessionid,
+                ttsSelection: ttsSelection,
+                avatarVoice: avatarVoice,
+            }
+        )
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('请求成功，返回的数据是：', data);
+    })
+    .catch(error => {
+        console.error('请求失败，错误信息是：', error);
+    });
+}
+
 /*更换角色*/
 function changeAvatar(val)
 { 
@@ -257,6 +296,9 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
+
+    updateAvatarVoice(avatarName); // 自动更新声音设置
+
     console.log("AvatarName is:", avatarName);
     isChange=true;
     start();
@@ -274,6 +316,7 @@ function changeTtsSelection(val)
     isChange=true;
     start();
 }
+
 
 /*更换 声音*/
 function changeAvatarVoice(val)
