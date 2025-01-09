@@ -245,6 +245,7 @@ function updateAvatarVoice(avatarName) {
     avatarVoice = newVoice;
     console.log("re AvatarVoice is:", avatarVoice);
 
+    showLoading();
     fetch(host + '/change_property', {
         method: 'POST',
         body: JSON.stringify(
@@ -258,9 +259,11 @@ function updateAvatarVoice(avatarName) {
     .then(response => response.json())
     .then(data => {
         console.log('请求成功，返回的数据是：', data);
+        hideLoading(); 
     })
     .catch(error => {
         console.error('请求失败，错误信息是：', error);
+        hideLoading(); 
     });
 }
 
@@ -321,6 +324,7 @@ function changeTtsSelection(val)
 /*更换 声音*/
 function changeAvatarVoice(val)
 {
+    
     if(avatarVoice == val){
         return;
     }
@@ -329,6 +333,7 @@ function changeAvatarVoice(val)
     avatarVoice = val;//'';
     console.log("AvatarVoice is:", avatarVoice);
 
+    showLoading();
     fetch(host+'/change_property',{
         method: 'POST',
         body: JSON.stringify(
@@ -342,9 +347,11 @@ function changeAvatarVoice(val)
     ).then(response => response.json()) // 处理请求成功的情况
     .then(data => {
         console.log('请求成功，返回的数据是：', data);
+        hideLoading(); 
     })
     .catch(error => {
         console.error('请求失败，错误信息是：', error);
+        hideLoading(); 
     });
 
 

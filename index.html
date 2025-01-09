@@ -144,7 +144,37 @@
 					<div class="bannerWrapper">
 						<div class="swiper-container" id='swiper2'>
 							<div class="swiper-wrapper">
-								
+								<div class="swiper-slide">
+									<div class="color_img" style="background-color: #dc4b4b;">
+									  <img src="./icon/voiceLine.png" alt="" />
+									</div>
+								  </div>
+								  <div class="swiper-slide">
+									<div class="color_img" style="background-color: #4bc05e;">
+									  <img src="./icon/voiceLine.png" alt="" />
+									</div>
+								  </div>
+								  <div class="swiper-slide">
+									<div class="color_img" style="background-color: #dc4b4b;">
+									  <img src="./icon/voiceLine.png" alt="" />
+									</div>
+								  </div>
+								  <div class="swiper-slide">
+									<div class="color_img" style="background-color: #4bc05e;">
+									  <img src="./icon/voiceLine.png" alt="" />
+									</div>
+								  </div>
+								  <div class="swiper-slide">
+									<div class="color_img" style="background-color: #dc4b4b;">
+									  <img src="./icon/voiceLine.png" alt="" />
+									</div>
+								  </div>
+								  <div class="swiper-slide">
+									<div class="color_img" style="background-color: #4bc05e;">
+									  <img src="./icon/voiceLine.png" alt="" />
+									</div>
+								  </div>
+								 
 							</div>
 						</div>
 						<div class="swiper-button-prev swiper-button-white btn_2" id="prev2"></div>
@@ -735,19 +765,19 @@
 					}
 				},
 				slideChangeTransitionEnd: function () {
-					console.log("切换音色", this.activeIndex)
+					console.log("切换音色", this.realIndex);
 
 					for (var i = 0; i < this.slides.length; i++) {
 						this.slides[i].classList.remove('swiper-slide-active');
 					}
 					// 给当前选中的滑块添加边框样式
-					this.slides[this.activeIndex].classList.add('swiper-slide-active');
-
+					this.slides[this.realIndex].classList.add('swiper-slide-active');
+					
 					let len = datatVoices.length;
-					let index = this.activeIndex % len;
-
+					let index = this.realIndex % len;
+					
 					if (isConnected && datatVoices.length > 0 && datatVoices[index]) {
-						 // 计算下一个声音的索引
+						// 计算下一个声音的索引
 						changeAvatarVoice(datatVoices[index].value); //切换声音
 					}
 				}
@@ -2533,22 +2563,21 @@ function removeRecordEvents() {
 }
 
 // 获取麦克风流
-function getMediaStream() {
+async function getMediaStream() {
     if (audioStream) {
         // 如果已经获取了麦克风流，直接返回
-        return Promise.resolve(audioStream);
+        return audioStream;
     } else {
-        // 请求麦克风权限并获取媒体流
-        return navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                audioStream = stream; // 存储麦克风流
-                return audioStream;
-            })
-            .catch(error => {
-                console.error('Error accessing microphone:', error);
-                alert('Unable to access microphone. Please ensure microphone permissions are granted.');
-                throw error;
-            });
+        try {
+            // 请求麦克风权限并获取媒体流
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioStream = stream; // 存储麦克风流
+            return audioStream;
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+            alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+            throw error;
+        }
     }
 }
 
@@ -2559,12 +2588,15 @@ function checkBackgroundColor() {
 		console.log("add speak");
 		clearInterval(checkBgColorInterval)
 		// 请求麦克风流
+
         getMediaStream().then(stream => {
             console.log('麦克风流已获取');
+			bindRecordEvents()
         }).catch(error => {
             console.error('无法获取麦克风流:', error);
         });
-		bindRecordEvents()
+
+		
     }else{
 		removeRecordEvents()
 	}
@@ -2591,5 +2623,55 @@ syncWidth();
 window.addEventListener('resize', syncWidth);
 </script>
 
+<script>
+//   const startRecordingButton = document.getElementById('start-recording');
+//   const stopRecordingButton = document.getElementById('stop-recording');
+//   const recordingText = document.getElementById('recording-text');
+ 
+//   let recording = false;
+//   let stream = null;
+//   let mediaRecorder = null;
+//   let recordedBlobs = [];
+ 
+//   startRecordingButton.addEventListener('click', async () => {
+//     try {
+//       // 请求获取麦克风访问
+//       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+//       mediaRecorder = new MediaRecorder(stream);
+ 
+//       // 当收到新的音频数据时的事件处理
+//       mediaRecorder.ondataavailable = event => {
+//         if (event.data && event.data.size > 0) {
+//           recordedBlobs.push(event.data);
+//         }
+//       };
+ 
+//       // 当录音结束时的事件处理
+//       mediaRecorder.onstop = () => {
+//         const blob = new Blob(recordedBlobs, { type: 'audio/wav' });
+//         const url = URL.createObjectURL(blob);
+//         recordingText.innerHTML = `<audio controls src="${url}"></audio>`;
+//       };
+ 
+//       mediaRecorder.start();
+//       recording = true;
+//       stopRecordingButton.disabled = false;
+//       startRecordingButton.disabled = true;
+//       recordingText.innerText = '正在录音...';
+//     } catch (error) {
+//       console.error('录音错误:', error);
+//       recordingText.innerText = '无法获取麦克风访问';
+//     }
+//   });
+ 
+//   stopRecordingButton.addEventListener('click', () => {
+//     mediaRecorder.stop();
+//     stream.getTracks().forEach(track => track.stop());
+ 
+//     recording = false;
+//     startRecordingButton.disabled = false;
+//     stopRecordingButton.disabled = true;
+//   });
+</script>
 
 </html>

@@ -2086,8 +2086,9 @@ body.dark-mode {
 		background-color: black !important;
 	}
 
-	#speak-button::before:active{
-		background-color: rgba(0, 0, 0, 0.7);
+	#speak-button:active::before {
+		color: white !important;
+		background-color: black !important;
 	}
 
 
@@ -2105,6 +2106,51 @@ body.dark-mode {
 		visibility: hidden;
 	}
 
+	.Featureitem {
+		border-radius: 50%;
+		display: flex;
+		height: 50px;
+		width: 50px;
+		align-items: center;
+		justify-content: center;
+		background-color: white;
+		transition: all 0.6 ease;
+	}
+	
+	#FeatureArea img {
+		height: 30px;
+		width: 30px;
+	}
+
+	.demo {
+		position: absolute;
+		left: 1%;
+		top: 2%;
+		font-size: 26px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0px 15px;
+		z-index: 102;
+	}
+
+	.tips {
+		margin-left: 5px;
+		margin-top: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 41px;
+		height: 11px;
+		padding: 2px;
+		font-size: 11px;
+		font-weight: 500;
+		color: #7e7e7e;
+		background-color: white;
+		border-radius: 50px;
+	}
+	
 
 
 
