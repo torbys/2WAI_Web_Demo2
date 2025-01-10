@@ -189,24 +189,29 @@ function stop() {
         pc.close();
     }, 500);
 
-   
-
     console.log("********************888***********************************");
 }
 
 function stop2() {
+
     console.log("********************stop***********************************");
+
+    fetch(host+'/stop_current_avatar',{
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    sessionid: sessionid,    //parseInt(document.getElementById('sessionid').value),
+                }
+            )
+        }
+    );
 
     if (pc) {
         pc.close();
         pc = null; 
     }
-
-
     
     showLoading();
-
-    
 
     // 如果你还需要清理音频/视频流等资源，可以在这里添加更多清理代码
     // document.getElementById('video').srcObject = null;
