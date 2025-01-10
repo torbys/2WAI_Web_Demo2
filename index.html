@@ -104,7 +104,7 @@
 				</video>-->
 
 					<audio id="audio" autoplay="true"></audio>
-					<video id="video" autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
+					<video id="video" autoplay="true" playsinline="true" src="./video/base.mp4"></video>
 
 
 
@@ -463,9 +463,6 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		const media = document.getElementById('media');
 		const zoomIcon = document.getElementById('zoomIcon'); // 这个元素似乎是用来触发缩放的，但通常它不会是一个图标，而是一个覆盖在视频上的透明层或视频本身
-
-		// 注意：通常我们不会在一个图标上监听滚轮事件来缩放视频，因为这不太符合用户期望。
-		// 这里我假设zoomIcon是为了示例目的而设置的，实际应用中可能需要调整。
 
 		zoomIcon.addEventListener('wheel', function (event) {
 			event.preventDefault(); // 阻止默认的滚动行为
@@ -1666,8 +1663,6 @@
 	const timer1 = createTimer(recordTime);
 	const timer2 = createTimer(recordTime2);
 
-
-
 	function generateRandomFileName(extension) {
 		// 获取当前时间戳
 		const timestamp = Date.now();
@@ -2187,15 +2182,15 @@
 			messageDiv.append(avatar).append(content);
 
 			 // 获取聊天区域的 jQuery 对象
-			 const chatArea = $('#chat-messages-zoom');
+			//  const chatArea = $('#chat-messages-zoom');
 
-			// 将新消息插入到聊天区域的最上方
-			chatArea.prepend(messageDiv);
+			// // 将新消息插入到聊天区域的最上方
+			// chatArea.prepend(messageDiv);
 
-			// 自动滚动到顶部，确保新消息可见
-			chatArea.scrollTop(0);
-			// $('#chat-messages-zoom').prepend(messageDiv); // 使用prepend将消息插入到最前面
-			// $('#chat-messages-zoom').scrollTop=0;
+			// // 自动滚动到顶部，确保新消息可见
+			// chatArea.scrollTop(0);
+			$('#chat-messages-zoom').append(messageDiv);
+			$('#chat-messages-zoom').scrollTop($('#chat-messages-zoom')[0].scrollHeight);
 		}
 
 		// 获取 image-container-zoom 容器

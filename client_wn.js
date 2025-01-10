@@ -133,6 +133,55 @@ function start() {
               credential: "MnW7roClfOpuBZoC",
             }
         ];
+        
+        //美国东部服务器
+        // config.iceServers=[
+        //     {
+        //         urls: "turn:54.166.236.67:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE",
+        //     },
+        //     {
+        //         urls: "turn:52.11.182.61:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE",
+        //     },            
+        //     {
+        //         urls: "turns:global.relay.metered.ca:443?transport=tcp",
+        //         username: "450fcc1d0427f8ff34d668bc",
+        //         credential: "MnW7roClfOpuBZoC",
+        //     },
+        //     {
+        //         urls: "turn:global.relay.metered.ca:443",
+        //         username: "450fcc1d0427f8ff34d668bc",
+        //         credential: "MnW7roClfOpuBZoC",
+        //     },
+        // ]
+
+        //美国西部服务器
+        // config.iceServers=[
+        //     {
+        //         urls: "turn:52.11.182.61:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE",
+        //     },   
+        //     {
+        //         urls: "turn:54.166.236.67:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE",
+        //     },
+        //     {
+        //         urls: "turns:global.relay.metered.ca:443?transport=tcp",
+        //         username: "450fcc1d0427f8ff34d668bc",
+        //         credential: "MnW7roClfOpuBZoC",
+        //     },
+        //     {
+        //         urls: "turn:global.relay.metered.ca:443",
+        //         username: "450fcc1d0427f8ff34d668bc",
+        //         credential: "MnW7roClfOpuBZoC",
+        //     },
+        // ]
+
     }
 
     pc = new RTCPeerConnection(config);    
@@ -217,7 +266,6 @@ function stop2() {
     // document.getElementById('video').srcObject = null;
     // document.getElementById('audio').srcObject = null;
     // document.getElementById('stop').style.display = 'none';
-
     console.log("********************stop completed***********************************");
 }
 
