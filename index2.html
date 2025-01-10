@@ -1,0 +1,2671 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>2WAI Demo</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" href="swiper.min.css">
+	<link rel="stylesheet" href="index.css">
+
+
+</head>
+
+<body>
+
+	<div class="outer-container">
+		<!-- <div class="main-title">
+        <h1>2WAI Demo</h1>
+        <div class="theme-toggle">
+            <button id="theme-toggle-btn">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </div> -->
+
+		<div class="inner-container">
+
+			<!-- z左侧视频面板 -->
+			<div class="panel-left ">
+				<!-- col-lg-12 -->
+				<div class="Error-Dialog">
+					<div class="loader"></div>
+					<div class="text">Connection in progress...</div>
+				</div>
+
+				<div class="Time-out">
+					<img class="Tcancel" src="./icon/cancel.png" alt="">
+					<div class="Outicon">
+						<img src="./icon/linkicon.png" alt="">
+					</div>
+					<div class="text">Connection Timeout</div>
+					<button>Refresh</button>
+				</div>
+
+				<div class="control-panel">
+					<div class="option">
+						<input id="use-stun" type="checkbox" checked />
+						<label for="use-stun">Use STUN server</label>
+					</div>
+				</div>
+
+				<div class="bottom-icon">
+					Zoom
+					<img src="./icon/move.png" alt="" id="zoomIcon" />
+				</div>
+
+				<div class="demo">
+					2WAI
+					<div class="tips">
+						Demo
+					</div>
+				</div>
+
+				<div id="FeatureArea">
+					<div class="Featureitem" id="change_item">
+						<img src="./icon/change.png" alt="" />
+					</div>
+					<div class="Featureitem" id="clothes_item">
+						<img src="./icon/clothes.png" alt="" />
+					</div>
+					<!-- <div class="Featureitem" id="hand_item">
+					<img src="./icon/hand.png" alt="" />
+				</div> -->
+					<!-- <div class="Featureitem" id="like_item">
+					<img src="./icon/like.png" alt="" />
+				</div> -->
+				</div>
+
+
+
+				<!-- 视频展示区 -->
+				<div id="media">
+					
+
+
+					<div id="video-mask">
+
+						<div id="TTS-title" name="TTS-title">TTS Selection</div>
+						<div class="btn_wrapper">
+							<img src="./icon/bottom.png" alt="" />
+						</div>
+
+
+						<div class="TTS-item">
+							<!-- 选择项在此处动态添加 -->
+						</div>
+					</div>
+
+					
+					<!--<audio id="audio" autoplay="true"></audio> 
+				<video id="video" preload="auto" poster="./icon/loadingBackGorund.png" autoplay playsinline loop muted>
+				  <source src="./video/base.mp4" type="video/mp4"> 
+				</video>-->
+
+					<audio id="audio" autoplay="true"></audio>
+					<video id="video" autoplay="true" playsinline="true" src="./video/base.mp4"></video>
+
+
+
+					<!-- 背景更换区 -->
+					<div class="bannerWrapper">
+						<div class="swiper-container" id='swiper1'>
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img src="./icon/0.png" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/1.png" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/2.png" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/3.png" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/4.png" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/5.png" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/6.png" alt="" />
+								</div>
+							</div>
+						</div>
+						<div class="swiper-button-prev swiper-button-white btn_1" id="prev1"></div>
+						<div class="swiper-button-next swiper-button-white btn_1" id="next1"></div>
+					</div>
+
+
+					<!-- 声音切换区  -->
+					<div class="bannerWrapper">
+						<div class="swiper-container" id='swiper2'>
+							<div class="swiper-wrapper">
+							</div>
+						</div>
+						<div class="swiper-button-prev swiper-button-white btn_2" id="prev2"></div>
+						<div class="swiper-button-next swiper-button-white btn_2" id="next2"></div>
+					</div>
+
+
+					<!-- 人物切换区  -->
+					<div class="bannerWrapper">
+						<div class="swiper-container" id='swiper3'>
+							<div class="swiper-wrapper">
+							</div>
+						</div>
+						<div class="swiper-button-prev swiper-button-white btn_3" id="prev3"></div>
+						<div class="swiper-button-next swiper-button-white btn_3" id="next3"></div>
+					</div>
+
+
+					<!-- 衣服更换区 -->
+					<div class="bannerWrapper">
+						<div class="swiper-container" id='swiper4'>
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img src="./icon/choice1.jpg" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/choice1.jpg" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/choice1.jpg" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/choice1.jpg" alt="" />
+								</div>
+								<div class="swiper-slide">
+									<img src="./icon/choice1.jpg" alt="" />
+								</div>
+							</div>
+						</div>
+						<div class="swiper-button-prev swiper-button-white btn_4" id="prev4"></div>
+						<div class="swiper-button-next swiper-button-white btn_4" id="next4"></div>
+					</div>
+
+
+					<!-- 缩放后的聊天面板 -->
+					<div class="panel-zoom">
+						<!-- 输入区 -->
+						<div class="zoom-bottom">
+
+							<audio src="" style="display: none;" id="zoomVoice"></audio>
+							<button id="speak-button" class="hidden1">Hold on and speak</button>
+							
+							<textarea class="form-control" id="message2"
+								placeholder="Type your message here..."></textarea>
+
+						
+							<div id="image-container-zoom"
+								style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
+								<img id="voice-image-zoom" class="voice_img" src="./icon/voice.png" alt="voice"
+									style="width: 50%;height: 50%;" />
+							</div>
+
+						</div>
+						
+						<!-- 聊天区 -->
+						<div class="zoom-left" id="chat-messages-zoom">
+							
+						</div>
+
+						<!-- 功能区 -->
+						<div class="zoom-right">
+							<div class="option-item " data-name="avatar">
+								<div class="img_container" id="avatar-name">
+									<img i src="./icon/Digital Human.png" alt="" />
+								</div>
+								<label for="avatar-name">Avatar</label>
+							</div>
+	
+							<div class="option-item" data-name="tts">
+								<div class="img_container" id="tts-selection_zoom">
+									<img src="./icon/cude.png" alt="" />
+								</div>
+	
+								<label for="tts-selection">TTS</label>
+							</div>
+	
+							<div class="option-item" data-name="voice">
+								<div class="img_container" id="avatar-voice">
+									<img src="./icon/voiceLine.png" alt="" />
+								</div>
+								<label for="avatar-voice">Voice</label>
+							</div>
+	
+							<div class="option-item" data-name="background">
+								<div class="img_container" id="avatar-background">
+									<img src="./icon/background.png" alt="" />
+								</div>
+								<label for="avatar-background">Background</label>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+			<!-- 右侧聊天面板 -->
+			<div class="panel ">
+
+				<div class="chat-container" id="chat-messages">
+					<div class="welcome-message">
+						<span>Welcome! You can click the <img src="./icon/voice.png" alt="" class="voice_img" /> icon
+							below or enter text to talk to me</span>
+					</div>
+					<!-- 聊天消息将在这里动态添加 -->
+				</div>
+
+				<form class="form-inline" id="echo-form">
+
+					<div id="image-container">
+						<img id="voice-image" class="voice_img" src="./icon/voice.png" alt="voice"
+							onclick="changeImage()" />
+					</div>
+
+					<div class="gap"></div>
+
+					<textarea class="form-control" id="message" placeholder="Type your message here..."></textarea>
+
+					<div id="recordGroup1" class="hidden">
+						<div id="record_wrapper">
+							<img id="recording" src="./icon/recording.png" alt="microphone" />
+						</div>
+						<img id="recordLine" src="./icon/recordLine.png" alt="Line" />
+					</div>
+
+					<div id="recordGroup2" class="hidden">
+						<div id="stop_wrapper">
+							<div id="stop_record"></div>
+						</div>
+						<img id="activeLine" src="./icon/vioce_active.gif" alt="动画演示">
+						<!-- <div class="wave"></div> -->
+						<div id="recordTime">0.00</div>
+					</div>
+
+					<div class="audio-preview hidden">
+
+						<audio id="audio-player"></audio>
+						<div id="custom-player">
+							<img src="./icon/play.png" alt="">
+						</div>
+
+						<p id="file-name"></p>
+
+						<img id="activeLine2" src="./icon/vioce_active.gif" alt="动画演示">
+
+						<div id="recordTime2">0.00</div>
+
+						<button id="delete-audio">
+							<img src="./icon/cancel2.png" alt="">
+						</button>
+					</div>
+
+					<!-- $('#audio-preview').show(); // 显示音频预览区域
+                    $('#audio-player').attr('src', `/tmp/${fileName}`); // 设置音频播放器的源为服务器上的音频文件
+                    $('#file-name').text(fileName); // 设置文件名显示为上传的文件名
+                    $('#delete-audio').show(); // 显示删除音频的按钮 -->
+
+
+
+
+					<!-- <div>
+				    <label for="btn-record"></label>
+				    <button class="btn btn-primary" id="btn_start_record">Start Recording</button>
+				    <button class="btn btn-primary" id="btn_stop_record" disabled>Stop Recording</button>
+				</div> -->
+
+					<!-- 按钮包裹的提交 -->
+					<button type="submit" class="btn btn-default">
+						<img class="submit" src="./icon/base_submit.png" alt="submit" />
+					</button>
+
+					<div class="gap"></div> <!-- 间隔竖线 -->
+
+					<div class="more" id="moreButton">
+						<img id="more_img" src="./icon/more.png" alt="" />
+					</div>
+
+				</form>
+
+				<!-- 隐藏式选择框 -->
+				<div id="options-container">
+					<div class="options-group">
+						<div class="option-item " data-name="avatar">
+							<div class="img_container" id="avatar-name">
+								<img i src="./icon/Digital Human.png" alt="" />
+							</div>
+							<label for="avatar-name">Avatar</label>
+						</div>
+
+						<div class="option-item" data-name="tts">
+							<div class="img_container" id="tts-selection">
+								<img src="./icon/cude.png" alt="" />
+							</div>
+
+							<label for="tts-selection">TTS</label>
+						</div>
+
+						<div class="option-item" data-name="voice">
+							<div class="img_container" id="avatar-voice">
+								<img src="./icon/voiceLine.png" alt="" />
+							</div>
+							<label for="avatar-voice">Voice</label>
+						</div>
+
+						<div class="option-item" data-name="background">
+							<div class="img_container" id="avatar-background">
+								<img src="./icon/background.png" alt="" />
+							</div>
+							<label for="avatar-background">Background</label>
+						</div>
+
+					</div>
+
+					<!-- 拖拉调节条 -->
+					<div class="option-line">
+						<label for="chunk-size">Min Length</label>
+						<div class="slider-with-input">
+							<div class="slider-container">
+								<input type="range" id="chunk-size" class="form-control" min="0" max="30" step="1"
+									value="10" style="width: 1000px" ;>
+								<div class="number-box-container" style="display: none;">
+									<input type="number" id="chunk-size-input" class="form-control" min="0" max="30"
+										value="10">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+
+<script>
+
+	// const host = 'https://wxqawnt5040hm5-7862.proxy.runpod.net'; 
+	//const host = 'http://47.96.160.235:7862'; 
+	// const host = 'https://6sme1xw3s55ryw-7862.proxy.runpod.net'; 
+	//const host='https://66.114.112.70';
+	// const host ='http://47.96.160.235:7862';
+	// const host = 'http://52.11.182.61:7862';
+	const host = 'http://35.89.226.131:7864';
+
+	var avatarName = "avatar1";  	//会话人物
+	var ttsSelection = "tts1";   	//会话模块
+	var avatarVoice = "voice1"; 	//会话声音
+	var sessionid = "";				//会话id
+	var isConnected = false;		//链接状态
+	var canSubmit = 0; 				// 提交标志，默认为0
+	var SDP="";
+
+	var dataAvatars = [];			//获取的模型人物名字集合
+	var datatVoices = [];			//获取的声音集合
+
+	// 显示 loading 提示的函数
+	function showLoading() {
+		var loadingElement = document.querySelector('.Error-Dialog');
+		loadingElement.classList.add('pop');
+		document.body.style.pointerEvents = 'none';
+	}
+
+	// 隐藏 loading 提示的函数
+	function hideLoading() {
+		var loadingElement = document.querySelector('.Error-Dialog');
+		loadingElement.classList.remove('pop');
+		document.body.style.pointerEvents = 'auto';
+	}
+
+</script>
+
+<script src="client_wn2.js"></script>
+<!-- <script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script> -->
+<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+<script src="swiper.min.js"></script>
+
+<script>
+
+	/*max滑块的更改*/
+	document.getElementById('chunk-size').addEventListener('input', function (e) {
+		var value = e.target.value;
+		var numberBoxContainer = document.querySelector('.number-box-container');
+
+		// 确保.number-box-container是可见的
+		numberBoxContainer.style.display = 'block';
+
+		var sliderWidth = e.target.offsetWidth;
+		var numberBoxLeft = (value / e.target.max) * (sliderWidth - 100) + 'px';
+
+		numberBoxContainer.style.left = numberBoxLeft;
+
+		// 清除之前的定时器
+		if (numberBoxContainer.timeoutId) {
+			clearTimeout(numberBoxContainer.timeoutId);
+		}
+
+		// 设置一个短暂的延迟，然后隐藏.number-box-container
+		numberBoxContainer.timeoutId = setTimeout(function () {
+			numberBoxContainer.style.display = 'none';
+		}, 500); // 1000毫秒后隐藏，可以根据需要调整这个时间
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+		const media = document.getElementById('media');
+		const zoomIcon = document.getElementById('zoomIcon'); // 这个元素似乎是用来触发缩放的，但通常它不会是一个图标，而是一个覆盖在视频上的透明层或视频本身
+
+		zoomIcon.addEventListener('wheel', function (event) {
+			event.preventDefault(); // 阻止默认的滚动行为
+
+			const scaleFactor = 1.1; // 缩放因子
+			let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
+
+			// 根据滚轮方向更新缩放比例
+			if (event.deltaY < 0) {
+				currentScale *= scaleFactor;
+			} else {
+				currentScale /= scaleFactor;
+				// 防止缩放过小导致视频不可见
+				if (currentScale < 0.1) currentScale = 0.1;
+			}
+
+			// 应用缩放变换
+			media.style.transformOrigin = 'center center'; 
+			media.style.transform = `scale(${currentScale})`;
+		});
+	});
+
+</script>
+
+<script>
+	// /*---------------曾经的视高度适配功能-----------------*/
+
+	// // 添加视频高度监听和聊天容器高度整功能
+	// function adjustChatContainerHeight() {
+
+	// console.log("检查高度")
+
+	// 	const video = document.querySelector('#video');
+	// 	const chatContainer = document.querySelector('.chat-container');
+	// 	const form = document.querySelector('#echo-form'); // 确保你的表单有一个ID
+	// 	const option =document.querySelector("#options-container");
+	// 	var adjustedHeight ;
+
+	// 	if (video && chatContainer && form) {
+
+	// 	if (option.classList.contains("open")) {
+	// 		const videoHeight = video.offsetHeight;
+	// 		const formHeight = form.offsetHeight;
+	// 		const optionHeight =  option.offsetHeight
+	// 		adjustedHeight = videoHeight - formHeight - optionHeight;
+	// 	} else {
+	// 		const videoHeight = video.offsetHeight;
+	// 		const formHeight = form.offsetHeight;
+	// 		adjustedHeight = videoHeight - formHeight;
+	// 	}
+
+	// 	if (adjustedHeight > 0) {
+	// 		chatContainer.style.height = `${adjustedHeight}px`;
+	// 		chatContainer.style.minHeight = `${adjustedHeight}px`;
+	// 		chatContainer.style.maxHeight = `${adjustedHeight}px`; // 你可以根据需要调整最大高度
+	// 	} else {
+	// 		// 如果计算出的高度小于或等于0，你可以设置一个最小高度或者直接使用视频的高度
+	// 		chatContainer.style.height = `${videoHeight}px`;
+	// 		chatContainer.style.minHeight = `${videoHeight}px`;
+	// 		chatContainer.style.maxHeight = `${videoHeight}px`;
+	// 	}
+
+	// 	}
+	// }
+
+	// // 监听视频加载事件
+	// document.querySelector('#video').addEventListener('loadedmetadata', () => {
+	// setTimeout(adjustChatContainerHeight, 100); // 迟一点执行以确保视频尺寸已更新
+	// });
+
+	// // 创建 ResizeObserver 来监听视频尺寸变化
+	// const resizeObserver = new ResizeObserver(entries => {
+	// adjustChatContainerHeight();
+	// });
+
+	// // 开始观察视频元素
+	// resizeObserver.observe(document.querySelector('#video'));
+
+	// // 监听窗口大小变化
+	// window.addEventListener('resize', adjustChatContainerHeight);
+
+	// // 定期检查视频高度（以防其他情况导致的变化）
+	// setInterval(adjustChatContainerHeight, 100);
+
+</script>
+
+<!-- 为了分别获取元素这里设置3个js来单独控制 -->
+<script>
+
+	effect = 1
+	var swiper1 = new Swiper('#swiper1', {
+		loop: true,
+		speed: 1500,
+		slidesPerView: 5,
+		spaceBetween: 30,
+		centeredSlides: true,
+		watchSlidesProgress: true,
+		on: {
+			setTranslate: function () {
+				slides = this.slides
+				for (i = 0; i < slides.length; i++) {
+					slide = slides.eq(i)
+					progress = slides[i].progress
+					//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
+					slide.css({ 'opacity': '', 'background': '' }); slide.transform('');//清除样式
+
+					if (effect == 1) {
+						slide.transform('scale(' + (1 - Math.abs(progress) / 8) + ')');
+					} else if (effect == 2) {
+						slide.css('opacity', (1 - Math.abs(progress) / 6));
+						slide.transform('translate3d(0,' + Math.abs(progress) * 20 + 'px, 0)');
+					}
+					else if (effect == 3) {
+						slide.transform('rotate(' + progress * 30 + 'deg)');
+					} else if (effect == 4) {
+						slide.css('background', 'rgba(' + (255 - Math.abs(progress) * 20) + ',' + (127 + progress * 32) + ',' + Math.abs(progress) * 64 + ')');
+					}
+
+				}
+			},
+			setTransition: function (transition) {
+				for (var i = 0; i < this.slides.length; i++) {
+					var slide = this.slides.eq(i)
+					slide.transition(transition);
+				}
+			},
+			slideChangeTransitionEnd: function () {
+				// 获取当前激活的slide的索引
+				var activeIndex = this.activeIndex;
+				for (var i = 0; i < this.slides.length; i++) {
+					this.slides[i].classList.remove('swiper-slide-active');
+				}
+				// 给当前选中的滑块添加边框样式
+				this.slides[this.activeIndex].classList.add('swiper-slide-active');
+
+				// 获取当前激活的slide元素
+				var activeSlide = this.slides[activeIndex];
+
+				// 获取当前激活的slide中的图片元素
+				var activeImage = activeSlide.querySelector('img');
+
+				// 打印图片的src属性
+				console.log("执行切换" + activeImage.src);
+				changeBg(activeImage.src); // 假设这是你定义的函数，用于改变背景图片
+			}
+		},
+		navigation: {
+			nextEl: '#next1',
+			prevEl: '#prev1',
+		},
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+		},
+		
+	});
+
+	effect = 1
+	swiper4 = new Swiper('#swiper4', {
+		loop: true,
+		speed: 1500,
+		slidesPerView: 5,
+		spaceBetween: 30,
+		centeredSlides: true,
+		watchSlidesProgress: true,
+		on: {
+			setTranslate: function () {
+				slides = this.slides
+				for (i = 0; i < slides.length; i++) {
+					slide = slides.eq(i)
+					progress = slides[i].progress
+					//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
+					slide.css({ 'opacity': '', 'background': '' }); slide.transform('');//清除样式
+
+					if (effect == 1) {
+						slide.transform('scale(' + (1 - Math.abs(progress) / 8) + ')');
+					} else if (effect == 2) {
+						slide.css('opacity', (1 - Math.abs(progress) / 6));
+						slide.transform('translate3d(0,' + Math.abs(progress) * 20 + 'px, 0)');
+					}
+					else if (effect == 3) {
+						slide.transform('rotate(' + progress * 30 + 'deg)');
+					} else if (effect == 4) {
+						slide.css('background', 'rgba(' + (255 - Math.abs(progress) * 20) + ',' + (127 + progress * 32) + ',' + Math.abs(progress) * 64 + ')');
+					}
+
+				}
+			},
+			setTransition: function (transition) {
+				for (var i = 0; i < this.slides.length; i++) {
+					var slide = this.slides.eq(i)
+					slide.transition(transition);
+				}
+			},
+			slideChangeTransitionEnd: function () {
+
+				for (var i = 0; i < this.slides.length; i++) {
+					this.slides[i].classList.remove('swiper-slide-active');
+				}
+				// 给当前选中的滑块添加边框样式
+				this.slides[this.activeIndex].classList.add('swiper-slide-active');
+
+				console.log("切换衣服", this.activeIndex)
+				//    let index = this.activeIndex > datatVoices.length ? (this.activeIndex - datatVoices.length ) : this.activeIndex
+
+				// if(datatVoices.length > 0 && datatVoices[index]){
+				//     avatarVoice = datatVoices[index].value;  
+				// }
+			}
+		},
+		navigation: {
+			nextEl: '#next4',
+			prevEl: '#prev4',
+		},
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+		},
+	});
+
+	var swiper2;
+	var swiper3;
+
+	function initSwiper() {
+		// 声音选择部分
+		effect = 1
+		swiper2 = new Swiper('#swiper2', {
+			loop: true,
+			speed: 1500,
+			slidesPerView: 5,
+			spaceBetween: 30,
+			centeredSlides: true,
+			watchSlidesProgress: true,
+			on: {
+				setTranslate: function () {
+					slides = this.slides
+					for (i = 0; i < slides.length; i++) {
+						slide = slides.eq(i)
+						progress = slides[i].progress
+						//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
+						slide.css({ 'opacity': '', 'background': '' }); slide.transform('');//清除样式
+
+						if (effect == 1) {
+							slide.transform('scale(' + (1 - Math.abs(progress) / 8) + ')');
+						} else if (effect == 2) {
+							slide.css('opacity', (1 - Math.abs(progress) / 6));
+							slide.transform('translate3d(0,' + Math.abs(progress) * 20 + 'px, 0)');
+						}
+						else if (effect == 3) {
+							slide.transform('rotate(' + progress * 30 + 'deg)');
+						} else if (effect == 4) {
+							slide.css('background', 'rgba(' + (255 - Math.abs(progress) * 20) + ',' + (127 + progress * 32) + ',' + Math.abs(progress) * 64 + ')');
+						}
+
+					}
+				},
+				setTransition: function (transition) {
+					for (var i = 0; i < this.slides.length; i++) {
+						var slide = this.slides.eq(i)
+						slide.transition(transition);
+					}
+				},
+				slideChangeTransitionEnd: function () {
+					console.log("切换音色", this.realIndex);
+
+					for (var i = 0; i < this.slides.length; i++) {
+						this.slides[i].classList.remove('swiper-slide-active');
+					}
+					// 给当前选中的滑块添加边框样式
+					this.slides[this.realIndex].classList.add('swiper-slide-active');
+					
+					let len = datatVoices.length;
+					let index = this.realIndex % len;
+					
+					if (isConnected && datatVoices.length > 0 && datatVoices[index]) {
+						// 计算下一个声音的索引
+						changeAvatarVoice(datatVoices[index].value); //切换声音
+					}
+				}
+			},
+			navigation: {
+				nextEl: '#next2',
+				prevEl: '#prev2',
+			},
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true,
+			},
+		});
+
+		/*人物选择部份*/
+		swiper3 = new Swiper('#swiper3', {
+			loop: true,
+			speed: 1500,
+			slidesPerView: 5,
+			spaceBetween: 30,
+			centeredSlides: true,
+			watchSlidesProgress: true,
+			on: {
+				setTranslate: function () {
+					slides = this.slides
+					for (i = 0; i < slides.length; i++) {
+						slide = slides.eq(i)
+						progress = slides[i].progress
+						//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
+						slide.css({ 'opacity': '', 'background': '' }); slide.transform('');//清除样式
+
+						if (effect == 1) {
+							slide.transform('scale(' + (1 - Math.abs(progress) / 8) + ')');
+						} else if (effect == 2) {
+							slide.css('opacity', (1 - Math.abs(progress) / 6));
+							slide.transform('translate3d(0,' + Math.abs(progress) * 20 + 'px, 0)');
+						}
+						else if (effect == 3) {
+							slide.transform('rotate(' + progress * 30 + 'deg)');
+						} else if (effect == 4) {
+							slide.css('background', 'rgba(' + (255 - Math.abs(progress) * 20) + ',' + (127 + progress * 32) + ',' + Math.abs(progress) * 64 + ')');
+						}
+
+					}
+				},
+				setTransition: function (transition) {
+					for (var i = 0; i < this.slides.length; i++) {
+						var slide = this.slides.eq(i)
+						slide.transition(transition);
+					}
+				},
+				slideChangeTransitionEnd: function () {
+					console.log("切换人物", this.activeIndex)
+
+					for (var i = 0; i < this.slides.length; i++) {
+						this.slides[i].classList.remove('swiper-slide-active');
+					}
+					// 给当前选中的滑块添加边框样式
+					this.slides[this.activeIndex].classList.add('swiper-slide-active');
+
+					
+					let len = 4; // 只展示前四个角色
+
+					let index = this.activeIndex % len; // 计算当前索引在0到3之间的值
+
+					// let len = dataAvatars.length - 1
+
+					// let index = this.activeIndex % len;//this.activeIndex > len ? (this.activeIndex - len ) : this.activeIndex
+
+					if (dataAvatars.length > 0 && dataAvatars[index] && isConnected) {
+						changeAvatar(dataAvatars[index].value);//切换角色
+					}
+				},
+			},
+			navigation: {
+				nextEl: '#next3',
+				prevEl: '#prev3',
+			},
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true,
+			},
+		});
+	}
+
+
+
+
+
+
+
+</script>
+
+<!-- -------------------------------------隐藏框的展示------------------------------------- -->
+<script>
+	//DDsheng修改的	
+	// 外部监听器，用于在视频播放结束后更换视频源
+	var videoElement = document.getElementById('video');
+
+	videoElement.addEventListener('ended', function () {
+		// 视频播放结束后更换视频源为base.mp4并设置循环播放
+		videoElement.src = './video/base.mp4';
+		videoElement.loop = true;
+		videoElement.play(); // 播放base.mp4    
+	});
+
+
+
+	const clothesItem = document.getElementById("clothes_item");
+	/*---------------为单个板块添加监听器---------------------*/
+	document.addEventListener('DOMContentLoaded', function () {
+		clothesItem.addEventListener('click', function () {
+			changeAvatar('')
+			// 隐藏所有swiper
+			/* $('.img_container').removeClass('selected');
+			 
+			 [swiperBox1, swiperBox2, swiperBox3].forEach(function(swiper) {
+				 swiper.classList.remove('show');
+			 });
+			 prevButton.classList.remove('show');
+			 nextButton.classList.remove('show');
+		 	
+			 if (swiperBox4.classList.contains('show')) {
+					 // 如果swiper4是显示的，隐藏它
+					 swiperBox4.classList.remove('show');
+					 prevButton4.classList.remove('show');
+					 nextButton4.classList.remove('show');
+				 } else {
+					 swiperBox4.classList.add('show');
+					 prevButton4.classList.add('show');
+					 nextButton4.classList.add('show');
+				 }*/
+		});
+
+		// 获取 #video-mask 元素
+		var videoMask = document.getElementById('video-mask');
+		// 获取 #tts-selection 元素
+		var ttsSelection = document.getElementById('tts-selection');
+
+		// 为 #tts-selection 添加点击事件监听器
+		ttsSelection.addEventListener('click', function () {
+			// 检查 #video-mask 的高度是否已经设置为100%
+			if (videoMask.style.height === '100%') {
+				// 如果已经设置为100%，则将其高度设置回0px
+				videoMask.style.height = '0px';
+			} else {
+				// 如果没有设置为100%，则将其高度设置为100%
+				videoMask.style.height = '100%';
+			}
+		});
+
+		document.querySelector('.btn_wrapper').addEventListener('click', function () {
+
+			// 获取TTS-item元素
+			var ttsItem = document.querySelector('.TTS-item');
+
+			// 切换元素的expanded类
+			if (ttsItem.classList.contains('expanded')) {
+				ttsItem.classList.remove('expanded');
+			} else {
+				ttsItem.classList.add('expanded');
+			}
+		});
+
+	});
+
+
+
+
+	/*小按钮旋转*/
+
+
+	/*-------------------------------------隐藏框的展示-------------------------------------*/
+	$('.more').click(function () {
+
+		// 获取轮播区域元素
+		var buttons1 = document.querySelectorAll('.btn_1');
+		var swiperBox1 = document.getElementById('swiper1');
+
+		var buttons2 = document.querySelectorAll('.btn_2');
+		var swiperBox2 = document.getElementById('swiper2');
+
+		var buttons3 = document.querySelectorAll('.btn_3');
+		var swiperBox3 = document.getElementById('swiper3');
+
+		function hideSwiperAndButtons(swiperBox, buttons) {
+			// 如果轮播区域显示，则隐藏轮播区域和所有按钮
+			if (swiperBox.classList.contains('show')) {
+				swiperBox.classList.remove('show');
+				buttons.forEach(function (button) {
+					button.classList.remove('show');
+				});
+			}
+		}
+
+		// 隐藏swiper1和对应的按钮
+		hideSwiperAndButtons(swiperBox1, buttons1);
+		// 隐藏swiper2和对应的按钮
+		hideSwiperAndButtons(swiperBox2, buttons2);
+		// 隐藏swiper3和对应的按钮
+		hideSwiperAndButtons(swiperBox3, buttons3);
+
+
+
+		var optionscontainer = document.getElementById('options-container');
+		if (optionscontainer.classList.contains('open')) {
+			optionscontainer.classList.remove('open');
+		} else {
+			optionscontainer.classList.add('open');
+		}
+
+		var chatContainer = document.querySelector('.chat-container');
+
+		// 切换当前的最大高度
+		if (chatContainer.classList.contains('active')) {
+			chatContainer.classList.remove('active');
+		} else {
+			chatContainer.classList.add('active');
+		}
+
+		//  // 检查more_img的src是否已经更换为line.png
+		// if ($('#more_img').attr('src') === './icon/line.png') {
+		//     // 如果是line.png，则切换回more.png
+		//     $('#more_img').attr('src', './icon/more.png');
+		// } else {
+		//     // 否则，切换到line.png
+		//     $('#more_img').attr('src', './icon/line.png');
+		// }
+
+
+	});
+
+	function setupHoverEvents(selector) {
+		// 为指定选择器的元素绑定 hover 事件
+		$(selector).hover(
+			function () {
+				// 改变鼠标样式
+				$(this).css('cursor', 'pointer');
+			},
+			function () {
+				// 鼠标离开时恢复鼠标样式
+				$(this).css('cursor', 'default');
+			}
+		);
+	}
+
+	setupHoverEvents('.img_container');
+	setupHoverEvents('.more');
+	setupHoverEvents('.Tcancel');
+	setupHoverEvents('.voice_img');
+	setupHoverEvents('#record_wrapper');
+	setupHoverEvents('#stop_wrapper');
+	setupHoverEvents('#custom-player');
+	setupHoverEvents('#zoomIcon');
+
+
+
+	
+
+    // 封装检查和切换视频遮罩高度的函数
+    function TVideoMask() {
+		// 获取 #video-mask 元素
+		var videoMask = document.getElementById('video-mask');
+    	// 获取 #tts-selection 元素
+    	var ttsSelection = document.getElementById('tts-selection');
+        if (videoMask.style.height === '100%') {
+            videoMask.style.height = '0px';
+        }
+    }
+
+
+
+	/*功能元素选中*/
+	$(document).ready(function () {
+
+		// 功能元素选中
+		$('.option-item').click(function () {
+			/*整体获取和删除*/
+			var imgContainer = $(this).find('.img_container');
+
+			var swiperBoxes = document.querySelectorAll('.swiper-container');
+			// 选择所有的 .swiper-button-prev 元素
+			var prevButtons = document.querySelectorAll('.swiper-button-prev');
+			// 选择所有的 .swiper-button-next 元素
+			var nextButtons = document.querySelectorAll('.swiper-button-next');
+			// 遍历所有的 .swiper-container 元素，并移除 'show' 类
+			swiperBoxes.forEach(function (box) {
+				$(box).removeClass('show');
+			});
+
+			// 遍历所有的 .swiper-button-prev 元素，并移除 'show' 类
+			prevButtons.forEach(function (button) {
+				$(button).removeClass('show');
+			});
+
+			// 遍历所有的 .swiper-button-next 元素，并移除 'show' 类
+			nextButtons.forEach(function (button) {
+				$(button).removeClass('show');
+			});
+
+
+			if (imgContainer.hasClass('selected')) {
+				imgContainer.removeClass('selected');
+			} else {
+				$('.img_container').removeClass('selected');
+				imgContainer.addClass('selected');
+				let dataname = $(this).data('name');
+				var buttons;
+				var swiperBox;
+				if (dataname == 'avatar') {
+					TVideoMask();
+					buttons = document.querySelectorAll('.btn_3');
+					swiperBox = document.getElementById('swiper3');
+				} else if (dataname == 'tts') {
+
+				} else if (dataname == 'voice') {
+					TVideoMask();
+					buttons = document.querySelectorAll('.btn_2');
+					swiperBox = document.getElementById('swiper2');
+
+				} else if (dataname == 'background') {
+					TVideoMask();
+					buttons = document.querySelectorAll('.btn_1');
+					swiperBox = document.getElementById('swiper1');
+				}
+				if (swiperBox) {
+					
+					$(swiperBox).addClass('show')
+					buttons.forEach(function (button) {
+						$(button).addClass('show');
+					});
+				}
+
+			}
+
+		});
+
+	});
+
+
+	/*-----------------------------录音图片切换----------------------*/
+	var voiceFlag = true;
+
+
+
+	function changeImage() {
+		// 获取图片元素
+		var image = document.getElementById('voice-image');
+		console.log("change");
+
+		voiceFlag = !voiceFlag;
+		var newSrc = voiceFlag ? './icon/voice.png' : './icon/left.png'; // 根据 voiceFlag 的值选择图片
+
+		// 添加过渡效果
+		image.classList.add('changing');
+
+		// 移除过渡效果类，这将在 CSS 中触发过渡
+		setTimeout(function () {
+			// 设置图片新源
+			image.src = newSrc;
+			image.classList.remove('changing');
+		}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+
+		var message = document.getElementById('message');
+		var recordGroup1 = document.getElementById('recordGroup1');
+		var recordGroup2 = document.getElementById('recordGroup2');
+		var voiceImage = document.getElementById('voice-image');
+
+		// 切换显示状态
+		if (message.classList.contains('hidden')) {
+			message.classList.remove('hidden');
+			recordGroup1.classList.add('hidden');
+			recordGroup2.classList.add('hidden');
+		} else {
+			message.classList.add('hidden');
+			recordGroup1.classList.remove('hidden');
+		}
+
+	}
+
+
+
+</script>
+
+<!-- =----------------发送回复功能--------------------= -->
+<script type="text/javascript" charset="utf-8">
+
+
+
+	$(document).ready(function () {
+		// var host = window.location.hostname
+		// var ws = new WebSocket("ws://"+host+":8000/humanecho");
+		// //document.getElementsByTagName("video")[0].setAttribute("src", aa["video"]);
+		// ws.onopen = function() {
+		// console.log('Connected');
+		// };
+		// ws.onmessage = function(e) {
+		// console.log('Received: ' + e.data);
+		// data = e
+		// var vid = JSON.parse(data.data); 
+		// console.log(typeof(vid),vid)
+		// //document.getElementsByTagName("video")[0].setAttribute("src", vid["video"]);
+
+		// };
+		// ws.onclose = function(e) {
+		// console.log('Closed');
+		// };
+
+
+
+		function addMessage(message, isUser) {
+			const messageDiv = $('<div>')
+				.addClass('message')
+				.addClass(isUser ? 'user-message' : 'bot-message');
+
+			// 确定头像路径
+			let avatarPath = './icon/icon.png'; // 默认头像路径
+			if (!isUser) {
+				avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
+			}
+
+			const avatar = $('<img>')
+				.addClass('message-avatar')
+				.attr('src', avatarPath)
+				.attr('alt', isUser ? 'User' : 'Bot');
+
+			const content = $('<div>')
+				.addClass('message-content')
+				.text(message);
+
+			messageDiv.append(avatar).append(content);
+			$('#chat-messages').append(messageDiv);
+			$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+		}
+
+		var submitBtn = $('button[type="submit"]');
+		var messageTextarea = $('#message');
+		var submitImg = './icon/submit.png'; // 绿色按钮的图片路径
+		var baseSubmitImg = './icon/base_submit.png'; // 灰色按钮的图片路径
+
+
+		// 监听textarea输入事件
+		messageTextarea.on('input', function () {
+			var message = $(this).val().trim();
+			if (message === '') {
+				// 如果textarea为空，设置flag为0，显示灰色图片，禁用按钮
+				canSubmit = 0;
+				submitBtn.prop('disabled', true);
+				submitBtn.find('img').attr('src', baseSubmitImg);
+			} else {
+				// 如果textarea不为空，设置flag为1，显示绿色图片，启用按钮
+				canSubmit = 1;
+				submitBtn.prop('disabled', false);
+				submitBtn.find('img').attr('src', submitImg);
+			}
+		});
+
+		// 监听textarea回车键事件
+		messageTextarea.on('keydown', function (e) {
+			if (e.which === 13) { // 检查是否是回车键（键码为13）
+				e.preventDefault(); // 阻止默认行为
+				if (canSubmit === 1) {
+					$('#echo-form').trigger('submit'); // 手动触发表单提交事件
+				}
+			}
+		});
+
+		$('#echo-form').on('submit', function (e) {
+			e.preventDefault();
+			if (canSubmit === 1) {
+
+				// 获取 audio-preview 元素
+				var audioPreview = $('.audio-preview');
+
+				// 检查 audio-preview 是否没有 hidden 类
+				if (!audioPreview.hasClass('hidden')) {
+					// 如果没有 hidden 类，则添加 hidden 类
+					audioPreview.addClass('hidden');
+					messageTextarea.removeClass('hidden');
+					// 获取 voice-image 元素
+					var image = document.getElementById('voice-image');
+
+					// 设置 voiceFlag 为 true，以便将图标更换为 voice.png
+					voiceFlag = true;
+
+					// 设置图片新源为 voice.png
+					var newSrc = './icon/voice.png';
+
+					// 添加过渡效果
+					image.classList.add('changing');
+
+					// 移除过渡效果类，这将在 CSS 中触发过渡
+					setTimeout(function () {
+						// 设置图片新源
+						image.src = newSrc;
+						image.classList.remove('changing');
+					}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+				}
+
+				var message = $('#message').val();
+				// 添加用户消息到聊天框
+				addMessage(message, true);
+
+				console.log('Sending: ' + message);
+				console.log('sessionid: ', sessionid);
+
+
+				/*网络获取机械人回复*/
+				fetch(host + '/getAnswerTxt', {
+					body: JSON.stringify({
+          				"text": message,            
+          				"sessionid": sessionid,
+          				"avatarName": avatarName,
+          				"ttsSelection": ttsSelection,
+          				"avatarVoice":avatarVoice,
+          				"chunkSize": document.getElementById('chunk-size-input').value
+    				}),
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					method: 'POST'
+				})
+					.then(response => response.json())
+					.then(data => {
+						// 添加机器人的回复消息
+						const llmResponse = data.res || "No valid response was returned！";
+						addMessage(llmResponse, false);
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						// 可选：显示错误消息
+						addMessage("Sorry, an error occurred. Please try again later.", false);
+					});
+
+				// 清空入框并将焦点重新放在输入框上
+				$('#message').val('');
+				canSubmit = 0;
+				submitBtn.find('img').attr('src', baseSubmitImg);
+			}
+		});
+
+
+		// $('#btn_download').click(function() {
+		//     // 载视频文件
+		//     console.log('Downloading video...');
+		//     fetch('/record_lasted.mp4', {
+		//         method: 'GET'
+		//     }).then(function(response) {
+		//         if (response.ok) {
+		//             return response.blob();
+		//         } else {
+		//             throw new Error('Failed to download the video.');
+		//         }
+		//     }).then(function(blob) {
+		//         // 创建一个 Blob 对象
+		//         const url = window.URL.createObjectURL(blob);
+		//         // 创建一个藏的可下载链接
+		//         const a = document.createElement('a');
+		//         a.style.display = 'none';
+		//         a.href = url;
+		//         a.download = 'record_lasted.mp4';
+		//         document.body.appendChild(a);
+		//         // 触发下载
+		//         a.click();
+		//         // 清理
+		//         window.URL.revokeObjectURL(url);
+		//         document.body.removeChild(a);
+		//         console.log('Video downloaded successfully.');
+		//     }).catch(function(error) {
+		//         console.error('Error:', error);
+		//     });
+		// });
+
+	});
+</script>
+
+<!-- --------------------据接口渲染轮播图------------------- -->
+<script>
+	// 在现有的 JavaScript 代码中添加
+
+	function updateSwiper(swiper) {
+    if (window.innerWidth < 1000) {
+        // 当屏幕宽度小于1000像素时，设置slidesPerView为3，spaceBetween为20
+        if (swiper.params.slidesPerView !== 3) {
+            swiper.params.slidesPerView = 3;
+            swiper.params.spaceBetween = 25;
+            swiper.update();
+        }
+    } else {
+        // 当屏幕宽度大于或等于1000像素时，恢复slidesPerView为5，spaceBetween为30
+        if (swiper.params.slidesPerView !== 3) {
+            swiper.params.slidesPerView = 5;
+            swiper.params.spaceBetween = 30;
+            swiper.update();
+        }
+    }
+}
+	console.log("选项初始化链接开始")
+
+	/*---------------------------动态调整轮播图数量-----------------------------*/
+	async function loadOptions() {
+
+		start();
+
+		// const response = await fetch(host + '/options.json');
+		// const options = await response.json();
+		// window.appConfig = options;
+
+		// // 填充 Digital Human 选项框 人物切换
+		// const avatarSelect = document.getElementById('avatar-name');
+
+		// let avatars = '';
+		// let vimgs = ['avatar1', 'avatar2', 'avatar3', 'avatar4'], aindex = 0;
+		// let countAvatar = 0; // 用于跟踪已处理的元素数量 
+		// console.log(options.avatars);
+
+		// options.avatars.forEach(avatar => {
+		// 	if (countAvatar < 4) { // 只处理前四个元素
+		// 		const imgSrc = `./icon/${vimgs[aindex]}.png`;
+		// 		console.log('create avatar', imgSrc);
+
+		// 		// console.log("当前创立的是"+dataAvatars[countAvatar]);
+
+		// 		avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="" />  </div>`;
+		// 		aindex++; // 更新索引
+		// 		countAvatar++; // 增加已处理元素的计数
+		// 		if (aindex >= vimgs.length) {
+		// 			aindex = 0; // 如果索引超出数组长度，重置为0
+		// 		}
+		// 	} else {
+		// 		return; // 一旦处理了四个元素，就退出循环
+		// 	}
+		// });
+
+		// dataAvatars = options.avatars;
+		// datatVoices = options.ttsVoices;
+
+		// $('#swiper3 .swiper-wrapper').html(avatars);
+
+		// /*---------------------TTS-item条目创建--------------------------*/
+		// const ttsItemContainer = document.querySelector('.TTS-item');
+
+		// // 清空TTS-item容器中现有的选择项，避免重复添加
+		// ttsItemContainer.innerHTML = '';
+
+		// // 遍历ttsModules数组
+		// options.ttsModules.forEach(tts => {
+		// 	// 创建一个新的selection-item div
+		// 	const selectionItem = document.createElement('div');
+		// 	selectionItem.className = 'selection-item';
+		// 	selectionItem.textContent = tts.label; // 设置显示的文字描述
+		// 	selectionItem.setAttribute('data-value', tts.value); // 存储值，可以通过getAttribute('data-value')访问
+
+		// 	// 为选择项添加点击事件
+		// 	selectionItem.addEventListener('click', function () {
+		// 		// 处理选中项的逻辑
+		// 		console.log('选中的值是：', this.getAttribute('data-value'));
+
+		// 		// changeTtsSelection(data-value);
+		// 	});
+
+		// 	// 将新创建的div添加到TTS-item容器中
+		// 	ttsItemContainer.appendChild(selectionItem);
+		// });
+
+
+
+		// // 填充 TTS Sound 选择框 音色的切换
+		// const voiceSelect = document.getElementById('avatar-voice');
+		// let ttsVoices = "";
+		// let vcolors = ['#dc4b4b', '#4bc05e', '#4b66c0', '#ffda48', '#aa6de8'], vindex = 0;
+		// options.ttsVoices.forEach(voice => {
+
+
+		// 	const nameInBrackets = voice.label.match(/\((.*?)\)/) ? voice.label.match(/\((.*?)\)/)[1] : '';
+		// 	console.log('Create sound: ' + voice.value + nameInBrackets);
+
+
+		// 	ttsVoices += `<div class="swiper-slide">
+        //                        <div class="color_img" style="background-color: ${vcolors[vindex]};">
+        //                          <img src="./icon/voiceLine.png" alt="" />
+        //                          <div>${nameInBrackets}</div> <!-- 在这里插入括号里的名字 -->
+        //                        </div>
+        //                      </div>`;
+
+		// 	vindex += 1;
+		// 	if (vindex > 4) {
+		// 		vindex = 0;
+		// 	}
+		// });
+
+		// $('#swiper2 .swiper-wrapper').html(ttsVoices);
+
+		initSwiper();
+
+		// // 设置默认选中项
+		// if (options.avatars.length > 0) {
+		// 	avatarName = options.avatars[0].value;
+		// }
+		// if (options.ttsModules.length > 0) {
+		// 	ttsSelection = options.ttsModules[0].value;
+		// }
+		// if (options.ttsVoices.length > 0) {
+		// 	avatarVoice = options.ttsVoices[0].value;
+		// }
+
+		/*选则填充好后再触发一次切换视频流*/
+		console.log("选项初始化链接结束")
+		
+		function addThumbnailClickEvents(swiperInstance, selector) {
+		console.log("click")
+		var thumbnails = document.querySelectorAll(selector + ' .swiper-slide');
+		thumbnails.forEach(function (slide, index) {
+				// 添加鼠标悬停事件
+				slide.addEventListener('mouseenter', function (e) {
+					e.stopPropagation();
+					// 鼠标悬停时改变鼠标样式
+					e.target.style.cursor = 'pointer';
+				});
+
+				// 添加鼠标离开事件
+				slide.addEventListener('mouseleave', function (e) {
+					e.stopPropagation();
+					// 鼠标离开时恢复鼠标样式
+					e.target.style.cursor = 'default';
+				});
+
+				slide.addEventListener('click', function (e) {
+					// 阻止事件冒泡
+					e.stopPropagation();
+					// 跳转到对应的幻灯片
+					swiperInstance.slideTo(index);
+				});
+			});
+		}
+
+		// 调用函数为每个 Swiper 实例添加点击事件
+		addThumbnailClickEvents(swiper1, '#swiper1');
+		addThumbnailClickEvents(swiper2, '#swiper2');
+		addThumbnailClickEvents(swiper3, '#swiper3');
+		addThumbnailClickEvents(swiper4, '#swiper4');
+
+		
+		// 在窗口大小调整时调用 updateSwiper 函数
+		window.addEventListener('resize', function() {
+		    updateSwiper(swiper1);
+		    updateSwiper(swiper2);
+		    updateSwiper(swiper3);
+		});
+
+		// 页面加载时也调用一次，以确保初始状态正确
+		updateSwiper(swiper1);
+		updateSwiper(swiper2);
+		updateSwiper(swiper3);
+		// start();
+	}
+
+	updateSwiper(swiper1);
+
+
+
+
+	var button = document.querySelector('.Time-out button');
+	var cancel = document.querySelector('.Tcancel');
+	cancel.addEventListener('click', function () {
+		document.querySelector(".Time-out").classList.remove('pop');
+	})
+	// 为按钮添加点击事件监听器
+	button.addEventListener('click', function () {
+		event.preventDefault(); // 阻止默认行为
+		// 刷新网页
+		location.reload();
+	});
+
+	// Initialize options
+	loadOptions();
+
+	
+
+	
+
+
+	// 同步滑块和输入框的值
+	const chunkSizeSlider = document.getElementById('chunk-size');
+	const chunkSizeInput = document.getElementById('chunk-size-input');
+
+	chunkSizeSlider.addEventListener('input', function (e) {
+		chunkSizeInput.value = e.target.value;
+	});
+
+	chunkSizeInput.addEventListener('input', function (e) {
+		let value = parseInt(e.target.value);
+		if (value < 0) value = 0;
+		if (value > 30) value = 30;
+		if (!isNaN(value)) {
+			chunkSizeSlider.value = value;
+		}
+	});
+</script>
+
+<!-- <script type="text/javascript">
+    window.addEventListener('load', () => {
+      // 确保页面加载完毕后执行
+      const startButton = document.getElementById('start');
+      if (startButton) {
+        startButton.click(); // 触发点击事件
+      }
+    });
+</script> -->
+
+<!-- ----------------------------切换黑暗模式------------------------------ -->
+<script>
+	const changeItem = document.getElementById('change_item');
+	const themeIcon = changeItem.querySelector('i');
+	var flag = false;
+
+	// 检查本地存储中的主题设置
+	const savedTheme = localStorage.getItem('theme');
+	if (savedTheme === 'dark') {
+		flag = true;
+		document.body.classList.add('dark-mode');
+		themeIcon.classList.replace('fa-moon', 'fa-sun');
+	}
+
+	changeItem.addEventListener('click', () => {
+		document.body.classList.toggle('dark-mode');
+		flag = !flag;
+		changeImagedark()
+		// if (document.body.classList.contains('dark-mode')) {
+		// 	themeIcon.classList.replace('fa-moon', 'fa-sun');
+		// 	localStorage.setItem('theme', 'dark');
+		// } else {
+		// 	themeIcon.classList.replace('fa-sun', 'fa-moon');
+		// 	localStorage.setItem('theme', 'light');
+		// }
+	});
+
+
+	function changeImagedark() {
+		// 获取所有类名为 'voice_img' 的 img 元素
+		var images = document.querySelectorAll('.voice_img');
+
+		// 遍历这些 img 元素
+		images.forEach(image => {
+			// 检查每个 img 的 src 是否以 './icon/voice.png' 结尾
+			if (image.src.endsWith('/voice.png') && flag) {
+				// 替换 src 为 './icon/voice_dark.png'
+				image.src = image.src.replace('/voice.png', '/voice_dark.png');
+			}
+			if (image.src.endsWith('/voice_dark.png') && !flag) {
+				image.src = image.src.replace('/voice_dark.png', '/voice.png');
+			}
+		});
+
+		images = document.querySelectorAll('#FeatureArea .Featureitem img');
+		// 遍历这些 img 元素
+		console.log('yes');
+		images.forEach(image => {
+
+			if (flag) {
+				// 替换 src 为暗色模式的图片
+				image.src = image.src.replace('.png', '_dark.png'); // 假设暗色图标的命名规则是在原图标名称后加 '_dark'
+			} else {
+				// 替换 src 为浅色模式的图片
+				image.src = image.src.replace('_dark.png', '.png');
+			}
+		});
+	}
+
+</script>
+
+<!-- ---------------录音功能区------------------------- -->
+<script>
+	let mediaRecorder;
+	let audioChunks = [];
+	let isRecording = false;  // 添加录音状态标志
+	let audioStream; // 用于存储麦克风流的全局变量
+
+	// 封装计时器功能的函数
+	function createTimer(recordTimeElement) {
+		let timer = null;
+		let timeValue = 0;
+
+		// 更新时间的函数
+		function updateTime() {
+			timeValue += 0.01;
+			recordTimeElement.textContent = timeValue.toFixed(2); // 保留两位小数
+		}
+
+		// 计时器开始的函数
+		function startTimer() {
+			if (!timer) {
+				timer = setInterval(updateTime, 1000); // 每 100 毫秒更新时间
+			}
+		}
+
+		// 计时器停止并重置的函数
+		function stopTimer() {
+			if (timer) {
+				clearInterval(timer);
+				timer = null;
+				timeValue = 0;
+				recordTimeElement.textContent = '0.00';
+			}
+		}
+
+		// 返回计时器的控制函数
+		return {
+			start: startTimer,
+			stop: stopTimer
+		};
+	}
+
+	// 获取计时器显示的元素
+	const recordTime = document.getElementById('recordTime');
+	const recordTime2 = document.getElementById('recordTime2');
+	var messageTextarea = $('#message');
+	var submitBtn = $('button[type="submit"]');
+	var submitImg = './icon/submit.png'; // 绿色按钮的图片路径
+	var baseSubmitImg = './icon/base_submit.png'; // 灰色按钮的图片路径
+
+	// 创建两个计时器实例
+	const timer1 = createTimer(recordTime);
+	const timer2 = createTimer(recordTime2);
+
+	function generateRandomFileName(extension) {
+		// 获取当前时间戳
+		const timestamp = Date.now();
+		// 生成一个随机数
+		const randomPart = Math.random().toString(36).substring(2, 15);
+		// 返回文件名，格式为时间戳_随机数.扩展名
+		return `${timestamp}_${randomPart}${extension}`;
+	}
+
+	function addMessage(message, isUser) {
+			const messageDiv = $('<div>')
+				.addClass('message')
+				.addClass(isUser ? 'user-message' : 'bot-message');
+
+			// 确定头像路径
+			let avatarPath = './icon/icon.png'; // 默认头像路径
+			if (!isUser) {
+				avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
+			}
+
+			const avatar = $('<img>')
+				.addClass('message-avatar')
+				.attr('src', avatarPath)
+				.attr('alt', isUser ? 'User' : 'Bot');
+
+			const content = $('<div>')
+				.addClass('message-content')
+				.text(message);
+
+			messageDiv.append(avatar).append(content);
+			$('#chat-messages').append(messageDiv);
+			$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+	}
+
+	function simulateSubmit(message) {
+	    if (canSubmit === 1) {
+	        // 获取 audio-preview 元素
+	        var audioPreview = $('.audio-preview');
+
+	        // 检查 audio-preview 是否没有 hidden 类
+	        if (!audioPreview.hasClass('hidden')) {
+	            // 如果没有 hidden 类，则添加 hidden 类
+	            audioPreview.addClass('hidden');
+	            messageTextarea.removeClass('hidden');
+	            // 获取 voice-image 元素
+	            var image = document.getElementById('voice-image');
+
+	            // 设置 voiceFlag 为 true，以便将图标更换为 voice.png
+	            voiceFlag = true;
+
+	            // 设置图片新源为 voice.png
+	            var newSrc = './icon/voice.png';
+
+	            // 添加过渡效果
+	            image.classList.add('changing');
+
+	            // 移除过渡效果类，这将在 CSS 中触发过渡
+	            setTimeout(function () {
+	                // 设置图片新源
+	                image.src = newSrc;
+	                image.classList.remove('changing');
+	            }, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+	        }
+
+	        // 添加用户消息到聊天框
+			console.log("添加");
+	        addMessage(message, true);
+
+	        console.log('Sending: ' + message);
+	        console.log('sessionid: ', sessionid);
+
+	        /*网络获取机械人回复*/
+	        fetch(host + '/getAnswerTxt', {
+	            body: JSON.stringify({
+          			"text": message,            
+          			"sessionid": sessionid,
+          			"avatarName": avatarName,
+          			"ttsSelection": ttsSelection,
+          			"avatarVoice":avatarVoice,
+          			"chunkSize": document.getElementById('chunk-size-input').value
+    			}),
+	            headers: {
+	                'Content-Type': 'application/json'
+	            },
+	            method: 'POST'
+	        })
+	        .then(response => response.json())
+	        .then(data => {
+	            // 添加机器人的回复消息
+	            const llmResponse = data.res || "No valid response was returned！";
+	            addMessage(llmResponse, false);
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	            // 可选：显示错误消息
+	            addMessage("Sorry, an error occurred. Please try again later.", false);
+	        });
+
+	        // 清空入框并将焦点重新放在输入框上
+	        $('#message').val('');
+	        canSubmit = 0;
+	        submitBtn.find('img').attr('src', baseSubmitImg);
+	    }
+	}
+
+	$('#record_wrapper').click(function () {
+    	if (isRecording) return; // 如果已经在录制中，直接返回
+		
+	    // 检查是否已经获取了媒体流
+	    if (!audioStream) {
+	        // 请求麦克风权限并获取媒体流
+	        navigator.mediaDevices.getUserMedia({ audio: true })
+	            .then(stream => {
+	                audioStream = stream; // 存储媒体流
+	                startRecording(); // 开始录音
+	            })
+	            .catch(error => {
+	                console.error('Error accessing microphone:', error);
+	                alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+	                isRecording = false; // 重置录制状态
+	            });
+	    } else {
+	        startRecording(); // 直接开始录音
+	    }
+
+	});
+	
+	function startRecording() {
+	    if (audioStream) {
+	        mediaRecorder = new MediaRecorder(audioStream);
+	        mediaRecorder.ondataavailable = (event) => {
+	            audioChunks.push(event.data); // 将音频数据添加到数组中
+	            console.log('Audio chunk received:', event.data);
+	            console.log('Audio chunks length:', audioChunks.length);
+	        };
+		
+	        mediaRecorder.start(); // 开始录音
+	        audioChunks = []; // 初始化音频数据数组
+	        isRecording = true; // 设置录制状态为true
+		
+	        // 更新按钮状态和文本
+	        $('#record_wrapper').prop('disabled', true); // 禁用开始录制按钮
+	        $('#stop_wrapper').prop('disabled', false); // 启用停止录制按钮
+		
+	        // 隐藏和显示相关元素
+	        var recordGroup1 = document.getElementById('recordGroup1');
+	        var recordGroup2 = document.getElementById('recordGroup2');
+	        recordGroup1.classList.add('hidden');
+	        recordGroup2.classList.remove('hidden');
+	        timer1.start();
+	    } else {
+	        console.warn('未允许麦克风权限');
+	    }
+	}
+	
+	$('#stop_wrapper').click(function () {
+		console.log("yes im into")
+		if (!isRecording) return; // 如果不在录制中，直接返回
+		if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+			mediaRecorder.stop(); // 停止录音
+			// mediaRecorder.stream.getTracks().forEach(track => track.stop()); // 停止音频流中的所有轨道
+
+			// 更新按钮状态
+			$(this).prop('disabled', true); // 禁用停止录制按钮
+			$('#record_wrapper').prop('disabled', false) // 启用开始录制按钮
+
+			// 保存录音文件
+			mediaRecorder.onstop = () => {
+				console.log("录音结束....");
+				var recordGroup2 = document.getElementById('recordGroup2');
+				recordGroup2.classList.add('hidden');
+				timer1.stop();
+				$('.audio-preview').removeClass('hidden');
+
+				const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // 将音频数据转换为 Blob 对象
+				const fileName = generateRandomFileName('.wav'); // 生成随机文件
+				const formData = new FormData(); // 创建 FormData 对象
+
+				// 设置音频播放器的源为刚刚的音频文件' 
+				const audioUrl = URL.createObjectURL(audioBlob);
+
+				// 设置音频播放器的源为刚刚的音频文件
+				$('#audio-player').attr('src', audioUrl);
+
+				// 设置文件名显示为上传的文件名
+				$('#file-name').text(fileName);
+
+				formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 
+
+				// 获取提交按钮元素
+				const loading = document.querySelector('.btn.btn-default');
+
+				// 在发送请求前替换为加载动画
+				const loaderDiv = document.createElement('div');
+				loaderDiv.className = 'loader2';
+				loading.innerHTML = ''; // 清空按钮内的内容
+				loading.appendChild(loaderDiv); // 添加加载动画
+
+				fetch('http://35.89.226.131:7864' + '/uploadAudio', {
+					method: 'POST',
+					body: formData
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log('返回的数据是:', data); // 打印保存结果
+						// 请求完成后换回原来的图片
+
+						loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
+
+						// // 将返回的 res 文字设置到 #message 文本框中
+						messageTextarea.val(data.res);
+						canSubmit = 1; // 设置可发送标志为1
+						// 自动调用 simulateSubmit 函数发送消息
+						simulateSubmit(data.res);
+					
+						// submitBtn.prop('disabled', false); // 启用提交按钮
+						// submitBtn.find('img').attr('src', submitImg); // 更换按钮的箭头为绿色的
+
+
+						isRecording = false; // 重置录制状态
+
+					})
+					.catch(error => {
+						loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
+						var audioPreview = document.querySelector('.audio-preview');
+						var message = document.getElementById('message');
+						audioPreview.classList.add('hidden');
+						message.classList.remove('hidden');
+						// 获取 voice-image 元素
+						var image = document.getElementById('voice-image');
+
+						// 设置 voiceFlag 为 true，以便将图标更换为 voice.png
+						voiceFlag = true;
+
+						// 设置图片新源为 voice.png
+						var newSrc = './icon/voice.png';
+
+						// 添加过渡效果
+						image.classList.add('changing');
+
+						// 移除过渡效果类，这将在 CSS 中触发过渡
+						setTimeout(function () {
+							// 设置图片新源
+							image.src = newSrc;
+							image.classList.remove('changing');
+						}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+
+
+						console.error('Error saving audio:', error); // 打印保存错误信息
+						alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+						isRecording = false; // 确保在错误情况下也重置状态
+					});
+
+			};
+		}
+	});
+
+
+	var audioPlayer = document.getElementById('audio-player');
+
+	document.getElementById('custom-player').addEventListener('click', function () {
+
+		if (audioPlayer.paused) {
+			audioPlayer.play();
+			timer2.start();
+		}
+	});
+
+	// 添加 ended 事件监听器
+	audioPlayer.addEventListener('ended', function () {
+		timer2.stop(); // 音频播放结束时停止计时器
+		audioPlayer.pause(); // 确保音频暂停
+	});
+
+	// 处理音频文件上传	用户自己上传的文件
+	// $('#audio-file-input').change(function(e) {
+	//     const file = e.target.files[0];
+	//     if (file) {
+	//         const extension = file.name.substring(file.name.lastIndexOf('.'));
+	//         const newFileName = generateRandomFileName(extension);
+
+	//         const formData = new FormData();
+	//         formData.append('audio', file, newFileName);
+
+	//         fetch('/save-audio', {
+	//             method: 'POST',
+	//             body: formData
+	//         })
+	//         .then(response => response.json())
+	//         .then(data => {
+	//             console.log('File saved:', data);
+	//             // 修改这里的路径
+	//             $('#audio-preview').show();
+	//             $('#audio-player').attr('src', `/tmp/${newFileName}`);
+	//             $('#file-name').text(newFileName);
+	//             $('#delete-audio').show();
+	//         })
+	//         .catch(error => {
+	//             console.error('Error saving file:', error);
+	//             alert('Failed to save audio file');
+	//         });
+	//     }
+	// });
+
+	// 处理删除音频
+	$('#delete-audio').click(function () {
+
+		// 获取 audio-preview 和 message 元素
+		var audioPreview = document.querySelector('.audio-preview');
+		var message = document.getElementById('message');
+
+		// 给 audio-preview 添加 hidden 类
+		audioPreview.classList.add('hidden');
+
+		// 移除 message 的 hidden 类
+		message.classList.remove('hidden');
+		// 清空入框并将焦点重新放在输入框上
+		$('#message').val('').focus(); // 清空输入框内容并设置焦点
+		canSubmit = 0; // 设置可发送标志为0
+		submitBtn.prop('disabled', true); // 禁用提交按钮
+		submitBtn.find('img').attr('src', baseSubmitImg); // 更换按钮的箭头为灰色的
+		// 获取 voice-image 元素
+		var image = document.getElementById('voice-image');
+
+		// 设置 voiceFlag 为 true，以便将图标更换为 voice.png
+		voiceFlag = true;
+
+		// 设置图片新源为 voice.png
+		var newSrc = './icon/voice.png';
+
+		// 添加过渡效果
+		image.classList.add('changing');
+
+		// 移除过渡效果类，这将在 CSS 中触发过渡
+		setTimeout(function () {
+			// 设置图片新源
+			image.src = newSrc;
+			image.classList.remove('changing');
+		}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+	});
+
+</script>
+
+<!-- 
+缩放区域的控制 -->
+<script>
+	 function checkWindowSize() {
+	    const panelZoom = document.querySelector('.panel-zoom');
+		const labels = document.querySelectorAll('.option-item label');
+        if (window.innerWidth < 1000) {
+            labels.forEach(label => {
+                label.style.display = 'none';
+            });
+        } else {
+            labels.forEach(label => {
+                label.style.display = 'block'; // 或者使用 'inline' 或其他布局方式，根据你的具体需求
+            });
+        }
+		
+		
+		
+	    if (window.innerWidth > 1000) {
+	        panelZoom.style.display = 'none';
+	    } else {
+	        panelZoom.style.display = 'flex'; // 或者使用 'flex' 等其他布局方式，根据你的具体需求
+	    }
+
+	}
+    // 初始检查
+    checkWindowSize();
+    // 监听窗口大小变化
+    window.addEventListener('resize', checkWindowSize);
+
+	function toggleFilter(event) {
+            // 获取当前点击的 img_container
+    const container = event.target.closest('.img_container');
+    if (container) {
+        // 获取当前点击的 img
+        const currentImg = container.querySelector('img');
+        
+        // 移除除当前点击的 img 之外的所有 img 的 selected-filter 类
+        document.querySelectorAll('.img_container img').forEach(img => {
+            if (img !== currentImg) {
+                img.classList.remove('selected-filter');
+            }
+        });
+
+        // 切换当前点击的 img 的 selected-filter 类
+        if (currentImg) {
+            currentImg.classList.toggle('selected-filter');
+        }
+    }
+        }
+
+        function updateEventListeners() {
+            
+			const imgContainers = document.querySelectorAll('.img_container');
+            if (window.innerWidth < 1000) {
+                imgContainers.forEach(container => {
+                    container.addEventListener('click', toggleFilter);
+                });
+            } else {
+                imgContainers.forEach(container => {
+                    container.removeEventListener('click', toggleFilter);
+                });
+            }
+
+			
+
+
+
+
+        }
+
+        // 初始检查
+        updateEventListeners();
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', updateEventListeners);
+
+		function toggleVideoMaskHeight() {
+            var videoMask = document.getElementById('video-mask');
+            if (videoMask.style.height === '100%') {
+                videoMask.style.height = '0px';
+            } else {
+                videoMask.style.height = '100%';
+            }
+        }
+
+        function updatezoomListeners() {
+            var ttsSelectionZoom = document.getElementById('tts-selection_zoom');
+
+            if (window.innerWidth < 1000) {
+               
+                // 为 #tts-selection_zoom 添加事件监听器
+                ttsSelectionZoom.addEventListener('click', toggleVideoMaskHeight);
+                // 显示 #tts-selection_zoom
+                ttsSelectionZoom.style.display = 'flex';
+            } else {
+                // 移除 #tts-selection_zoom 的事件监听器
+                ttsSelectionZoom.removeEventListener('click', toggleVideoMaskHeight);
+                // 隐藏 #tts-selection_zoom
+                ttsSelectionZoom.style.display = 'none';
+            }
+			
+
+
+        }
+
+        // 初始检查
+        updatezoomListeners();
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', updatezoomListeners);
+
+		const message2 = document.getElementById('message2');
+        const voiceImage = document.getElementById('voice-image-zoom');
+        const imageContainer = document.getElementById('image-container-zoom');
+
+        function updateImageAndContainer() {
+            if (message2.value.trim() !== '') {
+                voiceImage.src = './icon/submitzoom.png';
+                imageContainer.style.backgroundColor = '#1bb14f';
+            } else {
+                voiceImage.src = './icon/voice.png';
+                imageContainer.style.backgroundColor = '#fff';
+            }
+        }
+
+        function addInputListener() {
+            message2.addEventListener('input', updateImageAndContainer);
+        }
+
+        function removeInputListener() {
+            message2.removeEventListener('input', updateImageAndContainer);
+        }
+
+        function checkWindowSize2() {
+            if (window.innerWidth < 1000) {
+                addInputListener();
+            } else {
+                removeInputListener();
+            }
+        }
+
+        // 初始检查
+        checkWindowSize2();
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', checkWindowSize2);
+
+		const chatMessagesZoom = $('#chat-messages-zoom');
+
+		function addMessageForZoom(message, isUser) {
+			
+			const messageDiv = $('<div>')
+				.addClass('message')
+				.addClass(isUser ? 'user-message' : 'bot-message');
+
+			// 确定头像路径
+			let avatarPath = './icon/icon.png'; // 默认头像路径
+			if (!isUser) {
+				avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
+			}
+
+			const avatar = $('<img>')
+				.addClass('message-avatar')
+				.attr('src', avatarPath)
+				.attr('alt', isUser ? 'User' : 'Bot');
+
+			const content = $('<div>')
+				.addClass('message-content')
+				.text(message);
+
+			messageDiv.append(avatar).append(content);
+			$('#chat-messages-zoom').append(messageDiv);
+
+			// 获取消息区域的高度
+			const chatAreaHeight = $('#chat-messages-zoom')[0].scrollHeight;
+			// 获取刚刚发出的消息的高度
+			const messageHeight = messageDiv[0].scrollHeight;
+			// 计算滚动条需要滚动的距离
+			const scrollPosition = chatAreaHeight - messageHeight;
+			// 将滚动条滚动到刚刚发出的消息的顶部
+			$('#chat-messages-zoom').scrollTop(scrollPosition);
+
+			//  const chatArea = $('#chat-messages-zoom');
+			// // 将新消息插入到聊天区域的最上方
+			// chatArea.prepend(messageDiv);
+			// // 自动滚动到顶部，确保新消息可见
+			// chatArea.scrollTop(0);
+			// $('#chat-messages-zoom').append(messageDiv);
+			// $('#chat-messages-zoom').scrollTop($('#chat-messages-zoom')[0].scrollHeight);
+		}
+
+		// 获取 image-container-zoom 容器
+		var imageContainerZoom = document.getElementById('image-container-zoom');
+		
+		// 为 image-container-zoom 添加点击事件监听器
+		imageContainerZoom.addEventListener('click', function() {
+			// 获取容器内的 img 元素
+			var voiceImage = imageContainerZoom.querySelector('img');
+		
+			// 检查当前图片的 src 属性
+			if (voiceImage.src.includes('submitzoom.png')) {
+    		    // 如果当前是 submitzoom.png，不做任何操作
+    		    return;
+    		} else if (voiceImage.src.includes('voice.png')) {
+    		    // 如果当前是 voice.png，切换到 pan.png
+    		    voiceImage.src = './icon/pan.png';
+    		} else {
+    		    // 如果当前不是 voice.png，切换到 voice.png
+    		    voiceImage.src = './icon/voice.png';
+    		}
+		});
+
+		const imageContainerzoom = $('#image-container-zoom');
+		
+		 // 监听image-container点击事件
+		 imageContainerzoom.on('click', function () {
+            const voiceImage = $(this).find('img');
+   			const currentSrc = voiceImage.attr('src');
+            if (currentSrc === './icon/submitzoom.png') {
+
+				var message = $('#message2').val();
+				// 添加用户消息到聊天框
+				addMessageForZoom(message, true);
+
+				console.log('Sending: ' + message);
+				console.log('sessionid: ', sessionid);
+
+				const voiceImage1 = document.getElementById('voice-image-zoom');
+				const imageContainer1 = document.getElementById('image-container-zoom');
+
+				voiceImage1.src = './icon/voice.png';
+                imageContainer1.style.backgroundColor = '#fff';
+				
+				/*网络获取机械人回复*/
+				fetch(host + '/getAnswerTxt', {
+					body: JSON.stringify({
+          				"text": message,            
+          				"sessionid": sessionid,
+          				"avatarName": avatarName,
+          				"ttsSelection": ttsSelection,
+          				"avatarVoice":avatarVoice,
+          				"chunkSize": document.getElementById('chunk-size-input').value
+    				}),
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					method: 'POST'
+				})
+					.then(response => response.json())
+					.then(data => {
+						// 添加机器人的回复消息
+						const llmResponse = data.res || "No valid response was returned！";
+						addMessageForZoom(llmResponse, false);
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						// 可选：显示错误消息
+						addMessageForZoom("Sorry, an error occurred. Please try again later.", false);
+					});
+
+				
+				$('#message2').val('');
+
+				
+            }
+        });
+
+		function simulateZoomSubmit(message) {
+		    // 添加用户消息到聊天框
+		    addMessageForZoom(message, true);
+				
+		    console.log('Sending: ' + message);
+		    console.log('sessionid: ', sessionid);
+				
+
+		    /*网络获取机械人回复*/
+		    fetch(host + '/getAnswerTxt', {
+				body: JSON.stringify({
+          			"text": message,            
+          			"sessionid": sessionid,
+          			"avatarName": avatarName,
+          			"ttsSelection": ttsSelection,
+          			"avatarVoice":avatarVoice,
+          			"chunkSize": document.getElementById('chunk-size-input').value
+    			}),
+		        headers: {
+		            'Content-Type': 'application/json'
+		        },
+		        method: 'POST'
+		    })
+		    .then(response => response.json())
+		    .then(data => {
+		        // 添加机器人的回复消息
+		        const llmResponse = data.res || "No valid response was returned！";
+		        addMessageForZoom(llmResponse, false);
+		    })
+		    .catch(error => {
+		        console.error('Error:', error);
+		        // 可选：显示错误消息
+		        addMessageForZoom("Sorry, an error occurred. Please try again later.", false);
+		    });
+		
+		    // 清空入框
+		    $('#message2').val('');
+		}
+
+
+
+
+</script>
+
+<script>
+
+	$(document).ready(function() {
+		$('#image-container-zoom').click(function() {
+        // 获取图片的 src 属性
+        var imgSrc = $('#voice-image-zoom').attr('src');
+
+       		 // 检查图片的 src 是否为 voice.png
+      		  if (imgSrc !== './icon/voice.png') {
+          		  // 给 #message2 添加 hidden 类
+          		  $('#message2').addClass('hidden1');
+
+          		  // 从 #speak-button 移除 hidden 类
+          		  $('#speak-button').removeClass('hidden1');
+        	} else {
+          		  // 如果不是 voice.png，则给 #speak-button 添加 hidden 类
+				  $('#message2').removeClass('hidden1');
+          		  $('#speak-button').addClass('hidden1');
+        	}
+   		});
+	});
+
+
+	const speakButton = document.getElementById('speak-button');
+	let progress = 0; // 初始化进度为0
+	let pressTimer = null; // 定义定时器变量
+
+	// 自动开始增加进度的函数
+	function autoProgress() {
+	    pressTimer = setInterval(() => {
+	        if (progress < 100) {
+	            progress += 10;
+	            speakButton.style.background = `linear-gradient(to right, white ${progress}%, #ddd 0%)`;
+	        } else {
+	            clearInterval(pressTimer);
+	        }
+	    }, 100); // 每100毫秒增加5%
+	}
+
+	// 重置进度的函数
+	function resetProgress() {
+	    clearInterval(pressTimer);
+	    progress = 0;
+	    speakButton.style.background = '#ddd';
+	}
+
+	// 使用 MutationObserver 实时检测 speakButton 的类变化
+	const observer = new MutationObserver((mutations) => {
+	    mutations.forEach((mutation) => {
+	        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+	            if (speakButton.classList.contains('hidden1')) {
+	                // 如果有了 hidden 类，重置进度
+	                resetProgress();
+					// 如果有了 hidden1 类，重置进度并重启计时器
+					progress = 0; // 重置进度
+               		if (checkBgColorInterval) {
+                  		  clearInterval(checkBgColorInterval); // 清除当前计时器
+               		}
+                	checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 重新启动计时器
+	            } else {
+	                // 如果没有 hidden 类，自动开始增加进度
+	                autoProgress();
+	            }
+	        }
+	    });
+	});
+
+	// 配置观察器的选项
+	const config = {
+	    attributes: true, // 观察属性变化
+	    attributeFilter: ['class'] // 只观察 class 属性的变化
+	};
+
+	// 开始观察 speakButton 的类变化
+	observer.observe(speakButton, config);
+
+</script>
+
+<script>
+// 定义全局变量
+
+isRecording=false;
+let Record_flag = true; //判断是停止还是录音
+const longPressThreshold = 500; // 长按阈值，单位为毫秒
+// 长按定时器
+let longPressTimer = null;
+// 定义录音按钮的事件处理函数
+// function addRecordEvents() {
+
+// 	// 页面加载时请求麦克风权限并存储流
+// 	navigator.mediaDevices.getUserMedia({ audio: true })
+//     .then(stream => {
+//         console.log("麦克风权限已获取");
+//         audioStream = stream; // 存储麦克风流
+//         // 可以在这里做一些初始化工作，例如预加载录音相关的资源
+//     })
+//     .catch(error => {
+//         console.error("无法获取麦克风权限:", error);
+//         alert("无法获取麦克风权限，请确保麦克风权限已授予。");
+//     });
+// }
+
+// var speakButton = document.getElementById(speak-button);
+
+// 绑定录音事件
+function bindRecordEvents() {
+    console.log("绑定录音事件");
+    $('#speak-button').on('touchstart', function (event) {
+    console.log("触摸开始....");
+    event.preventDefault(); // 防止默认行为
+
+	// 添加按下效果
+	$(this).addClass('pressed');
+
+
+    // 如果已经在录制中，直接返回
+    if (isRecording) return;
+
+    // 设置长按定时器
+    longPressTimer = setTimeout(() => {
+        // 如果已经获取了麦克风流，则直接使用这个流，否则再次请求权限
+        if (audioStream) {
+            mediaRecorder = new MediaRecorder(audioStream);
+            mediaRecorder.ondataavailable = (event) => {
+                audioChunks.push(event.data);
+            };
+            mediaRecorder.start(); // 开始录制
+            audioChunks = []; // 初始化音频数据数组
+            isRecording = true; // 设置录制状态为 true
+        } else {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    audioStream = stream; // 存储麦克风流
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data); // 当有音频数据可用时，将其添加到 audioChunks 数组中
+                        console.log('Audio chunk received:', event.data); // 输出当前音频数据片段
+                        console.log('Audio chunks length:', audioChunks.length); // 输出音频数据
+                    };
+                    mediaRecorder.start(); // 开始录制
+                    audioChunks = []; // 初始化音频数据数组
+                    isRecording = true; // 设置录制状态为 true
+                })
+                .catch(error => {
+                    console.error('Error accessing microphone:', error);
+                    alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+                    isRecording = false; // 重置录制状态
+                });
+        }
+    }, longPressThreshold);
+});
+
+$('#speak-button').on('touchend', function (event) {
+    console.log("触摸结束....");
+    event.preventDefault(); // 防止默认行为
+
+	// 移除按下效果
+	$(this).removeClass('pressed');
+
+    // 清除长按定时器
+    if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+    }
+
+    // 如果正在录制中，停止录制
+    if (isRecording) {
+        mediaRecorder.stop(); // 停止录音
+
+        // 保存录音文件
+        mediaRecorder.onstop = () => {
+            console.log("收集开始....");
+
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // 将音频数据转换为 Blob 对象
+            const fileName = generateRandomFileName('.wav'); // 生成随机文件名
+            const formData = new FormData(); // 创建 FormData 对象
+
+            // 设置音频播放器的源为刚刚的音频文件
+            const audioUrl = URL.createObjectURL(audioBlob);
+            $('#zoomVoice').attr('src', audioUrl);
+            $('#zoomVoice').attr('autoplay', 'autoplay');
+
+            formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
+
+            // 获取 voice-image-zoom 元素
+            const voiceImageZoom = document.getElementById('voice-image-zoom');
+            const voiceImageZoomParent = voiceImageZoom.parentNode;
+
+            // 在发送请求前替换为加载动画
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'loader2';
+            loaderDiv.style.width = '50%'; // 设置加载动画的宽度
+            loaderDiv.style.height = '50%'; // 设置加载动画的高度
+            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
+
+            fetch('http://35.89.226.131:7864/uploadAudio', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('返回的数据是:', data); // 打印保存结果
+
+                // 请求成功后恢复原来的图片
+                const newVoiceImageZoom = document.createElement('img');
+                newVoiceImageZoom.id = 'voice-image-zoom';
+                newVoiceImageZoom.className = 'voice_img';
+                newVoiceImageZoom.src = './icon/pan.png';
+                newVoiceImageZoom.alt = 'voice';
+                newVoiceImageZoom.style.width = '50%';
+                newVoiceImageZoom.style.height = '50%';
+                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+
+                simulateZoomSubmit(data.res);
+                isRecording = false; // 重置录制状态
+            })
+            .catch(error => {
+                console.error('Error saving audio:', error); // 打印保存错误信息
+                alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+                isRecording = false; // 确保在错误情况下也重置状态
+            });
+        };
+    }
+});
+}
+
+
+function removeRecordEvents() {
+	console.log("remove");
+    $('#speak-button')
+        .off('mousedown')
+        .off('mouseup')
+        .off('touchstart')
+        .off('touchend');
+}
+
+// 获取麦克风流
+async function getMediaStream() {
+    if (audioStream) {
+        // 如果已经获取了麦克风流，直接返回
+        return audioStream;
+    } else {
+        try {
+            // 请求麦克风权限并获取媒体流
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioStream = stream; // 存储麦克风流
+            return audioStream;
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+            alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+            throw error;
+        }
+    }
+}
+
+
+function checkBackgroundColor() {
+
+    if (progress === 100) {
+		console.log("add speak");
+		clearInterval(checkBgColorInterval)
+		// 请求麦克风流
+
+        getMediaStream().then(stream => {
+            console.log('麦克风流已获取');
+			bindRecordEvents()
+        }).catch(error => {
+            console.error('无法获取麦克风流:', error);
+        });
+    }else{
+		
+		removeRecordEvents()
+	}
+
+}
+
+// 初始检查背景颜色
+checkBackgroundColor();
+
+checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查一次
+
+</script>
+
+<script>
+// 设置 speak-button 的宽度与 message2 一致
+function syncWidth() {
+    speakButton.style.width = message2.offsetWidth + 'px';
+}
+
+// 初始化时同步宽度
+syncWidth();
+
+// 监听窗口大小变化，动态调整宽度
+window.addEventListener('resize', syncWidth);
+</script>
+
+<script>
+//   const startRecordingButton = document.getElementById('start-recording');
+//   const stopRecordingButton = document.getElementById('stop-recording');
+//   const recordingText = document.getElementById('recording-text');
+ 
+//   let recording = false;
+//   let stream = null;
+//   let mediaRecorder = null;
+//   let recordedBlobs = [];
+ 
+//   startRecordingButton.addEventListener('click', async () => {
+//     try {
+//       // 请求获取麦克风访问
+//       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+//       mediaRecorder = new MediaRecorder(stream);
+ 
+//       // 当收到新的音频数据时的事件处理
+//       mediaRecorder.ondataavailable = event => {
+//         if (event.data && event.data.size > 0) {
+//           recordedBlobs.push(event.data);
+//         }
+//       };
+ 
+//       // 当录音结束时的事件处理
+//       mediaRecorder.onstop = () => {
+//         const blob = new Blob(recordedBlobs, { type: 'audio/wav' });
+//         const url = URL.createObjectURL(blob);
+//         recordingText.innerHTML = `<audio controls src="${url}"></audio>`;
+//       };
+ 
+//       mediaRecorder.start();
+//       recording = true;
+//       stopRecordingButton.disabled = false;
+//       startRecordingButton.disabled = true;
+//       recordingText.innerText = '正在录音...';
+//     } catch (error) {
+//       console.error('录音错误:', error);
+//       recordingText.innerText = '无法获取麦克风访问';
+//     }
+//   });
+ 
+//   stopRecordingButton.addEventListener('click', () => {
+//     mediaRecorder.stop();
+//     stream.getTracks().forEach(track => track.stop());
+ 
+//     recording = false;
+//     startRecordingButton.disabled = false;
+//     stopRecordingButton.disabled = true;
+//   });
+</script>
+
+</html>

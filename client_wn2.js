@@ -1,5 +1,6 @@
 var pc = null;
 var isChange = false;
+var SDP="";
 
 
 function negotiate() {
@@ -24,29 +25,28 @@ function negotiate() {
         });
     }).then(() => {
         var offer = pc.localDescription; 
-        return fetch(host+'/offer', {
+        return fetch(host+'/getWebrtcConnection', {
             body: JSON.stringify({
-                sdp: offer.sdp,
-                type: offer.type,
-                avatarName: avatarName,  
-                ttsSelection: ttsSelection,            
-                avatarVoice: avatarVoice       
+                "sdp":SDP,
+                "avatarName": avatarName,
+                "ttsSelection": ttsSelection,
+                "avatarVoice": avatarVoice,
             }),
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST'
         });
-
-        
-    }).then((response) => {
-        return response.json();
-    }).then((answer) => {
-        
-        sessionid = answer.sessionid
-        
-        return pc.setRemoteDescription(answer);
-
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text(); // 假设服务器返回的是文本格式的sessionid
+    })
+    .then(sessionid => {
+        console.log("获取到的sessionid:", sessionid);
+        // 将获取到的sessionid赋值给本地变量
+        sessionid = sessionid; // 或者您可以根据需要赋值给任何其他变量或进行其他操作
     }).catch((e) => {
         alert(e);
     });
@@ -106,6 +106,14 @@ function start() {
     };
 
     if (document.getElementById('use-stun').checked) {
+
+        config.iceServers=[
+            {
+                urls: "turn:35.89.226.131:7864",
+                username: "webrtc.aws.com",
+                credential: "repcun-xikdov-6kohdE",
+            }
+        ]
         // config.iceServers = [
         //     {
         //       urls: "stun:stun.relay.metered.ca:80",
@@ -199,8 +207,41 @@ function start() {
             });
         }
     });
+    
+    // function createOffer(pc) {
+    //     return new Promise((resolve, reject) => {
+    //       pc.createOffer(offer => {
+    //         pc.setLocalDescription(offer)
+    //           .then(() => resolve(offer))
+    //           .catch(reject);
+    //       }, reject);
+    //     });
+    // }
+      
+    // // 获取SDP
+    // createOffer(pc).then(offer => {
+    //     SDP=offer.sdp;
+    //     console.log(SDP);
+    // })
 
-
+    // 获取媒体流
+navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+.then(stream => {
+    pc.addStream(stream);
+    // 创建offer
+    return pc.createOffer();
+})
+.then(offer => {
+    return pc.setLocalDescription(offer);
+})
+.then(() => {
+    const sdp = pc.localDescription.sdp;
+    console.log("成功获取"+sdp);
+})
+.catch(error => {
+    console.error('Error creating offer or adding stream:', error);
+});
+    
     negotiate();
 
     console.log("Start现在的链接状态"+pc.connectionState);
@@ -353,8 +394,7 @@ function changeAvatar(val)
     stop2();
     resetSwiper1ToFirstSlide();
 
-    updateAvatarVo
-    ice(avatarName); // 自动更新声音设置
+    updateAvatarVoice(avatarName); // 自动更新声音设置
 
     console.log("AvatarName is:", avatarName);
     isChange=true;
@@ -421,11 +461,11 @@ function changeBg(imgurl)
     console.log("切换到"+arr[arr.length - 1] );
     if(isConnected && sessionid){
         showLoading();
-        fetch(host+'/background',{
+        fetch(host+'/changeBG',{
             method: 'POST',
             body: JSON.stringify({
                 sessionid: sessionid,
-                img_url: 'web/backgrounds/'+arr[arr.length - 1] 
+                "imgName": arr[arr.length - 1]
             })
         }
         )
