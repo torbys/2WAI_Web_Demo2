@@ -2180,17 +2180,24 @@
 				.text(message);
 
 			messageDiv.append(avatar).append(content);
+			$('#chat-messages-zoom').append(messageDiv);
 
-			 // 获取聊天区域的 jQuery 对象
+			// 获取消息区域的高度
+			const chatAreaHeight = $('#chat-messages-zoom')[0].scrollHeight;
+			// 获取刚刚发出的消息的高度
+			const messageHeight = messageDiv[0].scrollHeight;
+			// 计算滚动条需要滚动的距离
+			const scrollPosition = chatAreaHeight - messageHeight;
+			// 将滚动条滚动到刚刚发出的消息的顶部
+			$('#chat-messages-zoom').scrollTop(scrollPosition);
+
 			//  const chatArea = $('#chat-messages-zoom');
-
 			// // 将新消息插入到聊天区域的最上方
 			// chatArea.prepend(messageDiv);
-
 			// // 自动滚动到顶部，确保新消息可见
 			// chatArea.scrollTop(0);
-			$('#chat-messages-zoom').append(messageDiv);
-			$('#chat-messages-zoom').scrollTop($('#chat-messages-zoom')[0].scrollHeight);
+			// $('#chat-messages-zoom').append(messageDiv);
+			// $('#chat-messages-zoom').scrollTop($('#chat-messages-zoom')[0].scrollHeight);
 		}
 
 		// 获取 image-container-zoom 容器
