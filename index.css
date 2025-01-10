@@ -1238,7 +1238,7 @@ body.dark-mode {
 	margin-right: auto;
 	position: absolute;
 	bottom: 0%;
-	left: 6%;
+	left: 0%;
 	visibility: hidden;
 	/* 初始不可见 */
 	opacity: 0;
@@ -1395,6 +1395,8 @@ body.dark-mode {
 	flex-direction: column;
 	overflow: hidden;
 }
+
+
 
 /*录音效果*/
 #stop_record {
@@ -1761,6 +1763,7 @@ body.dark-mode {
 		position: absolute;
 		left: 0;
 		bottom: 10px;
+		height: auto;
 	}
 
 	.bottom-icon {
@@ -1780,20 +1783,48 @@ body.dark-mode {
 	.zoom-left {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		gap: 5px;
 		position: absolute;
 		left: 2.5%;
-		top: -200px;
+		top: -300px;
 		width: calc(100% - 5% - 50px);
-		height: 200px;
+		height: 300px;
+		min-height: 300px;
+		max-height: 300px;
 		overflow-y: auto; /* 允许垂直滚动 */
     	overflow-x: hidden; /* 隐藏水平滚动条 */
+		box-sizing: border-box;
+		-webkit-mask-image: 
+        linear-gradient(
+            to bottom, 
+            rgba(255,255,255,0) 0%, 
+            rgba(255,255,255,0.6) 5%, 
+            rgba(255,255,255,1) 50%, 
+            rgba(255,255,255,0.6) 95%, 
+            rgba(255,255,255,0) 100%
+        );
+	}
+	
+	#chat-messages-zoom{
+		background-color: transparent;
 	}
 
-	
+	.message-content {
+		padding: 10px 15px;
+		font-family: Gotham Rounded;
+		border-radius: 12px;
+		flex: 1;
+		font-weight: 350;
+		font-size: 16px;
+		line-height: 1.6;
+		word-wrap: break-word;
+		white-space: pre-wrap;
+		max-width: calc(100% - 44px);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		/* opacity: 0.7; */
+		
+	}
 
-	
+
 	/* .message-content::before{
 		display: block;
 		content: "";
@@ -1910,24 +1941,8 @@ body.dark-mode {
 		overflow: hidden;
 	}
 
-	#chat-messages-zoom{
-		background-color: transparent;
-	}
 
-	.message-content {
-		padding: 10px 15px;
-		font-family: Gotham Rounded;
-		border-radius: 12px;
-		flex: 1;
-		font-weight: 350;
-		font-size: 16px;
-		line-height: 1.6;
-		word-wrap: break-word;
-		white-space: pre-wrap;
-		max-width: calc(100% - 44px);
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-		/* opacity: 0.7; */
-	}
+
 
 	.user-message {
 		position: relative;

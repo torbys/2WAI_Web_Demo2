@@ -230,8 +230,7 @@
 							<textarea class="form-control" id="message2"
 								placeholder="Type your message here..."></textarea>
 
-							<!-- <button id="speak-button">Hold on and speak</button>
-							 -->
+						
 							<div id="image-container-zoom"
 								style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
 								<img id="voice-image-zoom" class="voice_img" src="./icon/voice.png" alt="voice"
@@ -239,10 +238,12 @@
 							</div>
 
 						</div>
+						
 						<!-- 聊天区 -->
 						<div class="zoom-left" id="chat-messages-zoom">
 							
 						</div>
+
 						<!-- 功能区 -->
 						<div class="zoom-right">
 							<div class="option-item " data-name="avatar">
@@ -2215,10 +2216,17 @@
 				.text(message);
 
 			messageDiv.append(avatar).append(content);
-			$('#chat-messages-zoom').append(messageDiv);
-			$('#chat-messages-zoom').scrollTop($('#chat-messages-zoom')[0].scrollHeight);
 
-			
+			 // 获取聊天区域的 jQuery 对象
+			 const chatArea = $('#chat-messages-zoom');
+
+			// 将新消息插入到聊天区域的最上方
+			chatArea.prepend(messageDiv);
+
+			// 自动滚动到顶部，确保新消息可见
+			chatArea.scrollTop(0);
+			// $('#chat-messages-zoom').prepend(messageDiv); // 使用prepend将消息插入到最前面
+			// $('#chat-messages-zoom').scrollTop=0;
 		}
 
 		// 获取 image-container-zoom 容器
