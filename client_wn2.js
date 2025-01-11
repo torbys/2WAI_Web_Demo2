@@ -25,17 +25,21 @@ function negotiate() {
         });
     }).then(() => {
         var offer = pc.localDescription; 
+        const requestData = {
+            "sdp": SDP,
+            "avatarName": avatarName,
+            "ttsSelection": ttsSelection,
+            "avatarVoice": avatarVoice,
+        };
+        
+        console.log('Sending data:', requestData);
+
         return fetch(host+'/getWebrtcConnection', {
-            body: JSON.stringify({
-                "sdp":SDP,
-                "avatarName": avatarName,
-                "ttsSelection": ttsSelection,
-                "avatarVoice": avatarVoice,
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST'
+          body: JSON.stringify(requestData),
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          method: 'POST'
         });
     }).then(response => {
         if (!response.ok) {
@@ -43,11 +47,10 @@ function negotiate() {
         }
         return response.json(); // 解析JSON字符串
     }).then(data => {
-        console.log("data:",data)
+        console.log("data:", data);
         console.log("获取到的sessionid:", data.sessionid);
         sessionid = data.sessionid; // 赋值sessionid
-    
-        // 设置远程描述
+
         return pc.setRemoteDescription(data);
     }).catch(e => {
         alert(e);
@@ -147,43 +150,43 @@ function start() {
         }
     });
     
-    // function createOffer(pc) {
-    //     return new Promise((resolve, reject) => {
-    //       pc.createOffer(offer => {
-    //         pc.setLocalDescription(offer)
-    //           .then(() => resolve(offer))
-    //           .catch(reject);
-    //       }, reject);
-    //     });
-    // }
-      
-    // // 获取SDP
-    // createOffer(pc).then(offer => {
-    //     SDP=offer.sdp;
-    //     console.log(SDP);
-    // })
+    // 定义 createOffer 函数
+    function createOffer(pc) {
+        return new Promise((resolve, reject) => {
+            pc.createOffer(offer => {
+                pc.setLocalDescription(offer)
+                    .then(() => resolve(offer))
+                    .catch(reject);
+            }, reject);
+        });
+    }
 
+    if (SDP) {
+        console.log("SDP 已存在，直接进行链接。");
+        negotiate();
+    } else {
+        console.log("SDP 为空，进行获取初始化");
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then(stream => {
+            // 将媒体流添加到 peer connection
+            pc.addStream(stream);
+            // 使用封装的 createOffer 函数创建 offer
+            return createOffer(pc);
+        })
+        .then(offer => {
+            // 获取设置本地描述后的 offer 的 SDP
+            SDP = offer.sdp;
+            console.log("成功获取 SDP: " + SDP);
+            // 进行协商
+            negotiate();
+        })
+        .catch(error => {
+            console.error('Error creating offer or adding stream:', error);
+        });
+    }
 
-
-    // 获取媒体流
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-    .then(stream => {
-        pc.addStream(stream);
-        // 创建offer
-        return pc.createOffer();
-    })
-    .then(offer => {
-        return pc.setLocalDescription(offer);
-    })
-    .then(() => {
-        SDP = pc.localDescription.sdp;
-        console.log("成功获取"+SDP);
-    })
-    .catch(error => {
-        console.error('Error creating offer or adding stream:', error);
-    });
     
-    negotiate();
+    
 
     console.log("Start现在的链接状态"+pc.connectionState);
 

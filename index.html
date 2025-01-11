@@ -402,16 +402,15 @@
 	//const host='https://66.114.112.70';
 	// const host ='http://47.96.160.235:7862';
 	// const host = 'http://52.11.182.61:7862';
-	//aws1
-	//const host = 'http://35.89.226.131:7864';
 
 	//aws1
-	//const host = 'http://35.89.226.131:7864';
+	//const host = 'http://35.89.226.131:7862';
 
 	//aws2
-	// const host= 'http://35.153.157.142:7864'
+	const host= 'http://35.153.157.142:7862'
 
-	const host='https://waverlyc4.xiaomy.net'
+	//index2的https请求
+	// const host='https://waverlyc4.xiaomy.net'
 
 	var avatarName = "avatar1";  	//会话人物
 	var ttsSelection = "tts1";   	//会话模块
@@ -1872,7 +1871,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch(host + '/uploadAudio', {
+				fetch('http://35.153.157.142:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
@@ -2528,7 +2527,7 @@ $('#speak-button').on('touchend', function (event) {
             loaderDiv.style.height = '50%'; // 设置加载动画的高度
             voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-            fetch(hsot+'/uploadAudio', {
+            fetch('http://35.153.157.142:7864/uploadAudio', {
                 method: 'POST',
                 body: formData
             })
