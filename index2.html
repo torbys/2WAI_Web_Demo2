@@ -323,15 +323,17 @@
 				</div> -->
 
 					<!-- 按钮包裹的提交 -->
-					<button type="submit" class="btn btn-default">
+					<button type="submit" class="btn btn-default" id="submitButton">
 						<img class="submit" src="./icon/base_submit.png" alt="submit" />
 					</button>
+					<audio id="submitPlayer" src="./soundEffect/submit.mp3" style="display: none;"></audio>
 
 					<div class="gap"></div> <!-- 间隔竖线 -->
 
 					<div class="more" id="moreButton">
 						<img id="more_img" src="./icon/more.png" alt="" />
 					</div>
+					<audio id="popVoice" src="./soundEffect/pop.mp3" style="display: none;"></audio>
 
 				</form>
 
@@ -493,6 +495,10 @@
 			media.style.transform = `scale(${currentScale})`;
 		});
 	});
+
+
+	/*声音的点击*/
+
 
 </script>
 
@@ -923,6 +929,9 @@
 	/*-------------------------------------隐藏框的展示-------------------------------------*/
 	$('.more').click(function () {
 
+		
+		$('#popVoice')[0].play();
+
 		// 获取轮播区域元素
 		var buttons1 = document.querySelectorAll('.btn_1');
 		var swiperBox1 = document.getElementById('swiper1');
@@ -1218,7 +1227,7 @@
 		$('#echo-form').on('submit', function (e) {
 			e.preventDefault();
 			if (canSubmit === 1) {
-
+				$('#submitPlayer')[0].play();
 				// 获取 audio-preview 元素
 				var audioPreview = $('.audio-preview');
 
@@ -1349,6 +1358,8 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
+		showLoading();
+
 		const response = await fetch(host+'/getOptions');
 		if (!response.ok) {
 		    throw new Error('Network response was not ok');

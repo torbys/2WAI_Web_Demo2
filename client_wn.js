@@ -318,15 +318,23 @@ function changeTtsSelection(val)
     ttsSelection = val; 
     console.log("更换TtsSelection is:", ttsSelection);
     showLoading();
+
+    // 请求数据
+    const requestData = {
+        sessionid: sessionid,
+        ttsSelection: ttsSelection,
+        avatarVoice: avatarVoice,
+    };
+
+    // 打印请求数据
+    console.log('TTS发送的请求数据：', requestData);
+
     fetch(host+'/change_property',{
         method: 'POST',
-        body: JSON.stringify(
-                {
-                    sessionid:sessionid,
-                    ttsSelection: ttsSelection,
-                    avatarVoice: avatarVoice,
-                }
-            )
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(requestData)
         }
     ).then(response => response.json()) // 处理请求成功的情况
     .then(data => {

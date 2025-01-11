@@ -1351,6 +1351,8 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
+		showLoading();
+
 		const response = await fetch(host + '/options.json');
 		const options = await response.json();
 		window.appConfig = options;

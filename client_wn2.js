@@ -364,16 +364,22 @@ function changeAvatarVoice(val)
     console.log("AvatarVoice is:", avatarVoice);
 
     showLoading();
+    // 请求数据
+    const requestData = {
+        sessionid: sessionid,
+        ttsSelection: ttsSelection,
+        avatarVoice: avatarVoice,
+    };
+
+    // 打印请求数据
+    console.log('声音发送的请求数据：', requestData);
+
     fetch(host+'/change_property',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify({
-                sessionid: sessionid,
-                ttsSelection: ttsSelection,
-                avatarVoice: avatarVoice,
-            })
+            body: JSON.stringify(requestData)
         }
     ).then(response => response.json()) // 处理请求成功的情况
     .then(data => {
@@ -405,7 +411,7 @@ function changeBg(imgurl)
             },
             body: JSON.stringify({
                 sessionid: sessionid,
-                imgName: arr[arr.length - 1] // 假设 arr 是一个包含图片名称的数组
+                imgName: arr[arr.length - 1] 
             })
         }
         )
