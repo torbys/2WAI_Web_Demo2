@@ -41,13 +41,15 @@ function negotiate() {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-        return response.text(); // 假设服务器返回的是文本格式的sessionid
-    })
-    .then(sessionid => {
-        console.log("获取到的sessionid:", sessionid);
-        // 将获取到的sessionid赋值给本地变量
-        sessionid = sessionid; // 或者您可以根据需要赋值给任何其他变量或进行其他操作
-    }).catch((e) => {
+        return response.json(); // 解析JSON字符串
+    }).then(data => {
+        console.log("data:",data)
+        console.log("获取到的sessionid:", data.sessionid);
+        sessionid = data.sessionid; // 赋值sessionid
+    
+        // 设置远程描述
+        return pc.setRemoteDescription(data);
+    }).catch(e => {
         alert(e);
     });
     
@@ -81,7 +83,7 @@ function checkConnectioning(){
         console.log("更换中loading");
         showLoading(); // 显示加载提示
     } else if(pc.connectionState === "connected"){
-        console.log("连接完成或断开，隐藏loading");
+        console.log("连接完成，隐藏loading");
         hideLoading(); // 隐藏加载提示
         clearInterval(intervalconnecting);
     }
@@ -107,13 +109,24 @@ function start() {
 
     if (document.getElementById('use-stun').checked) {
 
+        //aws1
+        // config.iceServers=[
+        //     {
+        //         urls: "turn:35.89.226.131:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE",
+        //     }
+        // ]
+
+        //aws2
         config.iceServers=[
             {
-                urls: "turn:35.89.226.131:7864",
+                urls: "turn:35.153.157.142:3478",
                 username: "webrtc.aws.com",
                 credential: "repcun-xikdov-6kohdE",
             }
         ]
+
         // config.iceServers = [
         //     {
         //       urls: "stun:stun.relay.metered.ca:80",
@@ -224,23 +237,25 @@ function start() {
     //     console.log(SDP);
     // })
 
+
+
     // 获取媒体流
-navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-.then(stream => {
-    pc.addStream(stream);
-    // 创建offer
-    return pc.createOffer();
-})
-.then(offer => {
-    return pc.setLocalDescription(offer);
-})
-.then(() => {
-    const sdp = pc.localDescription.sdp;
-    console.log("成功获取"+sdp);
-})
-.catch(error => {
-    console.error('Error creating offer or adding stream:', error);
-});
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => {
+        pc.addStream(stream);
+        // 创建offer
+        return pc.createOffer();
+    })
+    .then(offer => {
+        return pc.setLocalDescription(offer);
+    })
+    .then(() => {
+        SDP = pc.localDescription.sdp;
+        console.log("成功获取"+SDP);
+    })
+    .catch(error => {
+        console.error('Error creating offer or adding stream:', error);
+    });
     
     negotiate();
 
@@ -407,11 +422,39 @@ function changeTtsSelection(val)
     if(ttsSelection == val){
         return;
     }
-    stop2();
+
+    // 获取TTS-item元素
+	var ttsItem = document.querySelector('.TTS-item')
+
+    // stop2();
     ttsSelection = val; 
-    console.log("更换成功TtsSelection is:", ttsSelection);
-    isChange=true;
-    start();
+    console.log("更换TtsSelection is:", ttsSelection);
+    showLoading();
+    fetch(host+'/change_property',{
+        method: 'POST',
+        body: JSON.stringify(
+                {
+                    sessionid:sessionid,
+                    ttsSelection: ttsSelection,
+                    avatarVoice: avatarVoice,
+                }
+            )
+        }
+    ).then(response => response.json()) // 处理请求成功的情况
+    .then(data => {
+        console.log('请求成功，返回的数据是：', data);
+        ttsItem.classList.remove('expanded');
+        hideLoading(); 
+    })
+    .catch(error => {
+        console.error('请求失败，错误信息是：', error);
+        ttsItem.classList.remove('expanded');
+        hideLoading(); 
+    });
+
+
+    // isChange=true;
+    // start();
 }
 
 

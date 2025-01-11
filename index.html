@@ -1393,10 +1393,9 @@
 
 			// 为选择项添加点击事件
 			selectionItem.addEventListener('click', function () {
-				// 处理选中项的逻辑
-				console.log('选中的值是：', this.getAttribute('data-value'));
-
-				// changeTtsSelection(data-value);
+				const selectedValue = event.target.getAttribute('data-value');
+   				console.log('选中的值是：', selectedValue);
+    			changeTtsSelection(selectedValue); // 传递获取到的值
 			});
 
 			// 将新创建的div添加到TTS-item容器中
