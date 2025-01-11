@@ -951,13 +951,12 @@ body.dark-mode {
 
 	background-attachment: fixed;
 	filter: bulr();
-
 }
 
 #TTS-title {
 	transition: all 1s;
 	position: absolute;
-	left: 34%;
+	left: 30%;
 	top: 9%;
 	font-size: 26px;
 	font-weight: 600;

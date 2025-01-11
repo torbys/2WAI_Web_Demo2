@@ -3,6 +3,7 @@ var isChange = false;
 var SDP="";
 
 
+
 function negotiate() {
     pc.addTransceiver('video', { direction: 'recvonly' });
     pc.addTransceiver('audio', { direction: 'recvonly' });
@@ -26,7 +27,7 @@ function negotiate() {
     }).then(() => {
         var offer = pc.localDescription; 
         const requestData = {
-            "sdp": SDP,
+            "sdp": offer.sdp,
             "avatarName": avatarName,
             "ttsSelection": ttsSelection,
             "avatarVoice": avatarVoice,
@@ -47,7 +48,6 @@ function negotiate() {
         }
         return response.json(); // 解析JSON字符串
     }).then(data => {
-        console.log("data:", data);
         console.log("获取到的sessionid:", data.sessionid);
         sessionid = data.sessionid; // 赋值sessionid
 
@@ -144,49 +144,13 @@ function start() {
             // document.getElementById('video').srcObject = evt.streams[0];
         } else {
             document.getElementById('audio').srcObject = evt.streams[0];
-            document.getElementById('audio').play().catch(error => {
-                console.error('无法自动播放音频:', error);
-            });
+            // document.getElementById('audio').play().catch(error => {
+            //     console.error('无法自动播放音频:', error);
+            // });
         }
     });
     
-    // 定义 createOffer 函数
-    function createOffer(pc) {
-        return new Promise((resolve, reject) => {
-            pc.createOffer(offer => {
-                pc.setLocalDescription(offer)
-                    .then(() => resolve(offer))
-                    .catch(reject);
-            }, reject);
-        });
-    }
-
-    if (SDP) {
-        console.log("SDP 已存在，直接进行链接。");
-        negotiate();
-    } else {
-        console.log("SDP 为空，进行获取初始化");
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-        .then(stream => {
-            // 将媒体流添加到 peer connection
-            pc.addStream(stream);
-            // 使用封装的 createOffer 函数创建 offer
-            return createOffer(pc);
-        })
-        .then(offer => {
-            // 获取设置本地描述后的 offer 的 SDP
-            SDP = offer.sdp;
-            console.log("成功获取 SDP: " + SDP);
-            // 进行协商
-            negotiate();
-        })
-        .catch(error => {
-            console.error('Error creating offer or adding stream:', error);
-        });
-    }
-
-    
-    
+    negotiate();
 
     console.log("Start现在的链接状态"+pc.connectionState);
 
@@ -396,19 +360,20 @@ function changeAvatarVoice(val)
     }
 
     // stop2();
-    avatarVoice = val;//'';
+    avatarVoice = val;
     console.log("AvatarVoice is:", avatarVoice);
 
     showLoading();
     fetch(host+'/change_property',{
-        method: 'POST',
-        body: JSON.stringify(
-                {
-                    sessionid:sessionid,
-                    ttsSelection: ttsSelection,
-                    avatarVoice: avatarVoice,
-                }
-            )
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                sessionid: sessionid,
+                ttsSelection: ttsSelection,
+                avatarVoice: avatarVoice,
+            })
         }
     ).then(response => response.json()) // 处理请求成功的情况
     .then(data => {
@@ -435,19 +400,25 @@ function changeBg(imgurl)
         showLoading();
         fetch(host+'/changeBG',{
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 sessionid: sessionid,
-                "imgName": arr[arr.length - 1]
+                imgName: arr[arr.length - 1] // 假设 arr 是一个包含图片名称的数组
             })
         }
         )
         .then(response => {
+
             if (response.ok) {
                 console.log('Request successful');
+                response.json().then(data => {
+                console.log(data); // 打印返回的数据
+                });
                 hideLoading(); 
-            } else {
-                throw new Error('Request failed with status: ' + response.status);
-            }
+            }   
+
         })
         .catch(error => {
             hideLoading(); 

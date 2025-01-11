@@ -297,8 +297,7 @@ function changeAvatar(val)
     stop2();
     resetSwiper1ToFirstSlide();
 
-    updateAvatarVo
-    ice(avatarName); // 自动更新声音设置
+    updateAvatarVoice(avatarName); // 自动更新声音设置
 
     console.log("AvatarName is:", avatarName);
     isChange=true;
@@ -357,14 +356,15 @@ function changeAvatarVoice(val)
 
     showLoading();
     fetch(host+'/change_property',{
-        method: 'POST',
-        body: JSON.stringify(
-                {
-                    sessionid:sessionid,
-                    ttsSelection: ttsSelection,
-                    avatarVoice: avatarVoice,
-                }
-            )
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                sessionid: sessionid,
+                ttsSelection: ttsSelection,
+                avatarVoice: avatarVoice,
+            })
         }
     ).then(response => response.json()) // 处理请求成功的情况
     .then(data => {
