@@ -407,7 +407,9 @@
 	//const host = 'http://35.89.226.131:7864';
 
 	//aws2
-	const host= 'http://35.153.157.142:7864'
+	// const host= 'http://35.153.157.142:7864'
+
+	const host='https://waverlyc4.xiaomy.net'
 
 	var avatarName = "avatar1";  	//会话人物
 	var ttsSelection = "tts1";   	//会话模块
@@ -1346,7 +1348,10 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
-		const response = await fetch(host + '/options.json');
+		const response = await fetch(host+'/getOptions');
+		if (!response.ok) {
+		    throw new Error('Network response was not ok');
+		}
 		const options = await response.json();
 		window.appConfig = options;
 

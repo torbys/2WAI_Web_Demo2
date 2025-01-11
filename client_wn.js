@@ -106,79 +106,23 @@ function start() {
     };
 
     if (document.getElementById('use-stun').checked) {
-        // config.iceServers = [
-        //     {
-        //       urls: "stun:stun.relay.metered.ca:80",
-        //     },
-        //     {
-        //       urls: "turn:global.relay.metered.ca:80",
-        //       username: "450fcc1d0427f8ff34d668bc",
-        //       credential: "MnW7roClfOpuBZoC",
-        //     },
-        //     {
-        //       urls: "turn:global.relay.metered.ca:80?transport=tcp",
-        //       username: "450fcc1d0427f8ff34d668bc",
-        //       credential: "MnW7roClfOpuBZoC",
-        //     },
-        //     {
-        //       urls: "turn:global.relay.metered.ca:443",
-        //       username: "450fcc1d0427f8ff34d668bc",
-        //       credential: "MnW7roClfOpuBZoC",
-        //     },
-        //     {
-        //       urls: "turns:global.relay.metered.ca:443?transport=tcp",
-        //       username: "450fcc1d0427f8ff34d668bc",
-        //       credential: "MnW7roClfOpuBZoC",
-        //     }
-        // ];
-        
-        // 美国东部服务器
+       //aws1
         // config.iceServers=[
         //     {
-        //         urls: "turn:54.166.236.67:3478",
+        //         urls: "turn:35.89.226.131:3478",
         //         username: "webrtc.aws.com",
         //         credential: "repcun-xikdov-6kohdE",
-        //     },
-        //     {
-        //         urls: "turn:52.11.182.61:3478",
-        //         username: "webrtc.aws.com",
-        //         credential: "repcun-xikdov-6kohdE",
-        //     },            
-        //     {
-        //         urls: "turns:global.relay.metered.ca:443?transport=tcp",
-        //         username: "450fcc1d0427f8ff34d668bc",
-        //         credential: "MnW7roClfOpuBZoC",
-        //     },
-        //     {
-        //         urls: "turn:global.relay.metered.ca:443",
-        //         username: "450fcc1d0427f8ff34d668bc",
-        //         credential: "MnW7roClfOpuBZoC",
-        //     },
+        //     }
         // ]
 
-        //美国西部服务器
-        // config.iceServers=[
-        //     {
-        //         urls: "turn:52.11.182.61:3478",
-        //         username: "webrtc.aws.com",
-        //         credential: "repcun-xikdov-6kohdE",
-        //     },   
-        //     {
-        //         urls: "turn:54.166.236.67:3478",
-        //         username: "webrtc.aws.com",
-        //         credential: "repcun-xikdov-6kohdE",
-        //     },
-        //     {
-        //         urls: "turns:global.relay.metered.ca:443?transport=tcp",
-        //         username: "450fcc1d0427f8ff34d668bc",
-        //         credential: "MnW7roClfOpuBZoC",
-        //     },
-        //     {
-        //         urls: "turn:global.relay.metered.ca:443",
-        //         username: "450fcc1d0427f8ff34d668bc",
-        //         credential: "MnW7roClfOpuBZoC",
-        //     },
-        // ]
+        //aws2
+        config.iceServers=[
+            {
+                urls: "turn:35.153.157.142:3478",
+                username: "webrtc.aws.com",
+                credential: "repcun-xikdov-6kohdE",
+            }
+        ]
 
     }
 
@@ -367,11 +311,35 @@ function changeTtsSelection(val)
     if(ttsSelection == val){
         return;
     }
-    stop2();
+
+    // 获取TTS-item元素
+	var ttsItem = document.querySelector('.TTS-item')
+
+    // stop2();
     ttsSelection = val; 
-    console.log("更换成功TtsSelection is:", ttsSelection);
-    isChange=true;
-    start();
+    console.log("更换TtsSelection is:", ttsSelection);
+    showLoading();
+    fetch(host+'/change_property',{
+        method: 'POST',
+        body: JSON.stringify(
+                {
+                    sessionid:sessionid,
+                    ttsSelection: ttsSelection,
+                    avatarVoice: avatarVoice,
+                }
+            )
+        }
+    ).then(response => response.json()) // 处理请求成功的情况
+    .then(data => {
+        console.log('请求成功，返回的数据是：', data);
+        ttsItem.classList.remove('expanded');
+        hideLoading(); 
+    })
+    .catch(error => {
+        console.error('请求失败，错误信息是：', error);
+        ttsItem.classList.remove('expanded');
+        hideLoading(); 
+    });
 }
 
 
