@@ -64,6 +64,7 @@
 
 				<div id="FeatureArea">
 					<div class="Featureitem" id="change_item">
+						<audio src="./soundEffect/changeStyle.mp3" style="display: none;" id="changeItemVoice"></audio>
 						<img src="./icon/change.png" alt="" />
 					</div>
 					<div class="Featureitem" id="clothes_item">
@@ -274,6 +275,8 @@
 
 					<textarea class="form-control" id="message" placeholder="Type your message here..."></textarea>
 
+
+					
 					<div id="recordGroup1" class="hidden">
 						<div id="record_wrapper">
 							<img id="recording" src="./icon/recording.png" alt="microphone" />
@@ -339,6 +342,8 @@
 
 				<!-- 隐藏式选择框 -->
 				<div id="options-container">
+					<audio src="./soundEffect/mouse_click1.mp3" style="display: none;" id="optionsVoice"></audio>
+
 					<div class="options-group">
 						<div class="option-item " data-name="avatar">
 							<div class="img_container" id="avatar-name">
@@ -1037,6 +1042,8 @@
 			/*整体获取和删除*/
 			var imgContainer = $(this).find('.img_container');
 
+			$('#optionsVoice')[0].play();
+
 			var swiperBoxes = document.querySelectorAll('.swiper-container');
 			// 选择所有的 .swiper-button-prev 元素
 			var prevButtons = document.querySelectorAll('.swiper-button-prev');
@@ -1358,7 +1365,7 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
-		showLoading();
+		// showLoading();
 
 		const response = await fetch(host+'/getOptions');
 		if (!response.ok) {
@@ -1583,6 +1590,8 @@
 	}
 
 	changeItem.addEventListener('click', () => {
+
+		$('#changeItemVoice')[0].play();
 		document.body.classList.toggle('dark-mode');
 		flag = !flag;
 		changeImagedark()

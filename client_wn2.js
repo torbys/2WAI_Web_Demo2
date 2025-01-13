@@ -100,7 +100,7 @@ function cheackTimeOut(intervalId){
             hideLoading(); // 隐藏 loading 提示
             timeoutElement.classList.add('pop'); // 显示连接超时提示
         }
-    },300000); //5分钟300000
+    },1000); //5分钟300000
 }
 
 function start() {
@@ -129,6 +129,15 @@ function start() {
                 credential: "repcun-xikdov-6kohdE",
             }
         ]
+
+        //1.13runpod
+        // config.iceServers=[
+        //     {
+        //         urls: "turn:3.137.204.36:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE"
+        //     }
+        // ]
 
     }
 

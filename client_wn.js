@@ -116,11 +116,20 @@ function start() {
         // ]
 
         //aws2
+        // config.iceServers=[
+        //     {
+        //         urls: "turn:35.153.157.142:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE",
+        //     }
+        // ]
+
+        //1.13runpod
         config.iceServers=[
             {
-                urls: "turn:35.153.157.142:3478",
+                urls: "turn:3.137.204.36:3478",
                 username: "webrtc.aws.com",
-                credential: "repcun-xikdov-6kohdE",
+                credential: "repcun-xikdov-6kohdE"
             }
         ]
 
@@ -326,8 +335,7 @@ function changeTtsSelection(val)
         avatarVoice: avatarVoice,
     };
 
-    // 打印请求数据
-    console.log('TTS发送的请求数据：', requestData);
+    
 
     fetch(host+'/change_property',{
         method: 'POST',
