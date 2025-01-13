@@ -100,7 +100,7 @@ function cheackTimeOut(intervalId){
             hideLoading(); // 隐藏 loading 提示
             timeoutElement.classList.add('pop'); // 显示连接超时提示
         }
-    },1000); //5分钟300000
+    },300000); //5分钟300000
 }
 
 function start() {

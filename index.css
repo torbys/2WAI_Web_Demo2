@@ -551,6 +551,7 @@ body.dark-mode {
 
 .dark-mode .inner-container textarea {
 	background-color: #454545;
+	color: white;
 }
 
 .dark-mode .inner-container textarea::placeholder {
@@ -948,7 +949,6 @@ body.dark-mode {
 	transition: all 1s;
 	background-color: rgba(255, 255, 255, 0.8);
 	z-index: 101;
-
 	background-attachment: fixed;
 	filter: bulr();
 }

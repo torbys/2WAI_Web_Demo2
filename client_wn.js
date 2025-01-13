@@ -147,9 +147,9 @@ function start() {
             // document.getElementById('video').srcObject = evt.streams[0];
         } else {
             document.getElementById('audio').srcObject = evt.streams[0];
-            document.getElementById('audio').play().catch(error => {
-                console.error('无法自动播放音频:', error);
-            });
+            // document.getElementById('audio').play().catch(error => {
+            //     console.error('无法自动播放音频:', error);
+            // });
         }
     });
 
@@ -253,6 +253,12 @@ function updateAvatarVoice(avatarName) {
 
     avatarVoice = newVoice;
     console.log("re AvatarVoice is:", avatarVoice);
+
+    const voiceIndex = datatVoices.findIndex(voice => voice.value === newVoice);
+    if (voiceIndex !== -1) {
+        // 切换到对应的声音 slide
+        swiper2.slideTo(voiceIndex);
+    }
 
     showLoading();
     fetch(host + '/change_property', {

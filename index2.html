@@ -13,6 +13,13 @@
 </head>
 
 <body>
+	<audio src="./soundEffect/submit.mp3" style="display: none;" id="submitPlayer"></audio>
+	<audio src="./soundEffect/changeStyle.mp3" style="display: none;" id="changeItemVoice"></audio>
+	<audio src="./soundEffect/pop.mp3" style="display: none;" id="popVoice"></audio>
+	<audio src="./soundEffect/mouse_click1.mp3" style="display: none;" id="optionsVoice"></audio>
+	<audio src="./soundEffect/record.mp3" style="display: none;" id="recordVoice"></audio>
+	<audio src="./soundEffect/stop_record.mp3" style="display: none;" id="stopVoice"></audio>
+	<audio src="./soundEffect/swiperScroll.mp3" style="display: none;" id="ScrollVoice"></audio>
 
 	<div class="outer-container">
 		<!-- <div class="main-title">
@@ -64,7 +71,7 @@
 
 				<div id="FeatureArea">
 					<div class="Featureitem" id="change_item">
-						<audio src="./soundEffect/changeStyle.mp3" style="display: none;" id="changeItemVoice"></audio>
+						
 						<img src="./icon/change.png" alt="" />
 					</div>
 					<div class="Featureitem" id="clothes_item">
@@ -275,8 +282,6 @@
 
 					<textarea class="form-control" id="message" placeholder="Type your message here..."></textarea>
 
-
-					
 					<div id="recordGroup1" class="hidden">
 						<div id="record_wrapper">
 							<img id="recording" src="./icon/recording.png" alt="microphone" />
@@ -329,20 +334,20 @@
 					<button type="submit" class="btn btn-default" id="submitButton">
 						<img class="submit" src="./icon/base_submit.png" alt="submit" />
 					</button>
-					<audio id="submitPlayer" src="./soundEffect/submit.mp3" style="display: none;"></audio>
+					
 
 					<div class="gap"></div> <!-- 间隔竖线 -->
 
 					<div class="more" id="moreButton">
 						<img id="more_img" src="./icon/more.png" alt="" />
 					</div>
-					<audio id="popVoice" src="./soundEffect/pop.mp3" style="display: none;"></audio>
+					
 
 				</form>
 
 				<!-- 隐藏式选择框 -->
 				<div id="options-container">
-					<audio src="./soundEffect/mouse_click1.mp3" style="display: none;" id="optionsVoice"></audio>
+					
 
 					<div class="options-group">
 						<div class="option-item " data-name="avatar">
@@ -609,8 +614,13 @@
 					slide.transition(transition);
 				}
 			},
+			slideChangeTransitionStart: function () {
+            	$('#ScrollVoice')[0].play();
+        	},
 			slideChangeTransitionEnd: function () {
 				// 获取当前激活的slide的索引
+				
+				
 				var activeIndex = this.activeIndex;
 				for (var i = 0; i < this.slides.length; i++) {
 					this.slides[i].classList.remove('swiper-slide-active');
@@ -677,6 +687,9 @@
 					slide.transition(transition);
 				}
 			},
+			slideChangeTransitionStart: function () {
+            	$('#ScrollVoice')[0].play();
+        	},
 			slideChangeTransitionEnd: function () {
 
 				for (var i = 0; i < this.slides.length; i++) {
@@ -745,6 +758,9 @@
 						slide.transition(transition);
 					}
 				},
+				slideChangeTransitionStart: function () {
+            		$('#ScrollVoice')[0].play();
+        		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换音色", this.realIndex);
 
@@ -810,6 +826,9 @@
 						slide.transition(transition);
 					}
 				},
+				slideChangeTransitionStart: function () {
+            		$('#ScrollVoice')[0].play();
+        		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换人物", this.activeIndex)
 
@@ -871,6 +890,7 @@
 	/*---------------为单个板块添加监听器---------------------*/
 	document.addEventListener('DOMContentLoaded', function () {
 		clothesItem.addEventListener('click', function () {
+			$('#changeItemVoice')[0].play();
 			changeAvatar('')
 			// 隐藏所有swiper
 			/* $('.img_container').removeClass('selected');
@@ -937,6 +957,11 @@
 		
 		$('#popVoice')[0].play();
 
+		var optionItems = document.querySelectorAll('.img_container');
+    	optionItems.forEach(function(item) {
+    	    item.classList.remove('selected'); //假设选中类名为selected
+    	});
+
 		// 获取轮播区域元素
 		var buttons1 = document.querySelectorAll('.btn_1');
 		var swiperBox1 = document.getElementById('swiper1');
@@ -964,6 +989,7 @@
 		// 隐藏swiper3和对应的按钮
 		hideSwiperAndButtons(swiperBox3, buttons3);
 
+		
 
 
 		var optionscontainer = document.getElementById('options-container');
@@ -1728,6 +1754,8 @@
 
 	function simulateSubmit(message) {
 	    if (canSubmit === 1) {
+
+			$('#submitPlayer')[0].play();
 	        // 获取 audio-preview 元素
 	        var audioPreview = $('.audio-preview');
 
@@ -1799,7 +1827,7 @@
 
 	$('#record_wrapper').click(function () {
     	if (isRecording) return; // 如果已经在录制中，直接返回
-		
+		$('#recordVoice')[0].play();
 	    // 检查是否已经获取了媒体流
 	    if (!audioStream) {
 	        // 请求麦克风权限并获取媒体流
@@ -1814,6 +1842,7 @@
 	                isRecording = false; // 重置录制状态
 	            });
 	    } else {
+			
 	        startRecording(); // 直接开始录音
 	    }
 
@@ -1849,6 +1878,7 @@
 	
 	$('#stop_wrapper').click(function () {
 		console.log("yes im into")
+		
 		if (!isRecording) return; // 如果不在录制中，直接返回
 		if (mediaRecorder && mediaRecorder.state !== 'inactive') {
 			mediaRecorder.stop(); // 停止录音

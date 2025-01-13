@@ -14,6 +14,14 @@
 
 <body>
 
+	<audio src="./soundEffect/submit.mp3" style="display: none;" id="submitPlayer"></audio>
+	<audio src="./soundEffect/changeStyle.mp3" style="display: none;" id="changeItemVoice"></audio>
+	<audio src="./soundEffect/pop.mp3" style="display: none;" id="popVoice"></audio>
+	<audio src="./soundEffect/mouse_click1.mp3" style="display: none;" id="optionsVoice"></audio>
+	<audio src="./soundEffect/record.mp3" style="display: none;" id="recordVoice"></audio>
+	<audio src="./soundEffect/stop_record.mp3" style="display: none;" id="stopVoice"></audio>
+	<audio src="./soundEffect/swiperScroll.mp3" style="display: none;" id="ScrollVoice"></audio>
+
 	<div class="outer-container">
 		<!-- <div class="main-title">
         <h1>2WAI Demo</h1>
@@ -600,6 +608,9 @@
 					slide.transition(transition);
 				}
 			},
+			slideChangeTransitionStart: function () {
+            	$('#ScrollVoice')[0].play();
+        	},
 			slideChangeTransitionEnd: function () {
 				// 获取当前激活的slide的索引
 				var activeIndex = this.activeIndex;
@@ -668,6 +679,9 @@
 					slide.transition(transition);
 				}
 			},
+			slideChangeTransitionStart: function () {
+            	$('#ScrollVoice')[0].play();
+        	},
 			slideChangeTransitionEnd: function () {
 
 				for (var i = 0; i < this.slides.length; i++) {
@@ -736,6 +750,9 @@
 						slide.transition(transition);
 					}
 				},
+				slideChangeTransitionStart: function () {
+            		$('#ScrollVoice')[0].play();
+        		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换音色", this.realIndex);
 
@@ -801,6 +818,9 @@
 						slide.transition(transition);
 					}
 				},
+				slideChangeTransitionStart: function () {
+            		$('#ScrollVoice')[0].play();
+        		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换人物", this.activeIndex)
 
@@ -862,6 +882,7 @@
 	/*---------------为单个板块添加监听器---------------------*/
 	document.addEventListener('DOMContentLoaded', function () {
 		clothesItem.addEventListener('click', function () {
+			$('#changeItemVoice')[0].play();
 			changeAvatar('')
 			// 隐藏所有swiper
 			/* $('.img_container').removeClass('selected');
@@ -925,6 +946,13 @@
 	/*-------------------------------------隐藏框的展示-------------------------------------*/
 	$('.more').click(function () {
 
+
+		$('#popVoice')[0].play();
+
+		var optionItems = document.querySelectorAll('.img_container');
+    	optionItems.forEach(function(item) {
+    	    item.classList.remove('selected'); //假设选中类名为selected
+    	});
 		// 获取轮播区域元素
 		var buttons1 = document.querySelectorAll('.btn_1');
 		var swiperBox1 = document.getElementById('swiper1');
@@ -1029,6 +1057,8 @@
 		$('.option-item').click(function () {
 			/*整体获取和删除*/
 			var imgContainer = $(this).find('.img_container');
+
+			$('#optionsVoice')[0].play();
 
 			var swiperBoxes = document.querySelectorAll('.swiper-container');
 			// 选择所有的 .swiper-button-prev 元素
@@ -1221,6 +1251,7 @@
 			e.preventDefault();
 			if (canSubmit === 1) {
 
+				$('#submitPlayer')[0].play();
 				// 获取 audio-preview 元素
 				var audioPreview = $('.audio-preview');
 
@@ -1469,7 +1500,6 @@
 					// 鼠标悬停时改变鼠标样式
 					e.target.style.cursor = 'pointer';
 				});
-
 				// 添加鼠标离开事件
 				slide.addEventListener('mouseleave', function (e) {
 					e.stopPropagation();
@@ -1575,6 +1605,8 @@
 	}
 
 	changeItem.addEventListener('click', () => {
+
+		$('#changeItemVoice')[0].play();
 		document.body.classList.toggle('dark-mode');
 		flag = !flag;
 		changeImagedark()
@@ -1713,6 +1745,8 @@
 	    if (canSubmit === 1) {
 	        // 获取 audio-preview 元素
 	        var audioPreview = $('.audio-preview');
+
+			$('#submitPlayer')[0].play();
 
 	        // 检查 audio-preview 是否没有 hidden 类
 	        if (!audioPreview.hasClass('hidden')) {
@@ -1879,56 +1913,45 @@
 					method: 'POST',
 					body: formData
 				})
-					.then(response => response.json())
-					.then(data => {
-						console.log('返回的数据是:', data); // 打印保存结果
-						// 请求完成后换回原来的图片
-
-						loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
-
-						// // 将返回的 res 文字设置到 #message 文本框中
-						messageTextarea.val(data.res);
-						canSubmit = 1; // 设置可发送标志为1
-						// 自动调用 simulateSubmit 函数发送消息
-						simulateSubmit(data.res);
-					
-						// submitBtn.prop('disabled', false); // 启用提交按钮
-						// submitBtn.find('img').attr('src', submitImg); // 更换按钮的箭头为绿色的
-
-
-						isRecording = false; // 重置录制状态
-
-					})
-					.catch(error => {
-						loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
-						var audioPreview = document.querySelector('.audio-preview');
-						var message = document.getElementById('message');
-						audioPreview.classList.add('hidden');
-						message.classList.remove('hidden');
-						// 获取 voice-image 元素
-						var image = document.getElementById('voice-image');
-
-						// 设置 voiceFlag 为 true，以便将图标更换为 voice.png
-						voiceFlag = true;
-
-						// 设置图片新源为 voice.png
-						var newSrc = './icon/voice.png';
-
-						// 添加过渡效果
-						image.classList.add('changing');
-
-						// 移除过渡效果类，这将在 CSS 中触发过渡
-						setTimeout(function () {
-							// 设置图片新源
-							image.src = newSrc;
-							image.classList.remove('changing');
-						}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
-
-
-						console.error('Error saving audio:', error); // 打印保存错误信息
-						alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
-						isRecording = false; // 确保在错误情况下也重置状态
-					});
+				.then(response => response.json())
+				.then(data => {
+					console.log('返回的数据是:', data); // 打印保存结果
+					// 请求完成后换回原来的图片
+					loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
+					// // 将返回的 res 文字设置到 #message 文本框中
+					messageTextarea.val(data.res);
+					canSubmit = 1; // 设置可发送标志为1
+					// 自动调用 simulateSubmit 函数发送消息
+					simulateSubmit(data.res);
+				
+					// submitBtn.prop('disabled', false); // 启用提交按钮
+					// submitBtn.find('img').attr('src', submitImg); // 更换按钮的箭头为绿色的
+					isRecording = false; // 重置录制状态
+				})
+				.catch(error => {
+					loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
+					var audioPreview = document.querySelector('.audio-preview');
+					var message = document.getElementById('message');
+					audioPreview.classList.add('hidden');
+					message.classList.remove('hidden');
+					// 获取 voice-image 元素
+					var image = document.getElementById('voice-image');
+					// 设置 voiceFlag 为 true，以便将图标更换为 voice.png
+					voiceFlag = true;
+					// 设置图片新源为 voice.png
+					var newSrc = './icon/voice.png';
+					// 添加过渡效果
+					image.classList.add('changing');
+					// 移除过渡效果类，这将在 CSS 中触发过渡
+					setTimeout(function () {
+						// 设置图片新源
+						image.src = newSrc;
+						image.classList.remove('changing');
+					}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+					console.error('Error saving audio:', error); // 打印保存错误信息
+					alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+					isRecording = false; // 确保在错误情况下也重置状态
+				});
 
 			};
 		}
