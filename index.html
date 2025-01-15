@@ -1909,19 +1909,19 @@
 
 				// 获取提交按钮元素
 				const loading = document.querySelector('.btn.btn-default');
-
+p
 				// 在发送请求前替换为加载动画
 				const loaderDiv = document.createElement('div');
 				loaderDiv.className = 'loader2';
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://35.153.157.142:7864/uploadAudio', {
+				fetch('http://18.237.173.80:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
 				.then(response => response.json())
-				.then(data => {
+				.then(data => {pu
 					console.log('返回的数据是:', data); // 打印保存结果
 					// 请求完成后换回原来的图片
 					loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
@@ -2561,7 +2561,7 @@ $('#speak-button').on('touchend', function (event) {
             loaderDiv.style.height = '50%'; // 设置加载动画的高度
             voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-            fetch('http://35.153.157.142:7864/uploadAudio', {
+            fetch('http://18.237.173.80:7864/uploadAudio', {
                 method: 'POST',
                 body: formData
             })
