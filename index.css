@@ -1819,7 +1819,7 @@ body.dark-mode {
 		padding: 10px 15px;
 		font-family: Gotham Rounded;
 		border-radius: 12px;
-		flex: 1;
+
 		font-weight: 350;
 		font-size: 16px;
 		line-height: 1.6;
@@ -1947,9 +1947,6 @@ body.dark-mode {
 		overflow: hidden;
 	}
 
-
-
-
 	.user-message {
 		position: relative;
 		margin-right: auto;
@@ -1958,16 +1955,18 @@ body.dark-mode {
 	}
 
 	.user-message::before {
-		content: '';
-		position: absolute;
-		border: 12px solid;
-		z-index: 100;
 		border-color: transparent transparent transparent transparent;
-		right:182px;
-		top: 4px;
 	}
 
 	.bot-message::before{
+		border-color: transparent transparent transparent transparent;
+	}
+
+	.dark-mode .bot-message::before {
+		border-color: transparent transparent transparent transparent;
+	}
+	
+	.dark-mode .user-message::before {
 		border-color: transparent transparent transparent transparent;
 	}
 	

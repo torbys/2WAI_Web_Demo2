@@ -415,10 +415,10 @@
 	//const host = 'http://35.89.226.131:7862';
 
 	//aws2
-	// const host= 'http://35.153.157.142:7862'
+	// const host= 'http://35.153.157.142:7862's
 
 	//1.13runpod
-	const host = 'http://g754ua0bibbm8a-7862.proxy.runpod.net'
+	const host = 'https://g754ua0bibbm8a-7862.proxy.runpod.net'
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
 
@@ -2539,7 +2539,7 @@ $('#speak-button').on('touchend', function (event) {
             // 设置音频播放器的源为刚刚的音频文件
             const audioUrl = URL.createObjectURL(audioBlob);
             $('#zoomVoice').attr('src', audioUrl);
-            $('#zoomVoice').attr('autoplay', 'autoplay');
+            // $('#zoomVoice').attr('autoplay', 'autoplay');
 
             formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
 

@@ -100,7 +100,7 @@ function cheackTimeOut(intervalId){
             hideLoading(); // 隐藏 loading 提示
             timeoutElement.classList.add('pop'); // 显示连接超时提示
         }
-    },300000); //5分钟300000
+    },30000); //5分钟300000
 }
 
 function start() {
@@ -258,6 +258,12 @@ function updateAvatarVoice(avatarName) {
 
     avatarVoice = newVoice;
     console.log("re AvatarVoice is:", avatarVoice);
+
+    const voiceIndex = datatVoices.findIndex(voice => voice.value === newVoice);
+    if (voiceIndex !== -1) {
+        // 切换到对应的声音 slide
+        swiper2.slideTo(voiceIndex);
+    }
 
     showLoading();
     fetch(host + '/change_property', {

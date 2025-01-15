@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
 	<audio src="./soundEffect/submit.mp3" style="display: none;" id="submitPlayer"></audio>
 	<audio src="./soundEffect/changeStyle.mp3" style="display: none;" id="changeItemVoice"></audio>
 	<audio src="./soundEffect/pop.mp3" style="display: none;" id="popVoice"></audio>
@@ -1429,6 +1430,9 @@
 		dataAvatars = options.avatars;
 		datatVoices = options.ttsVoices;
 
+		//临时默认角色
+		avatarName='avatar5';
+
 		$('#swiper3 .swiper-wrapper').html(avatars);
 
 		/*---------------------TTS-item条目创建--------------------------*/
@@ -1545,6 +1549,7 @@
 		updateSwiper(swiper1);
 		updateSwiper(swiper2);
 		updateSwiper(swiper3);
+
 		start();
 	}
 
@@ -2288,7 +2293,9 @@
 
 				var message = $('#message2').val();
 				// 添加用户消息到聊天框
+				$('#submitPlayer')[0].play();
 				addMessageForZoom(message, true);
+
 
 				console.log('Sending: ' + message);
 				console.log('sessionid: ', sessionid);
@@ -2335,6 +2342,7 @@
 
 		function simulateZoomSubmit(message) {
 		    // 添加用户消息到聊天框
+			$('#submitPlayer')[0].play();
 		    addMessageForZoom(message, true);
 				
 		    console.log('Sending: ' + message);
@@ -2557,7 +2565,7 @@ $('#speak-button').on('touchend', function (event) {
             // 设置音频播放器的源为刚刚的音频文件
             const audioUrl = URL.createObjectURL(audioBlob);
             $('#zoomVoice').attr('src', audioUrl);
-            $('#zoomVoice').attr('autoplay', 'autoplay');
+            // $('#zoomVoice').attr('autoplay', 'autoplay');
 
             formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
 
