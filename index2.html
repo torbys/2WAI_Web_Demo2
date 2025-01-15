@@ -422,10 +422,17 @@
 	//aws2
 	// const host= 'http://35.153.157.142:7864'
 
+	//1.15的服务器
+	// const host = 'http://18.237.173.80:7862'
+
 	//接管index2的所有语音和服务的https发送
 	const host='https://waverlyc4.xiaomy.net'
 
-	var avatarName = "avatar1";  	//会话人物
+	// var avatarName = "avatar1";  	//会话人物
+	//临时默认角色
+	var avatarName = 'avatar5';
+
+
 	var ttsSelection = "tts1";   	//会话模块
 	var avatarVoice = "voice1"; 	//会话声音
 	var sessionid = "";				//会话id
@@ -1430,8 +1437,7 @@
 		dataAvatars = options.avatars;
 		datatVoices = options.ttsVoices;
 
-		//临时默认角色
-		avatarName='avatar5';
+		
 
 		$('#swiper3 .swiper-wrapper').html(avatars);
 

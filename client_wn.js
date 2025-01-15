@@ -125,6 +125,15 @@ function start() {
         // ]
 
         //1.13runpod
+        // config.iceServers=[
+        //     {
+        //         urls: "turn:3.137.204.36:3478",
+        //         username: "webrtc.aws.com",
+        //         credential: "repcun-xikdov-6kohdE"
+        //     }
+        // ]
+
+        //1.15日服务器
         config.iceServers=[
             {
                 urls: "turn:3.137.204.36:3478",
