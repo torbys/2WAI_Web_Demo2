@@ -113,7 +113,7 @@
 				</video>-->
 
 					<audio id="audio" autoplay="true"></audio>
-					<video id="video" autoplay="true" playsinline="true" src="./video/base.mp4"></video>
+					<video id="video" autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
 
 
 
@@ -588,6 +588,11 @@
 <!-- 为了分别获取元素这里设置3个js来单独控制 -->
 <script>
 
+	let isFirstEnter1 = true;
+	let isFirstEnter2 = true;
+	let isFirstEnter3 = true;
+	let isFirstEnter4 = true;
+
 	effect = 1
 	var swiper1 = new Swiper('#swiper1', {
 		loop: true,
@@ -626,7 +631,11 @@
 				}
 			},
 			slideChangeTransitionStart: function () {
-            	$('#ScrollVoice')[0].play();
+            	if (isFirstEnter1) {
+    			    isFirstEnter1 = false;
+    			} else {
+    			    $('#ScrollVoice')[0].play();
+    			}
         	},
 			slideChangeTransitionEnd: function () {
 				// 获取当前激活的slide的索引
@@ -699,7 +708,11 @@
 				}
 			},
 			slideChangeTransitionStart: function () {
-            	$('#ScrollVoice')[0].play();
+            	if (isFirstEnter2) {
+    			    isFirstEnter2 = false;
+    			} else {
+    			    $('#ScrollVoice')[0].play();
+    			}
         	},
 			slideChangeTransitionEnd: function () {
 
@@ -770,7 +783,11 @@
 					}
 				},
 				slideChangeTransitionStart: function () {
-            		$('#ScrollVoice')[0].play();
+            		if (isFirstEnter3) {
+    			    	isFirstEnter3 = false;
+    				} else {
+    				    $('#ScrollVoice')[0].play();
+    				}
         		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换音色", this.realIndex);
@@ -838,7 +855,11 @@
 					}
 				},
 				slideChangeTransitionStart: function () {
-            		$('#ScrollVoice')[0].play();
+            		if (isFirstEnter4) {
+    			    	isFirstEnter4 = false;
+    				} else {
+    				    $('#ScrollVoice')[0].play();
+    				}
         		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换人物", this.activeIndex)

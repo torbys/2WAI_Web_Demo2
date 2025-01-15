@@ -112,7 +112,7 @@
 				</video>-->
 
 					<audio id="audio" autoplay="true"></audio>
-					<video id="video" autoplay="true" playsinline="true" src="./video/base.mp4"></video>
+					<video id="video" autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
 
 
 
@@ -461,7 +461,6 @@
 <script src="swiper.min.js"></script>
 
 <script>
-
 	/*max滑块的更改*/
 	document.getElementById('chunk-size').addEventListener('input', function (e) {
 		var value = e.target.value;
@@ -513,8 +512,9 @@
 
 </script>
 
+<!-- ---------------曾经的视高度适配功能----------------- -->
 <script>
-	// /*---------------曾经的视高度适配功能-----------------*/
+	
 
 	// // 添加视频高度监听和聊天容器高度整功能
 	// function adjustChatContainerHeight() {
@@ -575,8 +575,13 @@
 
 </script>
 
-<!-- 为了分别获取元素这里设置3个js来单独控制 -->
+<!-- swiper1~4轮播图的初始化 -->
 <script>
+
+	let isFirstEnter1 = true;
+	let isFirstEnter2 = true;
+	let isFirstEnter3 = true;
+	let isFirstEnter4 = true;
 
 	effect = 1
 	var swiper1 = new Swiper('#swiper1', {
@@ -616,7 +621,12 @@
 				}
 			},
 			slideChangeTransitionStart: function () {
-            	$('#ScrollVoice')[0].play();
+            	// 检查是否是第一次进入
+    			if (isFirstEnter1) {
+    			    isFirstEnter1 = false;
+    			} else {
+    			    $('#ScrollVoice')[0].play();
+    			}
         	},
 			slideChangeTransitionEnd: function () {
 				// 获取当前激活的slide的索引
@@ -687,7 +697,11 @@
 				}
 			},
 			slideChangeTransitionStart: function () {
-            	$('#ScrollVoice')[0].play();
+            	if (isFirstEnter2) {
+    			    isFirstEnter2 = false;
+    			} else {
+    			    $('#ScrollVoice')[0].play();
+    			}
         	},
 			slideChangeTransitionEnd: function () {
 
@@ -758,7 +772,11 @@
 					}
 				},
 				slideChangeTransitionStart: function () {
-            		$('#ScrollVoice')[0].play();
+            		if (isFirstEnter3) {
+    			   		isFirstEnter3 = false;
+    				} else {
+    				    $('#ScrollVoice')[0].play();
+    				}
         		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换音色", this.realIndex);
@@ -826,7 +844,11 @@
 					}
 				},
 				slideChangeTransitionStart: function () {
-            		$('#ScrollVoice')[0].play();
+            		if (isFirstEnter4) {
+    			   		isFirstEnter4 = false;
+    				} else {
+    				    $('#ScrollVoice')[0].play();
+    				}
         		},
 				slideChangeTransitionEnd: function () {
 					console.log("切换人物", this.activeIndex)
@@ -862,12 +884,6 @@
 		});
 	}
 
-
-
-
-
-
-
 </script>
 
 <!-- -------------------------------------隐藏框的展示------------------------------------- -->
@@ -883,11 +899,9 @@
 		videoElement.play(); // 播放base.mp4    
 	});
 
-
-
-	const clothesItem = document.getElementById("clothes_item");
 	/*---------------为单个板块添加监听器---------------------*/
 	document.addEventListener('DOMContentLoaded', function () {
+		const clothesItem = document.getElementById("clothes_item");
 		clothesItem.addEventListener('click', function () {
 			$('#changeItemVoice')[0].play();
 			changeAvatar('')
@@ -945,11 +959,6 @@
 	});
 
 
-
-
-	/*小按钮旋转*/
-
-
 	/*-------------------------------------隐藏框的展示-------------------------------------*/
 	$('.more').click(function () {
 
@@ -1005,16 +1014,6 @@
 			chatContainer.classList.add('active');
 		}
 
-		//  // 检查more_img的src是否已经更换为line.png
-		// if ($('#more_img').attr('src') === './icon/line.png') {
-		//     // 如果是line.png，则切换回more.png
-		//     $('#more_img').attr('src', './icon/more.png');
-		// } else {
-		//     // 否则，切换到line.png
-		//     $('#more_img').attr('src', './icon/line.png');
-		// }
-
-
 	});
 
 	function setupHoverEvents(selector) {
@@ -1039,10 +1038,6 @@
 	setupHoverEvents('#stop_wrapper');
 	setupHoverEvents('#custom-player');
 	setupHoverEvents('#zoomIcon');
-
-
-
-	
 
     // 封装检查和切换视频遮罩高度的函数
     function TVideoMask() {
@@ -1126,52 +1121,9 @@
 
 	});
 
-
-	/*-----------------------------录音图片切换----------------------*/
-	var voiceFlag = true;
-
-
-
-	function changeImage() {
-		// 获取图片元素
-		var image = document.getElementById('voice-image');
-		console.log("change");
-
-		voiceFlag = !voiceFlag;
-		var newSrc = voiceFlag ? './icon/voice.png' : './icon/left.png'; // 根据 voiceFlag 的值选择图片
-
-		// 添加过渡效果
-		image.classList.add('changing');
-
-		// 移除过渡效果类，这将在 CSS 中触发过渡
-		setTimeout(function () {
-			// 设置图片新源
-			image.src = newSrc;
-			image.classList.remove('changing');
-		}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
-
-		var message = document.getElementById('message');
-		var recordGroup1 = document.getElementById('recordGroup1');
-		var recordGroup2 = document.getElementById('recordGroup2');
-		var voiceImage = document.getElementById('voice-image');
-
-		// 切换显示状态
-		if (message.classList.contains('hidden')) {
-			message.classList.remove('hidden');
-			recordGroup1.classList.add('hidden');
-			recordGroup2.classList.add('hidden');
-		} else {
-			message.classList.add('hidden');
-			recordGroup1.classList.remove('hidden');
-		}
-
-	}
-
-
-
 </script>
 
-<!-- =----------------发送回复功能--------------------= -->
+<!-- =----------------PC端的发送回复功能--------------------= -->
 <script type="text/javascript" charset="utf-8">
 
 
@@ -1331,42 +1283,10 @@
 			}
 		});
 
-
-		// $('#btn_download').click(function() {
-		//     // 载视频文件
-		//     console.log('Downloading video...');
-		//     fetch('/record_lasted.mp4', {
-		//         method: 'GET'
-		//     }).then(function(response) {
-		//         if (response.ok) {
-		//             return response.blob();
-		//         } else {
-		//             throw new Error('Failed to download the video.');
-		//         }
-		//     }).then(function(blob) {
-		//         // 创建一个 Blob 对象
-		//         const url = window.URL.createObjectURL(blob);
-		//         // 创建一个藏的可下载链接
-		//         const a = document.createElement('a');
-		//         a.style.display = 'none';
-		//         a.href = url;
-		//         a.download = 'record_lasted.mp4';
-		//         document.body.appendChild(a);
-		//         // 触发下载
-		//         a.click();
-		//         // 清理
-		//         window.URL.revokeObjectURL(url);
-		//         document.body.removeChild(a);
-		//         console.log('Video downloaded successfully.');
-		//     }).catch(function(error) {
-		//         console.error('Error:', error);
-		//     });
-		// });
-
 	});
 </script>
 
-<!-- --------------------据接口渲染轮播图------------------- -->
+<!-- --------------------zoom轮播数量调整，接口渲染轮播图，TimeOut事件，滑轮更新事件------------------- -->
 <script>
 	// 在现有的 JavaScript 代码中添加
 
@@ -1564,11 +1484,6 @@
 	// Initialize options
 	loadOptions();
 
-	
-
-	
-
-
 	// 同步滑块和输入框的值
 	const chunkSizeSlider = document.getElementById('chunk-size');
 	const chunkSizeInput = document.getElementById('chunk-size-input');
@@ -1586,16 +1501,6 @@
 		}
 	});
 </script>
-
-<!-- <script type="text/javascript">
-    window.addEventListener('load', () => {
-      // 确保页面加载完毕后执行
-      const startButton = document.getElementById('start');
-      if (startButton) {
-        startButton.click(); // 触发点击事件
-      }
-    });
-</script> -->
 
 <!-- ----------------------------切换黑暗模式------------------------------ -->
 <script>
@@ -1660,7 +1565,7 @@
 
 </script>
 
-<!-- ---------------录音功能区------------------------- -->
+<!-- ---------------PC端录音功能区------------------------- -->
 <script>
 	let mediaRecorder;
 	let audioChunks = [];
@@ -1700,6 +1605,44 @@
 			start: startTimer,
 			stop: stopTimer
 		};
+	}
+
+	/*-----------------------------录音图片切换----------------------*/
+	var voiceFlag = true;
+
+	function changeImage() {
+		// 获取图片元素
+		var image = document.getElementById('voice-image');
+		console.log("change");
+
+		voiceFlag = !voiceFlag;
+		var newSrc = voiceFlag ? './icon/voice.png' : './icon/left.png'; // 根据 voiceFlag 的值选择图片
+
+		// 添加过渡效果
+		image.classList.add('changing');
+
+		// 移除过渡效果类，这将在 CSS 中触发过渡
+		setTimeout(function () {
+			// 设置图片新源
+			image.src = newSrc;
+			image.classList.remove('changing');
+		}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+
+		var message = document.getElementById('message');
+		var recordGroup1 = document.getElementById('recordGroup1');
+		var recordGroup2 = document.getElementById('recordGroup2');
+		var voiceImage = document.getElementById('voice-image');
+
+		// 切换显示状态
+		if (message.classList.contains('hidden')) {
+			message.classList.remove('hidden');
+			recordGroup1.classList.add('hidden');
+			recordGroup2.classList.add('hidden');
+		} else {
+			message.classList.add('hidden');
+			recordGroup1.classList.remove('hidden');
+		}
+
 	}
 
 	// 获取计时器显示的元素
@@ -2050,8 +1993,7 @@ p
 
 </script>
 
-<!-- 
-缩放区域的控制 -->
+<!-- 缩放区域的Ui控制，缩放区的消息发送 -->
 <script>
 	 function checkWindowSize() {
 	    const panelZoom = document.querySelector('.panel-zoom');
@@ -2270,6 +2212,7 @@ p
             const voiceImage = $(this).find('img');
    			const currentSrc = voiceImage.attr('src');
             if (currentSrc === './icon/submitzoom.png') {
+				$('#submitPlayer')[0].play();
 
 				var message = $('#message2').val();
 				// 添加用户消息到聊天框
@@ -2323,6 +2266,7 @@ p
 		function simulateZoomSubmit(message) {
 		    // 添加用户消息到聊天框
 		    addMessageForZoom(message, true);
+			$('#submitPlayer')[0].play();
 				
 		    console.log('Sending: ' + message);
 		    console.log('sessionid: ', sessionid);
@@ -2366,6 +2310,7 @@ p
 
 </script>
 
+<!-- 说话进度条的加载，和图片转化 -->
 <script>
 
 	$(document).ready(function() {
@@ -2444,6 +2389,7 @@ p
 
 </script>
 
+<!-- ---------------移动端录音功能区------------------------- -->
 <script>
 // 定义全局变量
 
@@ -2649,68 +2595,18 @@ checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查�
 
 </script>
 
+<!-- ------------输入框宽度同步---------------- -->
 <script>
-// 设置 speak-button 的宽度与 message2 一致
-function syncWidth() {
-    speakButton.style.width = message2.offsetWidth + 'px';
-}
+	// 设置 speak-button 的宽度与 message2 一致
+	function syncWidth() {
+	    speakButton.style.width = message2.offsetWidth + 'px';
+	}
 
-// 初始化时同步宽度
-syncWidth();
+	// 初始化时同步宽度
+	syncWidth();
 
-// 监听窗口大小变化，动态调整宽度
-window.addEventListener('resize', syncWidth);
-</script>
-
-<script>
-//   const startRecordingButton = document.getElementById('start-recording');
-//   const stopRecordingButton = document.getElementById('stop-recording');
-//   const recordingText = document.getElementById('recording-text');
- 
-//   let recording = false;
-//   let stream = null;
-//   let mediaRecorder = null;
-//   let recordedBlobs = [];
- 
-//   startRecordingButton.addEventListener('click', async () => {
-//     try {
-//       // 请求获取麦克风访问
-//       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-//       mediaRecorder = new MediaRecorder(stream);
- 
-//       // 当收到新的音频数据时的事件处理
-//       mediaRecorder.ondataavailable = event => {
-//         if (event.data && event.data.size > 0) {
-//           recordedBlobs.push(event.data);
-//         }
-//       };
- 
-//       // 当录音结束时的事件处理
-//       mediaRecorder.onstop = () => {
-//         const blob = new Blob(recordedBlobs, { type: 'audio/wav' });
-//         const url = URL.createObjectURL(blob);
-//         recordingText.innerHTML = `<audio controls src="${url}"></audio>`;
-//       };
- 
-//       mediaRecorder.start();
-//       recording = true;
-//       stopRecordingButton.disabled = false;
-//       startRecordingButton.disabled = true;
-//       recordingText.innerText = '正在录音...';
-//     } catch (error) {
-//       console.error('录音错误:', error);
-//       recordingText.innerText = '无法获取麦克风访问';
-//     }
-//   });
- 
-//   stopRecordingButton.addEventListener('click', () => {
-//     mediaRecorder.stop();
-//     stream.getTracks().forEach(track => track.stop());
- 
-//     recording = false;
-//     startRecordingButton.disabled = false;
-//     stopRecordingButton.disabled = true;
-//   });
+	// 监听窗口大小变化，动态调整宽度
+	window.addEventListener('resize', syncWidth);
 </script>
 
 </html>
