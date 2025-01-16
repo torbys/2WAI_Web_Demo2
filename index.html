@@ -58,7 +58,7 @@
 					</div>
 				</div>
 
-				<div class="ZoomClick">
+				<div class="ZoomClick no-select">
 					<div class="zoom-in-2">
 						<img src="./icon/more.png" alt="">
 					</div>
@@ -68,12 +68,12 @@
 					</div>
 				</div>
 
-				<div class="bottom-icon">
+				<div class="bottom-icon no-select">
 					Zoom
 					<img src="./icon/move.png" alt="" id="zoomIcon" />
 				</div>
 
-				<div class="demo">
+				<div class="demo no-select">
 					2WAI
 					<div class="tips">
 						Demo
@@ -2654,6 +2654,18 @@ $('#speak-button').on('touchend', function (event) {
             .catch(error => {
                 console.error('Error saving audio:', error); // 打印保存错误信息
                 alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+
+				//错误时也换回来
+				const newVoiceImageZoom = document.createElement('img');
+                newVoiceImageZoom.id = 'voice-image-zoom';
+                newVoiceImageZoom.className = 'voice_img';
+                newVoiceImageZoom.src = './icon/pan.png';
+                newVoiceImageZoom.alt = 'voice';
+                newVoiceImageZoom.style.width = '50%';
+                newVoiceImageZoom.style.height = '50%';
+                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+
+
                 isRecording = false; // 确保在错误情况下也重置状态
             });
         };
@@ -2819,8 +2831,6 @@ checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查�
 
   const hintButton = document.getElementById('hint-button');
   const hintDiv = document.querySelector('.Hint');
-
-  
 
   // 检查是否已经显示过提示
   if (!localStorage.getItem('hintShown')) {

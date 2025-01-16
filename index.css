@@ -1729,20 +1729,25 @@ body.dark-mode {
 	}
 }
 
-.Hint{
-	display: none;
+.no-select {
+	user-select: none; 
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
 }
+
 
 @media (min-width: 1100px){
 
-	
+	.Hint{
+		display: none;
+	}
 
 	.ZoomClick{
 		position: absolute;
 		width: 20px;
 		height: 300px;
-		bottom: 60px;
-		/* left: 120%; */
+		bottom: 150px;
 		transition: all 0.5s; /* 添加平滑过渡效果 */
 		left: 88%;
 		display: flex;
@@ -1796,6 +1801,10 @@ body.dark-mode {
 		width: 100%;
 		top: 80%;
 		/* background-color: transparent; */
+	}
+
+	.panel-left{
+		border-radius: 12px;
 	}
 
 	.welcome-message {
@@ -2342,6 +2351,7 @@ body.dark-mode {
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		border-radius: 12px;
 		z-index: 1000;
 	}
 

@@ -58,7 +58,17 @@
 					</div>
 				</div>
 
-				<div class="bottom-icon">
+				<div class="ZoomClick no-select">
+					<div class="zoom-in-2">
+						<img src="./icon/more.png" alt="">
+					</div>
+					
+					<div class="zoom-out-2">
+						<img src="./icon/line.png" alt="">
+					</div>
+				</div>
+
+				<div class="bottom-icon no-select">
 					Zoom
 					<img src="./icon/move.png" alt="" id="zoomIcon" />
 				</div>
@@ -91,7 +101,12 @@
 				<!-- 视频展示区 -->
 				<div id="media">
 					
+					<div class="Hint">
 
+						Long press for two seconds to activate the zoom
+
+						<button id="hint-button">I got it</button>
+					</div>
 
 					<div id="video-mask">
 
@@ -199,6 +214,17 @@
 
 					<!-- 缩放后的聊天面板 -->
 					<div class="panel-zoom">
+						<div class="moblieZoom">
+
+							<div class="zoom-in">
+								<img src="./icon/more.png" alt="">
+							</div>
+							
+							<div class="zoom-out">
+								<img src="./icon/line.png" alt="">
+							</div>
+
+						</div>
 						<!-- 输入区 -->
 						<div class="zoom-bottom">
 
@@ -208,7 +234,6 @@
 							<textarea class="form-control" id="message2"
 								placeholder="Type your message here..."></textarea>
 
-						
 							<div id="image-container-zoom"
 								style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
 								<img id="voice-image-zoom" class="voice_img" src="./icon/voice.png" alt="voice"
@@ -493,12 +518,12 @@
 	});
 
 	document.addEventListener('DOMContentLoaded', function () {
-		const media = document.getElementById('media');
+		const media = document.getElementById('video');
 		const zoomIcon = document.getElementById('zoomIcon'); // 这个元素似乎是用来触发缩放的，但通常它不会是一个图标，而是一个覆盖在视频上的透明层或视频本身
 
 		zoomIcon.addEventListener('wheel', function (event) {
 			event.preventDefault(); // 阻止默认的滚动行为
-
+video
 			const scaleFactor = 1.1; // 缩放因子
 			let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
 
@@ -518,7 +543,67 @@
 	});
 
 
-	/*声音的点击*/
+	document.addEventListener('DOMContentLoaded', function () {
+	  const media = document.getElementById('video');
+	  const zoomInButton = document.querySelector('.zoom-in');
+	  const zoomOutButton = document.querySelector('.zoom-out');
+
+	  const scaleFactor = 1.1; // 缩放因子
+	  let currentScale = 1; // 当前缩放比例
+
+	  // 初始化缩放比例
+	  media.style.transformOrigin = 'center 10%'; 
+	  media.style.transform = `scale(${currentScale})`;
+
+	  // 缩放函数
+	  const zoom = (factor) => {
+	    currentScale *= factor;
+	    // 防止缩放过小导致媒体不可见
+	    if (currentScale < 0.1) currentScale = 0.1;
+	    media.style.transform = `scale(${currentScale})`;
+	  };
+
+	  // 监听 zoom-in 按钮的点击事件
+	  zoomInButton.addEventListener('click', function (event) {
+	    zoom(scaleFactor); // 放大
+	  });
+
+	  // 监听 zoom-out 按钮的点击事件
+	  zoomOutButton.addEventListener('click', function (event) {
+	    zoom(1 / scaleFactor); // 缩小
+	  });
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+	  const media = document.getElementById('video');
+	  const zoomInButton = document.querySelector('.zoom-in-2');
+	  const zoomOutButton = document.querySelector('.zoom-out-2');
+
+	  const scaleFactor = 1.1; // 缩放因子
+	  let currentScale = 1; // 当前缩放比例
+
+	  // 初始化缩放比例
+	  media.style.transformOrigin = 'center 10%'; 
+	  media.style.transform = `scale(${currentScale})`;
+
+	  // 缩放函数
+	  const zoom = (factor) => {
+	    currentScale *= factor;
+	    // 防止缩放过小导致媒体不可见
+	    if (currentScale < 0.1) currentScale = 0.1;
+	    media.style.transform = `scale(${currentScale})`;
+	  };
+
+	  // 监听 zoom-in 按钮的点击事件
+	  zoomInButton.addEventListener('click', function (event) {
+	    zoom(scaleFactor); // 放大
+	  });
+
+	  // 监听 zoom-out 按钮的点击事件
+	  zoomOutButton.addEventListener('click', function (event) {
+	    zoom(1 / scaleFactor); // 缩小
+	  });
+	});
 
 
 </script>
@@ -1074,7 +1159,7 @@
 	setupHoverEvents('#stop_wrapper');
 	setupHoverEvents('#custom-player');
 	setupHoverEvents('#zoomIcon');
-
+	setupHoverEvents('.ZoomClick');
 
 
 	
@@ -1292,6 +1377,10 @@
 		$('#echo-form').on('submit', function (e) {
 			e.preventDefault();
 			if (canSubmit === 1) {
+				$('#submitPlayer')[0].play();
+				// 获取 audio-preview 元素
+				var audioPreview = $('.audio-preview');
+
 				$('#submitPlayer')[0].play();
 				// 获取 audio-preview 元素
 				var audioPreview = $('.audio-preview');
@@ -1626,16 +1715,6 @@
 	});
 </script>
 
-<!-- <script type="text/javascript">
-    window.addEventListener('load', () => {
-      // 确保页面加载完毕后执行
-      const startButton = document.getElementById('start');
-      if (startButton) {
-        startButton.click(); // 触发点击事件
-      }
-    });
-</script> -->
-
 <!-- ----------------------------切换黑暗模式------------------------------ -->
 <script>
 	const changeItem = document.getElementById('change_item');
@@ -1793,6 +1872,10 @@
 			$('#submitPlayer')[0].play();
 	        // 获取 audio-preview 元素
 	        var audioPreview = $('.audio-preview');
+
+			$('#submitPlayer')[0].play();
+			// 获取 audio-preview 元素
+			var audioPreview = $('.audio-preview');
 
 	        // 检查 audio-preview 是否没有 hidden 类
 	        if (!audioPreview.hasClass('hidden')) {
@@ -2335,6 +2418,10 @@
 
 				voiceImage1.src = './icon/voice.png';
                 imageContainer1.style.backgroundColor = '#fff';
+
+				$('#submitPlayer')[0].play();
+				// 获取 audio-preview 元素
+				var audioPreview = $('.audio-preview');
 				
 				/*网络获取机械人回复*/
 				fetch(host + '/getAnswerTxt', {
@@ -2378,6 +2465,9 @@
 		    console.log('Sending: ' + message);
 		    console.log('sessionid: ', sessionid);
 				
+			$('#submitPlayer')[0].play();
+			// 获取 audio-preview 元素
+			var audioPreview = $('.audio-preview');
 
 		    /*网络获取机械人回复*/
 		    fetch(host + '/getAnswerTxt', {
@@ -2633,6 +2723,18 @@ $('#speak-button').on('touchend', function (event) {
             })
             .catch(error => {
                 console.error('Error saving audio:', error); // 打印保存错误信息
+				
+				//错误时也换回来
+				const newVoiceImageZoom = document.createElement('img');
+                newVoiceImageZoom.id = 'voice-image-zoom';
+                newVoiceImageZoom.className = 'voice_img';
+                newVoiceImageZoom.src = './icon/pan.png';
+                newVoiceImageZoom.alt = 'voice';
+                newVoiceImageZoom.style.width = '50%';
+                newVoiceImageZoom.style.height = '50%';
+                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+
+
                 alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
                 isRecording = false; // 确保在错误情况下也重置状态
             });
@@ -2670,22 +2772,37 @@ async function getMediaStream() {
     }
 }
 
+// 一直尝试获取麦克风权限，直到用户授权
+async function requestMicrophonePermission() {
+    while (true) {
+        try {
+            const stream = await getMediaStream();
+            console.log('麦克风流已获取');
+            bindRecordEvents();
+            break; // 如果成功获取麦克风流，退出循环
+        } catch (error) {
+            // 检查错误类型，如果是用户明确拒绝，则不再弹出提示
+            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                console.error('用户明确拒绝了麦克风权限请求');
+                alert('麦克风权限被拒绝。请在浏览器设置中手动开启麦克风权限。');
+                break; // 退出循环，不再尝试
+            } else {
+                console.error('无法获取麦克风流:', error);
+                alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+                // 等待用户操作，避免立即重新请求
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+    }
+}
 
 function checkBackgroundColor() {
 
-    if (progress === 100) {
+    if (progress >= 100) {
 		console.log("add speak");
+		requestMicrophonePermission();
 		clearInterval(checkBgColorInterval)
-		// 请求麦克风流
-
-        getMediaStream().then(stream => {
-            console.log('麦克风流已获取');
-			bindRecordEvents()
-        }).catch(error => {
-            console.error('无法获取麦克风流:', error);
-        });
     }else{
-		
 		removeRecordEvents()
 	}
 
@@ -2761,5 +2878,92 @@ window.addEventListener('resize', syncWidth);
 //     stopRecordingButton.disabled = true;
 //   });
 </script>
+
+<script>
+
+	const media = document.getElementById('media');
+	const moblieZoom = document.querySelector('.moblieZoom');
+  
+	let touchTimeout = null;
+	let resetTimeout = null; // 用于重置 left 属性的定时器
+  
+	// 定义触摸开始事件的处理函数
+	const handleTouchStart = (event) => {
+	  // 清除之前的定时器
+	  
+	  if (touchTimeout) {
+		clearTimeout(touchTimeout);
+	  }
+	  if (resetTimeout) {
+		clearTimeout(resetTimeout);
+	  }
+  
+	  // 设置一个新的定时器，2秒后执行
+	  touchTimeout = setTimeout(() => {
+		// 更新 .moblieZoom 的 left 属性
+		moblieZoom.style.left = '88%';
+	  }, 2000);
+  
+	};
+  
+	// 定义触摸结束事件的处理函数
+	const handleTouchEnd = (event) => {
+	  // 清除定时器，防止在2秒内松手时执行
+	  if (touchTimeout) {
+		clearTimeout(touchTimeout);
+	  }
+  
+	  // 无论用户在 .moblieZoom 内部还是外部松手，2秒后重置 left 属性
+	  resetTimeout = setTimeout(() => {
+		moblieZoom.style.left = '120%';
+	  }, 2000);
+	  
+	};
+  
+	// 定义媒体查询
+	const mediaQuery = window.matchMedia('(max-width: 1000px)');
+  
+	// 根据屏幕宽度添加或移除事件监听器
+	const toggleEventListeners = (matches) => {
+	  if (matches) {
+		
+		// 屏幕宽度小于1000px，添加事件监听器
+		media.addEventListener('touchstart', handleTouchStart);
+		media.addEventListener('touchend', handleTouchEnd);
+	  } else {
+		// 屏幕宽度大于1000px，移除事件监听器
+		media.removeEventListener('touchstart', handleTouchStart);
+		media.removeEventListener('touchend', handleTouchEnd);
+		// 重置 .moblieZoom 的 left 属性
+		
+		moblieZoom.style.left = '88%';
+		if (resetTimeout) {
+		  clearTimeout(resetTimeout);
+		}
+  
+	  }
+	};
+  
+	// 初始检查
+	toggleEventListeners(mediaQuery.matches);
+  
+	// 监听屏幕尺寸变化
+	mediaQuery.addListener(toggleEventListeners);
+  
+	const hintButton = document.getElementById('hint-button');
+	const hintDiv = document.querySelector('.Hint');
+  
+	// 检查是否已经显示过提示
+	if (!localStorage.getItem('hintShown')) {
+	  hintDiv.style.display = 'flex'; // 显示提示
+	  localStorage.setItem('hintShown', 'true'); // 标记提示已显示
+	}
+  
+	// 监听按钮的点击事件
+	hintButton.addEventListener('click', function () {
+	  hintDiv.style.display = 'none'; // 隐藏提示
+	});
+  
+  </script>
 
 </html>
