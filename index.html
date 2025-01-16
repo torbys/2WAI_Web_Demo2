@@ -59,18 +59,17 @@
 				</div>
 
 				<div class="ZoomClick no-select">
-					<div class="zoom-in-2">
-						<img src="./icon/more.png" alt="">
-					</div>
-					
-					<div class="zoom-out-2">
-						<img src="./icon/line.png" alt="">
+					<div class="ZoomGroup">
+						<img src="./icon/more.png" id="Zoom-out" alt="">
+						<img src="./icon/line.png" id="Zoom-in" alt="">
 					</div>
 				</div>
 
 				<div class="bottom-icon no-select">
 					Zoom
-					<img src="./icon/move.png" alt="" id="zoomIcon" />
+					<div class="moveWrapper">
+						<img src="./icon/move.png" alt="" id="zoomIcon" />
+					</div>
 				</div>
 
 				<div class="demo no-select">
@@ -216,18 +215,10 @@
 
 					
 					<div class="moblieZoom">
-
-						<div class="zoom-in">
-							<img src="./icon/more.png" alt="">
+						<div class="ZoomGroup2">
+							<img src="./icon/more.png" id="Zoom-out2" alt="">
+							<img src="./icon/line.png" id="Zoom-in2" alt="">
 						</div>
-						
-						<div class="zoom-out">
-							<img src="./icon/line.png" alt="">
-						</div>
-
-						<!-- <div class="vertical-slider-container">
-						  <input type="range" id="vertical-slider" min="0" max="100" value="50" orient="vertical" class="slider">
-						</div> -->
 					</div>
 
 					<!-- 输入区 -->
@@ -242,7 +233,7 @@
 					
 						<div id="image-container-zoom"
 							style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
-							<img id="voice-image-zoom" class="voice_img" src="./icon/voice.png" alt="voice"
+							<img id="voice-image-zoom" class="voice_img" src="./icon/voice-zoom.png" alt="voice"
 								style="width: 50%;height: 50%;" />
 						</div>
 
@@ -522,91 +513,193 @@
 		}, 500); // 1000毫秒后隐藏，可以根据需要调整这个时间
 	});
 
+
+	/*PC端的点击缩放*/
 	document.addEventListener('DOMContentLoaded', function () {
-			const media = document.getElementById('video');
-			const zoomIcon = document.getElementById('zoomIcon'); 
+		const media = document.getElementById('video');
+  		const zoomClick = document.querySelector('.ZoomClick');
+  		const moveWrapper = document.querySelector('.moveWrapper');
+  		const zoomIcon = document.getElementById('zoomIcon');
 
-			zoomIcon.addEventListener('wheel', function (event) {
-				event.preventDefault(); // 阻止默认的滚动行为
+  		let resetTimeout = null;
 
-				const scaleFactor = 1.1; // 缩放因子
-				let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
-
-				// 根据滚轮方向更新缩放比例
-				if (event.deltaY < 0) {
-					currentScale *= scaleFactor;
-				} else {
-					currentScale /= scaleFactor;
-					// 防止缩放过小导致视频不可见
-					if (currentScale < 0.1) currentScale = 0.1;
-				}
-
-				// 应用缩放变换，设置缩放原点为顶部 30% 的位置
-				media.style.transformOrigin = 'center 10%'; 
-	        	media.style.transform = `scale(${currentScale})`;
-			});
-		});
-
-	document.addEventListener('DOMContentLoaded', function () {
-	  const media = document.getElementById('video');
-	  const zoomInButton = document.querySelector('.zoom-in');
-	  const zoomOutButton = document.querySelector('.zoom-out');
-
-	  const scaleFactor = 1.1; // 缩放因子
-	  let currentScale = 1; // 当前缩放比例
-
-	  // 初始化缩放比例
-	  media.style.transformOrigin = 'center 10%'; 
-	  media.style.transform = `scale(${currentScale})`;
-
-	  // 缩放函数
-	  const zoom = (factor) => {
-	    currentScale *= factor;
-	    // 防止缩放过小导致媒体不可见
-	    if (currentScale < 0.1) currentScale = 0.1;
-	    media.style.transform = `scale(${currentScale})`;
-	  };
-
-	  // 监听 zoom-in 按钮的点击事件
-	  zoomInButton.addEventListener('click', function (event) {
-	    zoom(scaleFactor); // 放大
-	  });
-
-	  // 监听 zoom-out 按钮的点击事件
-	  zoomOutButton.addEventListener('click', function (event) {
-	    zoom(1 / scaleFactor); // 缩小
-	  });
+  		// 绑定点击事件，点击 moveWrapper 时将 ZoomClick 的 left 设置为 90%
+  		moveWrapper.addEventListener('click', function () {
+  		  zoomClick.style.left = '91%';
+  		  clearTimeout(resetTimeout);
+		
+  		  // 禁用 zoomIcon 的滚轮事件
+  		  zoomIcon.removeEventListener('wheel', handleWheel);
+		
+  		  // 重置定时器
+  		  resetTimeout = setTimeout(() => {
+  		    zoomClick.style.left = '120%';
+  		    // 重新启用 zoomIcon 的滚轮事件
+  		    zoomIcon.addEventListener('wheel', handleWheel);
+  		  }, 3000);
+  		});
+	
+  		// 绑定操作事件，当用户在 ZoomClick 内部进行操作时重置定时器
+  		zoomClick.addEventListener('click', function () {
+  		  clearTimeout(resetTimeout);
+  		  resetTimeout = setTimeout(() => {
+  		    zoomClick.style.left = '120%';
+  		    // 重新启用 zoomIcon 的滚轮事件
+  		    zoomIcon.addEventListener('wheel', handleWheel);
+  		  }, 3000);
+  		});
+	
+  		// 滚轮事件处理函数
+  		const handleWheel = (event) => {
+  		  	event.preventDefault(); // 阻止默认的滚动行为
+			
+  		  	const scaleFactor = 1.1; // 缩放因子
+  		  	let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
+			
+  		  	// 根据滚轮方向更新缩放比例
+  		  	if (event.deltaY < 0) {
+  		  	  currentScale *= scaleFactor;
+  		  	} else {
+  		  	  currentScale /= scaleFactor;
+  		  	  // 防止缩放过小导致视频不可见
+  		  	  if (currentScale < 0.1) currentScale = 0.1;
+  		  	}
+		  
+  		  	// 应用缩放变换，设置缩放原点为顶部 10% 的位置
+  		  	media.style.transformOrigin = 'center 10%'; 
+  		  	media.style.transform = `scale(${currentScale})`;
+  		};
+	
+  		// 初始绑定滚轮事件
+  		zoomIcon.addEventListener('wheel', handleWheel);
 	});
 
+	/*移动端zoom的点击事件*/
 	document.addEventListener('DOMContentLoaded', function () {
-	  const media = document.getElementById('video');
-	  const zoomInButton = document.querySelector('.zoom-in-2');
-	  const zoomOutButton = document.querySelector('.zoom-out-2');
+		const media = document.getElementById('video');
+        const zoomOutButton = document.getElementById('Zoom-out2');
+        const zoomInButton = document.getElementById('Zoom-in2');
+		const zoomGroup = document.querySelector('.ZoomGroup2');
 
-	  const scaleFactor = 1.1; // 缩放因子
-	  let currentScale = 1; // 当前缩放比例
+        const scaleLevels = [0.5, 0.75, 1.0, 1.5, 2.0]; // 缩放挡位
+        let currentScaleIndex = 2; // 初始索引为2，对应100%
+		let tem=(currentScaleIndex / (scaleLevels.length - 1)) * 100;
+      
+        // 初始化缩放比例
+        media.style.transformOrigin = 'center 10%'; 
+        media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
+    
+         // 更新 .ZoomGroup 的背景颜色
+		 const updateZoomGroupBackground = () => {
+  		  const percentage = (currentScaleIndex / (scaleLevels.length - 1)) * 100;
+				
+  		  // 逐步更新背景颜色
+  		  const step = 1; // 每次变化的百分比
+  		  const interval = 10; // 每次变化的间隔时间（毫秒）
+				
+  		  const intervalId = setInterval(() => {
+  		    if (tem < percentage) {
+  		      tem += step;
+  		      if (tem > percentage) tem = percentage;
+  		    } else if (tem > percentage) {
+  		      tem -= step;
+  		      if (tem < percentage) tem = percentage;
+  		    }
+		
+  		    const gradient = `linear-gradient(to bottom, #e1e1e1 ${100 - tem}%, white ${100-tem}%)`;
+  		    zoomGroup.style.background = gradient;
+		
+  		    if (tem === percentage) {
+  		      clearInterval(intervalId);
+  		    }
+  		  }, interval);
+  		};
 
-	  // 初始化缩放比例
-	  media.style.transformOrigin = 'center 10%'; 
-	  media.style.transform = `scale(${currentScale})`;
+	
+  		// 监听 Zoom-out 按钮的点击事件
+  		zoomOutButton.addEventListener('click', function (event) {
+  		  if (currentScaleIndex < scaleLevels.length - 1) {
+  		    currentScaleIndex++;
+  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
+  		    updateZoomGroupBackground();
+  		  }
+  		});
+	
+  		// 监听 Zoom-in 按钮的点击事件
+  		zoomInButton.addEventListener('click', function (event) {
+  		  if (currentScaleIndex > 0) {
+  		    currentScaleIndex--;
+  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
+  		    updateZoomGroupBackground();
+  		  }
+  		});
+	
+  		// 初始背景更新
+  		updateZoomGroupBackground();
+	});
 
-	  // 缩放函数
-	  const zoom = (factor) => {
-	    currentScale *= factor;
-	    // 防止缩放过小导致媒体不可见
-	    if (currentScale < 0.1) currentScale = 0.1;
-	    media.style.transform = `scale(${currentScale})`;
-	  };
+	
+	document.addEventListener('DOMContentLoaded', function () {
+		const media = document.getElementById('video');
+        const zoomOutButton = document.getElementById('Zoom-out');
+        const zoomInButton = document.getElementById('Zoom-in');
+		const zoomGroup = document.querySelector('.ZoomGroup');
 
-	  // 监听 zoom-in 按钮的点击事件
-	  zoomInButton.addEventListener('click', function (event) {
-	    zoom(scaleFactor); // 放大
-	  });
+        const scaleLevels = [0.5, 0.75, 1.0, 1.5, 2.0]; // 缩放挡位
+        let currentScaleIndex = 2; // 初始索引为2，对应100%
+		let tem=(currentScaleIndex / (scaleLevels.length - 1)) * 100;
+      
+        // 初始化缩放比例
+        media.style.transformOrigin = 'center 10%'; 
+        media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
+    
+         // 更新 .ZoomGroup 的背景颜色
+		 const updateZoomGroupBackground = () => {
+  		  const percentage = (currentScaleIndex / (scaleLevels.length - 1)) * 100;
+				
+  		  // 逐步更新背景颜色
+  		  const step = 1; // 每次变化的百分比
+  		  const interval = 10; // 每次变化的间隔时间（毫秒）
+				
+  		  const intervalId = setInterval(() => {
+  		    if (tem < percentage) {
+  		      tem += step;
+  		      if (tem > percentage) tem = percentage;
+  		    } else if (tem > percentage) {
+  		      tem -= step;
+  		      if (tem < percentage) tem = percentage;
+  		    }
+		
+  		    const gradient = `linear-gradient(to bottom, #e1e1e1 ${100 - tem}%, white ${100-tem}%)`;
+  		    zoomGroup.style.background = gradient;
+		
+  		    if (tem === percentage) {
+  		      clearInterval(intervalId);
+  		    }
+  		  }, interval);
+  		};
 
-	  // 监听 zoom-out 按钮的点击事件
-	  zoomOutButton.addEventListener('click', function (event) {
-	    zoom(1 / scaleFactor); // 缩小
-	  });
+	
+  		// 监听 Zoom-out 按钮的点击事件
+  		zoomOutButton.addEventListener('click', function (event) {
+  		  if (currentScaleIndex < scaleLevels.length - 1) {
+  		    currentScaleIndex++;
+  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
+  		    updateZoomGroupBackground();
+  		  }
+  		});
+	
+  		// 监听 Zoom-in 按钮的点击事件
+  		zoomInButton.addEventListener('click', function (event) {
+  		  if (currentScaleIndex > 0) {
+  		    currentScaleIndex--;
+  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
+  		    updateZoomGroupBackground();
+  		  }
+  		});
+	
+  		// 初始背景更新
+  		updateZoomGroupBackground();
 	});
 
 </script>
@@ -2227,7 +2320,7 @@
                 voiceImage.src = './icon/submitzoom.png';
                 imageContainer.style.backgroundColor = '#1bb14f';
             } else {
-                voiceImage.src = './icon/voice.png';
+                voiceImage.src = './icon/voice-zoom.png';
                 imageContainer.style.backgroundColor = '#fff';
             }
         }
@@ -2310,12 +2403,12 @@
 			if (voiceImage.src.includes('submitzoom.png')) {
     		    // 如果当前是 submitzoom.png，不做任何操作
     		    return;
-    		} else if (voiceImage.src.includes('voice.png')) {
+    		} else if (voiceImage.src.includes('voice-zoom.png')) {
     		    // 如果当前是 voice.png，切换到 pan.png
     		    voiceImage.src = './icon/pan.png';
     		} else {
     		    // 如果当前不是 voice.png，切换到 voice.png
-    		    voiceImage.src = './icon/voice.png';
+    		    voiceImage.src = './icon/voice-zoom.png';
     		}
 
 		});
@@ -2443,7 +2536,7 @@
         var imgSrc = $('#voice-image-zoom').attr('src');
 
        		 // 检查图片的 src 是否为 voice.png
-      		  if (imgSrc !== './icon/voice.png') {
+      		  if (imgSrc !== './icon/voice-zoom.png') {
           		  // 给 #message2 添加 hidden 类
           		  $('#message2').addClass('hidden1');
 
