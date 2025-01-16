@@ -58,6 +58,16 @@
 					</div>
 				</div>
 
+				<div class="ZoomClick">
+					<div class="zoom-in-2">
+						<img src="./icon/more.png" alt="">
+					</div>
+					
+					<div class="zoom-out-2">
+						<img src="./icon/line.png" alt="">
+					</div>
+				</div>
+
 				<div class="bottom-icon">
 					Zoom
 					<img src="./icon/move.png" alt="" id="zoomIcon" />
@@ -91,6 +101,12 @@
 				<div id="media">
 					
 
+					<div class="Hint">
+
+						Long press for two seconds to activate the zoom
+
+						<button id="hint-button">I got it</button>
+					</div>
 
 					<div id="video-mask">
 
@@ -195,67 +211,86 @@
 						<div class="swiper-button-next swiper-button-white btn_4" id="next4"></div>
 					</div>
 
-
 					<!-- 缩放后的聊天面板 -->
-					<div class="panel-zoom">
-						<!-- 输入区 -->
-						<div class="zoom-bottom">
+				<div class="panel-zoom">
 
-							<!-- <audio src="" style="display: none;" id="zoomVoice"></audio> -->
-							<button id="speak-button" class="hidden1">Hold on and speak</button>
-							
-							<textarea class="form-control" id="message2"
-								placeholder="Type your message here..."></textarea>
+					
+					<div class="moblieZoom">
 
-						
-							<div id="image-container-zoom"
-								style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
-								<img id="voice-image-zoom" class="voice_img" src="./icon/voice.png" alt="voice"
-									style="width: 50%;height: 50%;" />
-							</div>
-
+						<div class="zoom-in">
+							<img src="./icon/more.png" alt="">
 						</div>
 						
-						<!-- 聊天区 -->
-						<div class="zoom-left" id="chat-messages-zoom">
-							
+						<div class="zoom-out">
+							<img src="./icon/line.png" alt="">
 						</div>
 
-						<!-- 功能区 -->
-						<div class="zoom-right">
-							<div class="option-item " data-name="avatar">
-								<div class="img_container" id="avatar-name">
-									<img i src="./icon/Digital Human.png" alt="" />
-								</div>
-								<label for="avatar-name">Avatar</label>
+						<!-- <div class="vertical-slider-container">
+						  <input type="range" id="vertical-slider" min="0" max="100" value="50" orient="vertical" class="slider">
+						</div> -->
+					</div>
+
+					<!-- 输入区 -->
+					<div class="zoom-bottom">
+
+						<!-- <audio src="" style="display: none;" id="zoomVoice"></audio> -->
+						<button id="speak-button" class="hidden1">Hold on and speak</button>
+						
+						<textarea class="form-control" id="message2"
+							placeholder="Type your message here..."></textarea>
+
+					
+						<div id="image-container-zoom"
+							style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
+							<img id="voice-image-zoom" class="voice_img" src="./icon/voice.png" alt="voice"
+								style="width: 50%;height: 50%;" />
+						</div>
+
+					</div>
+					
+					<!-- 聊天区 -->
+					<div class="zoom-left" id="chat-messages-zoom">
+						
+					</div>
+
+					<!-- 功能区 -->
+					<div class="zoom-right">
+						<div class="option-item " data-name="avatar">
+							<div class="img_container" id="avatar-name">
+								<img i src="./icon/Digital Human.png" alt="" />
 							</div>
-	
-							<div class="option-item" data-name="tts">
-								<div class="img_container" id="tts-selection_zoom">
-									<img src="./icon/cude.png" alt="" />
-								</div>
-	
-								<label for="tts-selection">TTS</label>
+							<label for="avatar-name">Avatar</label>
+						</div>
+
+						<div class="option-item" data-name="tts">
+							<div class="img_container" id="tts-selection_zoom">
+								<img src="./icon/cude.png" alt="" />
 							</div>
-	
-							<div class="option-item" data-name="voice">
-								<div class="img_container" id="avatar-voice">
-									<img src="./icon/voiceLine.png" alt="" />
-								</div>
-								<label for="avatar-voice">Voice</label>
+
+							<label for="tts-selection">TTS</label>
+						</div>
+
+						<div class="option-item" data-name="voice">
+							<div class="img_container" id="avatar-voice">
+								<img src="./icon/voiceLine.png" alt="" />
 							</div>
-	
-							<div class="option-item" data-name="background">
-								<div class="img_container" id="avatar-background">
-									<img src="./icon/background.png" alt="" />
-								</div>
-								<label for="avatar-background">Background</label>
+							<label for="avatar-voice">Voice</label>
+						</div>
+
+						<div class="option-item" data-name="background">
+							<div class="img_container" id="avatar-background">
+								<img src="./icon/background.png" alt="" />
 							</div>
+							<label for="avatar-background">Background</label>
 						</div>
 					</div>
 
+				</div>
+
 
 				</div>
+
+				
 
 
 			</div>
@@ -488,35 +523,91 @@
 	});
 
 	document.addEventListener('DOMContentLoaded', function () {
-		const media = document.getElementById('media');
-		const zoomIcon = document.getElementById('zoomIcon'); 
+			const media = document.getElementById('video');
+			const zoomIcon = document.getElementById('zoomIcon'); 
 
-		zoomIcon.addEventListener('wheel', function (event) {
-			event.preventDefault(); // 阻止默认的滚动行为
+			zoomIcon.addEventListener('wheel', function (event) {
+				event.preventDefault(); // 阻止默认的滚动行为
 
-			const scaleFactor = 1.1; // 缩放因子
-			let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
+				const scaleFactor = 1.1; // 缩放因子
+				let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
 
-			// 根据滚轮方向更新缩放比例
-			if (event.deltaY < 0) {
-				currentScale *= scaleFactor;
-			} else {
-				currentScale /= scaleFactor;
-				// 防止缩放过小导致视频不可见
-				if (currentScale < 0.1) currentScale = 0.1;
-			}
+				// 根据滚轮方向更新缩放比例
+				if (event.deltaY < 0) {
+					currentScale *= scaleFactor;
+				} else {
+					currentScale /= scaleFactor;
+					// 防止缩放过小导致视频不可见
+					if (currentScale < 0.1) currentScale = 0.1;
+				}
 
-			// 应用缩放变换，设置缩放原点为顶部 30% 的位置
-			media.style.transformOrigin = 'center 10%'; 
-        	media.style.transform = `scale(${currentScale})`;
+				// 应用缩放变换，设置缩放原点为顶部 30% 的位置
+				media.style.transformOrigin = 'center 10%'; 
+	        	media.style.transform = `scale(${currentScale})`;
+			});
 		});
+
+	document.addEventListener('DOMContentLoaded', function () {
+	  const media = document.getElementById('video');
+	  const zoomInButton = document.querySelector('.zoom-in');
+	  const zoomOutButton = document.querySelector('.zoom-out');
+
+	  const scaleFactor = 1.1; // 缩放因子
+	  let currentScale = 1; // 当前缩放比例
+
+	  // 初始化缩放比例
+	  media.style.transformOrigin = 'center 10%'; 
+	  media.style.transform = `scale(${currentScale})`;
+
+	  // 缩放函数
+	  const zoom = (factor) => {
+	    currentScale *= factor;
+	    // 防止缩放过小导致媒体不可见
+	    if (currentScale < 0.1) currentScale = 0.1;
+	    media.style.transform = `scale(${currentScale})`;
+	  };
+
+	  // 监听 zoom-in 按钮的点击事件
+	  zoomInButton.addEventListener('click', function (event) {
+	    zoom(scaleFactor); // 放大
+	  });
+
+	  // 监听 zoom-out 按钮的点击事件
+	  zoomOutButton.addEventListener('click', function (event) {
+	    zoom(1 / scaleFactor); // 缩小
+	  });
 	});
 
-</script>
+	document.addEventListener('DOMContentLoaded', function () {
+	  const media = document.getElementById('video');
+	  const zoomInButton = document.querySelector('.zoom-in-2');
+	  const zoomOutButton = document.querySelector('.zoom-out-2');
 
-<script>
+	  const scaleFactor = 1.1; // 缩放因子
+	  let currentScale = 1; // 当前缩放比例
 
+	  // 初始化缩放比例
+	  media.style.transformOrigin = 'center 10%'; 
+	  media.style.transform = `scale(${currentScale})`;
 
+	  // 缩放函数
+	  const zoom = (factor) => {
+	    currentScale *= factor;
+	    // 防止缩放过小导致媒体不可见
+	    if (currentScale < 0.1) currentScale = 0.1;
+	    media.style.transform = `scale(${currentScale})`;
+	  };
+
+	  // 监听 zoom-in 按钮的点击事件
+	  zoomInButton.addEventListener('click', function (event) {
+	    zoom(scaleFactor); // 放大
+	  });
+
+	  // 监听 zoom-out 按钮的点击事件
+	  zoomOutButton.addEventListener('click', function (event) {
+	    zoom(1 / scaleFactor); // 缩小
+	  });
+	});
 
 </script>
 
@@ -1046,6 +1137,10 @@
 	setupHoverEvents('#stop_wrapper');
 	setupHoverEvents('#custom-player');
 	setupHoverEvents('#zoomIcon');
+	setupHoverEvents('.ZoomClick');
+
+
+	
 
     // 封装检查和切换视频遮罩高度的函数
     function TVideoMask() {
@@ -2012,6 +2107,8 @@
 
 <!-- 缩放区域的Ui控制，缩放区的消息发送 -->
 <script>
+
+	
 	 function checkWindowSize() {
 	    const panelZoom = document.querySelector('.panel-zoom');
 		const labels = document.querySelectorAll('.option-item label');
@@ -2220,6 +2317,7 @@
     		    // 如果当前不是 voice.png，切换到 voice.png
     		    voiceImage.src = './icon/voice.png';
     		}
+
 		});
 
 		const imageContainerzoom = $('#image-container-zoom');
@@ -2646,6 +2744,95 @@ checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查�
 
 	// 监听窗口大小变化，动态调整宽度
 	window.addEventListener('resize', syncWidth);
+</script>
+
+<script>
+
+  const media = document.getElementById('media');
+  const moblieZoom = document.querySelector('.moblieZoom');
+
+  let touchTimeout = null;
+  let resetTimeout = null; // 用于重置 left 属性的定时器
+
+  // 定义触摸开始事件的处理函数
+  const handleTouchStart = (event) => {
+    // 清除之前的定时器
+	
+    if (touchTimeout) {
+      clearTimeout(touchTimeout);
+    }
+    if (resetTimeout) {
+      clearTimeout(resetTimeout);
+    }
+
+    // 设置一个新的定时器，2秒后执行
+    touchTimeout = setTimeout(() => {
+      // 更新 .moblieZoom 的 left 属性
+      moblieZoom.style.left = '88%';
+    }, 2000);
+
+  };
+
+  // 定义触摸结束事件的处理函数
+  const handleTouchEnd = (event) => {
+    // 清除定时器，防止在2秒内松手时执行
+    if (touchTimeout) {
+      clearTimeout(touchTimeout);
+    }
+
+    // 无论用户在 .moblieZoom 内部还是外部松手，2秒后重置 left 属性
+    resetTimeout = setTimeout(() => {
+      moblieZoom.style.left = '120%';
+    }, 2000);
+	
+  };
+
+  // 定义媒体查询
+  const mediaQuery = window.matchMedia('(max-width: 1000px)');
+
+  // 根据屏幕宽度添加或移除事件监听器
+  const toggleEventListeners = (matches) => {
+    if (matches) {
+	  
+      // 屏幕宽度小于1000px，添加事件监听器
+      media.addEventListener('touchstart', handleTouchStart);
+      media.addEventListener('touchend', handleTouchEnd);
+    } else {
+      // 屏幕宽度大于1000px，移除事件监听器
+      media.removeEventListener('touchstart', handleTouchStart);
+      media.removeEventListener('touchend', handleTouchEnd);
+      // 重置 .moblieZoom 的 left 属性
+      
+	  moblieZoom.style.left = '88%';
+      if (resetTimeout) {
+        clearTimeout(resetTimeout);
+      }
+
+    }
+  };
+
+  // 初始检查
+  toggleEventListeners(mediaQuery.matches);
+
+  // 监听屏幕尺寸变化
+  mediaQuery.addListener(toggleEventListeners);
+
+  const hintButton = document.getElementById('hint-button');
+  const hintDiv = document.querySelector('.Hint');
+
+  
+
+  // 检查是否已经显示过提示
+  if (!localStorage.getItem('hintShown')) {
+    hintDiv.style.display = 'flex'; // 显示提示
+    localStorage.setItem('hintShown', 'true'); // 标记提示已显示
+  }
+
+  // 监听按钮的点击事件
+  hintButton.addEventListener('click', function () {
+    hintDiv.style.display = 'none'; // 隐藏提示
+  });
+
 </script>
 
 </html>
