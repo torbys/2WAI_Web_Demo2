@@ -85,8 +85,8 @@
 .chat-container {
 	flex: 1;
 	min-height: 0;
-	max-height: 980px;
-	height: 980px;
+	max-height: 930px;
+	height: 930px;
 	border: none;
 	background-color: #f9f9f9;
 	padding: 20px;
@@ -334,7 +334,7 @@
 }
 
 #media {
-	transform-origin: center center;
+	transform-origin: center 70%;
 	/* 确保从中心缩放 */
 	transition: transform 0.25s ease;
 	/* 添加平滑过渡效果 */
@@ -399,7 +399,7 @@ body.dark-mode {
 	background-color: #1a1a1a;
 }
 
-.dark-mode .bot-message::before {
+.dark-mode .bot-message::e {
 	border-color: transparent #fff transparent transparent;
 }
 
@@ -1212,8 +1212,7 @@ body.dark-mode {
 	right: 80%;
 	transform: translateY(-50%);
 	display: inline-block;
-	/* 使容器可以设置宽度和高度 */
-	z-index: 100;
+	z-index: 1000;
 }
 
 
@@ -1572,6 +1571,8 @@ body.dark-mode {
 	display: none;
 }
 
+
+
 #file-name {
 	display: none;
 }
@@ -1669,6 +1670,17 @@ body.dark-mode {
 	font-size: 1em;
 	/* 其他样式根据您的设计调整 */
 }
+
+/* #chunk-size::before{
+	content: '';
+	position: absolute;
+	border: 12px solid;
+	z-index: 100;
+	border-color: #5a5e68 transparent transparent  transparent  ;
+	right: 25px;
+	top: 4px;
+} */
+
 
 .slider-with-input {
 	position: relative;

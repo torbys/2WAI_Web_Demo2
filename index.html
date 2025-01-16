@@ -111,7 +111,7 @@
 				  <source src="./video/base.mp4" type="video/mp4"> 
 				</video>-->
 
-					<audio id="audio" autoplay="true"></audio>
+					<audio id="audio" autoplay="false"></audio>
 					<video id="video" autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
 
 
@@ -201,7 +201,7 @@
 						<!-- 输入区 -->
 						<div class="zoom-bottom">
 
-							<audio src="" style="display: none;" id="zoomVoice"></audio>
+							<!-- <audio src="" style="display: none;" id="zoomVoice"></audio> -->
 							<button id="speak-button" class="hidden1">Hold on and speak</button>
 							
 							<textarea class="form-control" id="message2"
@@ -470,7 +470,9 @@
 		numberBoxContainer.style.display = 'block';
 
 		var sliderWidth = e.target.offsetWidth;
-		var numberBoxLeft = (value / e.target.max) * (sliderWidth - 100) + 'px';
+		var numberBoxLeft = (value / e.target.max) * (sliderWidth - 70) + 'px';
+
+		console.log(numberBoxLeft);
 
 		numberBoxContainer.style.left = numberBoxLeft;
 
@@ -487,7 +489,7 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 		const media = document.getElementById('media');
-		const zoomIcon = document.getElementById('zoomIcon'); // 这个元素似乎是用来触发缩放的，但通常它不会是一个图标，而是一个覆盖在视频上的透明层或视频本身
+		const zoomIcon = document.getElementById('zoomIcon'); 
 
 		zoomIcon.addEventListener('wheel', function (event) {
 			event.preventDefault(); // 阻止默认的滚动行为
@@ -504,11 +506,17 @@
 				if (currentScale < 0.1) currentScale = 0.1;
 			}
 
-			// 应用缩放变换
-			media.style.transformOrigin = 'center center'; 
-			media.style.transform = `scale(${currentScale})`;
+			// 应用缩放变换，设置缩放原点为顶部 30% 的位置
+			media.style.transformOrigin = 'center 10%'; 
+        	media.style.transform = `scale(${currentScale})`;
 		});
 	});
+
+</script>
+
+<script>
+
+
 
 </script>
 
@@ -1214,6 +1222,8 @@
 				// 获取 audio-preview 元素
 				var audioPreview = $('.audio-preview');
 
+				
+
 				// 检查 audio-preview 是否没有 hidden 类
 				if (!audioPreview.hasClass('hidden')) {
 					// 如果没有 hidden 类，则添加 hidden 类
@@ -1246,6 +1256,11 @@
 				console.log('Sending: ' + message);
 				console.log('sessionid: ', sessionid);
 
+				const audio = document.getElementById('audio');
+        		audio.play().catch(error => {
+        		    console.error('无法自动播放音频:', error);
+        		});
+
 
 				/*网络获取机械人回复*/
 				fetch(host + '/human', {
@@ -1275,6 +1290,8 @@
 						// 可选：显示错误消息
 						addMessage("Sorry, an error occurred. Please try again later.", false);
 					});
+
+				
 
 				// 清空入框并将焦点重新放在输入框上
 				$('#message').val('');
@@ -1852,7 +1869,7 @@
 
 				// 获取提交按钮元素
 				const loading = document.querySelector('.btn.btn-default');
-p
+
 				// 在发送请求前替换为加载动画
 				const loaderDiv = document.createElement('div');
 				loaderDiv.className = 'loader2';
@@ -1864,7 +1881,7 @@ p
 					body: formData
 				})
 				.then(response => response.json())
-				.then(data => {pu
+				.then(data => {
 					console.log('返回的数据是:', data); // 打印保存结果
 					// 请求完成后换回原来的图片
 					loading.innerHTML = '<img class="submit" src="./icon/base_submit.png" alt="submit" />'; // 恢复原来的图片
@@ -2226,6 +2243,11 @@ p
 
 				voiceImage1.src = './icon/voice.png';
                 imageContainer1.style.backgroundColor = '#fff';
+
+				const audio = document.getElementById('audio');
+        		audio.play().catch(error => {
+        		    console.error('无法自动播放音频:', error);
+        		});
 				
 				/*网络获取机械人回复*/
 				fetch(host + '/human', {
@@ -2270,8 +2292,12 @@ p
 				
 		    console.log('Sending: ' + message);
 		    console.log('sessionid: ', sessionid);
-				
 
+			const audio = document.getElementById('audio');
+        	audio.play().catch(error => {
+        	    console.error('无法自动播放音频:', error);
+        	});
+				
 		    /*网络获取机械人回复*/
 		    fetch(host + '/human', {
 		        body: JSON.stringify({
@@ -2426,7 +2452,6 @@ function bindRecordEvents() {
 	// 添加按下效果
 	$(this).addClass('pressed');
 
-
     // 如果已经在录制中，直接返回
     if (isRecording) return;
 
@@ -2567,22 +2592,37 @@ async function getMediaStream() {
     }
 }
 
+// 一直尝试获取麦克风权限，直到用户授权
+async function requestMicrophonePermission() {
+    while (true) {
+        try {
+            const stream = await getMediaStream();
+            console.log('麦克风流已获取');
+            bindRecordEvents();
+            break; // 如果成功获取麦克风流，退出循环
+        } catch (error) {
+            // 检查错误类型，如果是用户明确拒绝，则不再弹出提示
+            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                console.error('用户明确拒绝了麦克风权限请求');
+                alert('麦克风权限被拒绝。请在浏览器设置中手动开启麦克风权限。');
+                break; // 退出循环，不再尝试
+            } else {
+                console.error('无法获取麦克风流:', error);
+                alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+                // 等待用户操作，避免立即重新请求
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+    }
+}
 
 function checkBackgroundColor() {
 
-    if (progress === 100) {
+    if (progress >= 100) {
 		console.log("add speak");
+		requestMicrophonePermission();
 		clearInterval(checkBgColorInterval)
-		// 请求麦克风流
-
-        getMediaStream().then(stream => {
-            console.log('麦克风流已获取');
-			bindRecordEvents()
-        }).catch(error => {
-            console.error('无法获取麦克风流:', error);
-        });
     }else{
-		
 		removeRecordEvents()
 	}
 
@@ -2592,7 +2632,6 @@ function checkBackgroundColor() {
 checkBackgroundColor();
 
 checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查一次
-
 </script>
 
 <!-- ------------输入框宽度同步---------------- -->
