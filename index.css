@@ -105,7 +105,7 @@
 }
 
 .chat-container.active {
-	max-height: 695px;
+	max-height: 690px;
 }
 
 /* 自定义滚动条样式 */
@@ -1317,11 +1317,6 @@ body.dark-mode {
 		height: 100px;
 	} */
 
-.active-border {
-	border: 5px solid white;
-	/* 白色边框 */
-}
-
 #swiper4 .swiper-slide {
 	text-align: center;
 	font-size: 18px;
@@ -1744,7 +1739,7 @@ body.dark-mode {
 	display: flex;
 	align-items: center;
 	justify-self: center;
-	margin-left: 2px;
+	margin-left: 5px;
 	transition: all 0.5s;
 }
 
@@ -2164,7 +2159,7 @@ body.dark-mode {
 		border: none;
 		object-fit: cover;
 	}
-	
+
 	.swiper-button-prev,
 	.swiper-button-next {
 		opacity: 0;
@@ -2175,6 +2170,8 @@ body.dark-mode {
 		z-index: 100;
 		display: none;
 	}
+
+	
 	
 	#swiper1 .swiper-slide {
 		width: 40px;
@@ -2345,12 +2342,19 @@ body.dark-mode {
 		background-color: rgba(0, 0, 0, 0.7);
 		color: white;
 		font-size: 14px;
-		display: flex;
+		display: none;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
 		border-radius: 12px;
 		z-index: 1000;
+	}
+
+	.Hint-message{
+		text-align: center;
+		color: white;
+		font-size: 16px;
+		width: 80%;
 	}
 
 	.Hint button{

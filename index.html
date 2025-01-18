@@ -102,7 +102,10 @@
 
 					<div class="Hint">
 
-						Long press for two seconds to activate the zoom
+						<div class="Hint-message">
+							Long press for two seconds to activate the zoom
+						</div>
+						
 
 						<button id="hint-button">I got it</button>
 					</div>
@@ -465,6 +468,20 @@
 	var dataAvatars = [];			//获取的模型人物名字集合
 	var datatVoices = [];			//获取的声音集合
 
+	// 检查并显示 Hint 的函数
+	function checkAndShowHint() {
+		const mediaQuery = window.matchMedia('(max-width: 1000px)');
+	    if (mediaQuery.matches) {
+	        // 屏幕宽度小于1000px且加载完成，显示 Hint
+	        const hint = document.querySelector('.Hint');
+	        hint.style.display = 'flex';
+	    } else {
+	        // 否则，隐藏 Hint
+	        const hint = document.querySelector('.Hint');
+	        hint.style.display = 'none';
+	    }
+	}
+
 	// 显示 loading 提示的函数
 	function showLoading() {
 		var loadingElement = document.querySelector('.Error-Dialog');
@@ -476,6 +493,7 @@
 	function hideLoading() {
 		var loadingElement = document.querySelector('.Error-Dialog');
 		loadingElement.classList.remove('pop');
+		checkAndShowHint();
 		document.body.style.pointerEvents = 'auto';
 	}
 
@@ -513,8 +531,7 @@
 		}, 500); // 1000毫秒后隐藏，可以根据需要调整这个时间
 	});
 
-
-	/*PC端的点击缩放*/
+	/*PC端的滑轮缩放*/
 	document.addEventListener('DOMContentLoaded', function () {
 		const media = document.getElementById('video');
   		const zoomClick = document.querySelector('.ZoomClick');
@@ -638,7 +655,7 @@
   		updateZoomGroupBackground();
 	});
 
-	
+	/*PC端zoom的点击事件*/
 	document.addEventListener('DOMContentLoaded', function () {
 		const media = document.getElementById('video');
         const zoomOutButton = document.getElementById('Zoom-out');
@@ -2586,7 +2603,7 @@
                		if (checkBgColorInterval) {
                   		  clearInterval(checkBgColorInterval); // 清除当前计时器
                		}
-                	checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 重新启动计时器
+                	checkBgColorInterval = setInterval(checkMicrophoneConnection, 1000); // 重新启动计时器
 	            } else {
 	                // 如果没有 hidden 类，自动开始增加进度
 	                autoProgress();
@@ -2615,155 +2632,131 @@ let Record_flag = true; //判断是停止还是录音
 const longPressThreshold = 500; // 长按阈值，单位为毫秒
 // 长按定时器
 let longPressTimer = null;
-// 定义录音按钮的事件处理函数
-// function addRecordEvents() {
 
-// 	// 页面加载时请求麦克风权限并存储流
-// 	navigator.mediaDevices.getUserMedia({ audio: true })
-//     .then(stream => {
-//         console.log("麦克风权限已获取");
-//         audioStream = stream; // 存储麦克风流
-//         // 可以在这里做一些初始化工作，例如预加载录音相关的资源
-//     })
-//     .catch(error => {
-//         console.error("无法获取麦克风权限:", error);
-//         alert("无法获取麦克风权限，请确保麦克风权限已授予。");
-//     });
-// }
-
-// var speakButton = document.getElementById(speak-button);
 
 // 绑定录音事件
 function bindRecordEvents() {
     console.log("绑定录音事件");
+
+	const media = document.getElementById('media');
+
     $('#speak-button').on('touchstart', function (event) {
-    console.log("触摸开始....");
-    event.preventDefault(); // 防止默认行为
+	    console.log("触摸开始....");
+	    event.preventDefault(); // 防止默认行为
 
-	// 添加按下效果
-	$(this).addClass('pressed');
+		// 添加按下效果
+		$(this).addClass('pressed');
 
-    // 如果已经在录制中，直接返回
-    if (isRecording) return;
+	    // 如果已经在录制中，直接返回
+	    if (isRecording) return;
 
-    // 设置长按定时器
-    longPressTimer = setTimeout(() => {
-        // 如果已经获取了麦克风流，则直接使用这个流，否则再次请求权限
-        if (audioStream) {
-            mediaRecorder = new MediaRecorder(audioStream);
-            mediaRecorder.ondataavailable = (event) => {
-                audioChunks.push(event.data);
-            };
-            mediaRecorder.start(); // 开始录制
-            audioChunks = []; // 初始化音频数据数组
-            isRecording = true; // 设置录制状态为 true
-        } else {
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    audioStream = stream; // 存储麦克风流
-                    mediaRecorder = new MediaRecorder(stream);
-                    mediaRecorder.ondataavailable = (event) => {
-                        audioChunks.push(event.data); // 当有音频数据可用时，将其添加到 audioChunks 数组中
-                        console.log('Audio chunk received:', event.data); // 输出当前音频数据片段
-                        console.log('Audio chunks length:', audioChunks.length); // 输出音频数据
-                    };
-                    mediaRecorder.start(); // 开始录制
-                    audioChunks = []; // 初始化音频数据数组
-                    isRecording = true; // 设置录制状态为 true
-                })
-                .catch(error => {
-                    console.error('Error accessing microphone:', error);
-                    alert('Unable to access microphone. Please ensure microphone permissions are granted.');
-                    isRecording = false; // 重置录制状态
-                });
-        }
-    }, longPressThreshold);
-});
+		// 移除之前的触摸事件监听器
+		media.removeEventListener('touchstart', handleTouchStart);
+    	media.removeEventListener('touchend', handleTouchEnd);
 
-$('#speak-button').on('touchend', function (event) {
-    console.log("触摸结束....");
-    event.preventDefault(); // 防止默认行为
+	    // 设置长按定时器
+	    longPressTimer = setTimeout(() => {
+	        // 如果已经获取了麦克风流，则直接使用这个流，否则再次请求权限
+	        if (audioStream) {
+	            mediaRecorder = new MediaRecorder(audioStream);
+	            mediaRecorder.ondataavailable = (event) => {
+	                audioChunks.push(event.data);
+	            };
+	            mediaRecorder.start(); // 开始录制
+	            audioChunks = []; // 初始化音频数据数组
+	            isRecording = true; // 设置录制状态为 true
+	        } 
+	    }, longPressThreshold);
+	});
 
-	// 移除按下效果
-	$(this).removeClass('pressed');
+	$('#speak-button').on('touchend', function (event) {
+	    console.log("触摸结束....");
+	    event.preventDefault(); // 防止默认行为
 
-    // 清除长按定时器
-    if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-    }
+		// 移除按下效果
+		$(this).removeClass('pressed');
 
-    // 如果正在录制中，停止录制
-    if (isRecording) {
-        mediaRecorder.stop(); // 停止录音
+	    // 清除长按定时器
+	    if (longPressTimer) {
+	        clearTimeout(longPressTimer);
+	        longPressTimer = null;
+	    }
 
-        // 保存录音文件
-        mediaRecorder.onstop = () => {
-            console.log("收集开始....");
+		// 重新添加触摸事件监听器
+		media.addEventListener('touchstart', handleTouchStart);
+    	media.addEventListener('touchend', handleTouchEnd);
 
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // 将音频数据转换为 Blob 对象
-            const fileName = generateRandomFileName('.wav'); // 生成随机文件名
-            const formData = new FormData(); // 创建 FormData 对象
+	    // 如果正在录制中，停止录制
+	    if (isRecording) {
+	        mediaRecorder.stop(); // 停止录音
 
-            // 设置音频播放器的源为刚刚的音频文件
-            const audioUrl = URL.createObjectURL(audioBlob);
-            $('#zoomVoice').attr('src', audioUrl);
-            // $('#zoomVoice').attr('autoplay', 'autoplay');
+	        // 保存录音文件
+	        mediaRecorder.onstop = () => {
+	            console.log("收集开始....");
 
-            formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
+	            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // 将音频数据转换为 Blob 对象
+	            const fileName = generateRandomFileName('.wav'); // 生成随机文件名
+	            const formData = new FormData(); // 创建 FormData 对象
 
-            // 获取 voice-image-zoom 元素
-            const voiceImageZoom = document.getElementById('voice-image-zoom');
-            const voiceImageZoomParent = voiceImageZoom.parentNode;
+	            // 设置音频播放器的源为刚刚的音频文件
+	            const audioUrl = URL.createObjectURL(audioBlob);
+	            $('#zoomVoice').attr('src', audioUrl);
+	            // $('#zoomVoice').attr('autoplay', 'autoplay');
 
-            // 在发送请求前替换为加载动画
-            const loaderDiv = document.createElement('div');
-            loaderDiv.className = 'loader2';
-            loaderDiv.style.width = '50%'; // 设置加载动画的宽度
-            loaderDiv.style.height = '50%'; // 设置加载动画的高度
-            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
+	            formData.append('audioFile', audioBlob, fileName); // 将音频 Blob 添加到 FormData 中
 
-            fetch('http://18.237.173.80:7864/uploadAudio', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('返回的数据是:', data); // 打印保存结果
+	            // 获取 voice-image-zoom 元素
+	            const voiceImageZoom = document.getElementById('voice-image-zoom');
+	            const voiceImageZoomParent = voiceImageZoom.parentNode;
 
-                // 请求成功后恢复原来的图片
-                const newVoiceImageZoom = document.createElement('img');
-                newVoiceImageZoom.id = 'voice-image-zoom';
-                newVoiceImageZoom.className = 'voice_img';
-                newVoiceImageZoom.src = './icon/pan.png';
-                newVoiceImageZoom.alt = 'voice';
-                newVoiceImageZoom.style.width = '50%';
-                newVoiceImageZoom.style.height = '50%';
-                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+	            // 在发送请求前替换为加载动画
+	            const loaderDiv = document.createElement('div');
+	            loaderDiv.className = 'loader2';
+	            loaderDiv.style.width = '50%'; // 设置加载动画的宽度
+	            loaderDiv.style.height = '50%'; // 设置加载动画的高度
+	            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-                simulateZoomSubmit(data.res);
-                isRecording = false; // 重置录制状态
-            })
-            .catch(error => {
-                console.error('Error saving audio:', error); // 打印保存错误信息
-                alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+	            fetch('http://18.237.173.80:7864/uploadAudio', {
+	                method: 'POST',
+	                body: formData
+	            })
+	            .then(response => response.json())
+	            .then(data => {
+	                console.log('返回的数据是:', data); // 打印保存结果
 
-				//错误时也换回来
-				const newVoiceImageZoom = document.createElement('img');
-                newVoiceImageZoom.id = 'voice-image-zoom';
-                newVoiceImageZoom.className = 'voice_img';
-                newVoiceImageZoom.src = './icon/pan.png';
-                newVoiceImageZoom.alt = 'voice';
-                newVoiceImageZoom.style.width = '50%';
-                newVoiceImageZoom.style.height = '50%';
-                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+	                // 请求成功后恢复原来的图片
+	                const newVoiceImageZoom = document.createElement('img');
+	                newVoiceImageZoom.id = 'voice-image-zoom';
+	                newVoiceImageZoom.className = 'voice_img';
+	                newVoiceImageZoom.src = './icon/pan.png';
+	                newVoiceImageZoom.alt = 'voice';
+	                newVoiceImageZoom.style.width = '50%';
+	                newVoiceImageZoom.style.height = '50%';
+	                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
+
+	                simulateZoomSubmit(data.res);
+	                isRecording = false; // 重置录制状态
+	            })
+	            .catch(error => {
+	                console.error('Error saving audio:', error); // 打印保存错误信息
+	                alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
+
+					//错误时也换回来
+					const newVoiceImageZoom = document.createElement('img');
+	                newVoiceImageZoom.id = 'voice-image-zoom';
+	                newVoiceImageZoom.className = 'voice_img';
+	                newVoiceImageZoom.src = './icon/pan.png';
+	                newVoiceImageZoom.alt = 'voice';
+	                newVoiceImageZoom.style.width = '50%';
+	                newVoiceImageZoom.style.height = '50%';
+	                voiceImageZoomParent.replaceChild(newVoiceImageZoom, loaderDiv); // 用原来的图片替换加载动画
 
 
-                isRecording = false; // 确保在错误情况下也重置状态
-            });
-        };
-    }
-});
+	                isRecording = false; // 确保在错误情况下也重置状态
+	            });
+	        };
+	    }
+	});
 }
 
 
@@ -2789,41 +2782,45 @@ async function getMediaStream() {
             return audioStream;
         } catch (error) {
             console.error('Error accessing microphone:', error);
-            alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+			alert('Unable to access microphone. Please ensure microphone permissions are granted. Additionally, the recording feature has been disabled.');
             throw error;
         }
     }
 }
 
 // 一直尝试获取麦克风权限，直到用户授权
-async function requestMicrophonePermission() {
-    while (true) {
-        try {
-            const stream = await getMediaStream();
-            console.log('麦克风流已获取');
-            bindRecordEvents();
-            break; // 如果成功获取麦克风流，退出循环
-        } catch (error) {
-            // 检查错误类型，如果是用户明确拒绝，则不再弹出提示
-            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                console.error('用户明确拒绝了麦克风权限请求');
-                alert('麦克风权限被拒绝。请在浏览器设置中手动开启麦克风权限。');
-                break; // 退出循环，不再尝试
-            } else {
-                console.error('无法获取麦克风流:', error);
-                alert('Unable to access microphone. Please ensure microphone permissions are granted.');
-                // 等待用户操作，避免立即重新请求
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-        }
-    }
-}
+// async function requestMicrophonePermission() {
+//     while (true) {
+//         try {
+//             const stream = await getMediaStream();
+//             console.log('麦克风流已获取');
+//             bindRecordEvents();
+//             break; // 如果成功获取麦克风流，退出循环
+//         } catch (error) {
+//             // 检查错误类型，如果是用户明确拒绝，则不再弹出提示
+//             if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+//                 console.error('用户明确拒绝了麦克风权限请求');
+//                 alert('麦克风权限被拒绝。请在浏览器设置中手动开启麦克风权限。');
+//                 break; // 退出循环，不再尝试
+//             } else {
+//                 console.error('无法获取麦克风流:', error);
+//                 alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+//                 // 等待用户操作，避免立即重新请求
+//                 await new Promise(resolve => setTimeout(resolve, 1000));
+//             }
+//         }
+//     }
+// }
 
-function checkBackgroundColor() {
+function checkMicrophoneConnection() {
 
     if (progress >= 100) {
 		console.log("add speak");
-		requestMicrophonePermission();
+		getMediaStream().then(() => {
+            bindRecordEvents();
+        }).catch(() => {
+           
+        });
 		clearInterval(checkBgColorInterval)
     }else{
 		removeRecordEvents()
@@ -2832,9 +2829,9 @@ function checkBackgroundColor() {
 }
 
 // 初始检查背景颜色
-checkBackgroundColor();
+checkMicrophoneConnection();
 
-checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查一次
+checkBgColorInterval = setInterval(checkMicrophoneConnection, 1000); // 每秒检查一次
 </script>
 
 <!-- ------------输入框宽度同步---------------- -->
@@ -2851,6 +2848,7 @@ checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查�
 	window.addEventListener('resize', syncWidth);
 </script>
 
+<!-- 长按出现缩放的功能 -->
 <script>
 
   const media = document.getElementById('media');
@@ -2921,6 +2919,9 @@ checkBgColorInterval = setInterval(checkBackgroundColor, 1000); // 每秒检查�
 
   // 监听屏幕尺寸变化
   mediaQuery.addListener(toggleEventListeners);
+
+
+  
 
   const hintButton = document.getElementById('hint-button');
   const hintDiv = document.querySelector('.Hint');
