@@ -450,7 +450,10 @@
 	// const host = 'https://g754ua0bibbm8a-7862.proxy.runpod.net'
 
 	//1.15的服务器
-	const host = 'http://18.237.173.80:7862'
+	// const host = 'http://18.237.173.80:7862'
+
+	//1.19日服务器
+	const host='http://54.214.223.101:7862'
 
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
@@ -464,6 +467,13 @@
 	var sessionid = "";				//会话id
 	var isConnected = false;		//链接状态
 	var canSubmit = 0; 				// 提交标志，默认为0
+	var streamType = "LLM_ONLY"     // 推流方式
+
+	//推流方式
+	// LLM_ONLY   
+	// AUDIO_ONLY 
+	// AUDIO_VIDEO
+	// AUDIO_VIDEO
 
 	var dataAvatars = [];			//获取的模型人物名字集合
 	var datatVoices = [];			//获取的声音集合
@@ -2081,7 +2091,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://18.237.173.80:7864/uploadAudio', {
+				fetch('http://54.214.223.101:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
@@ -2716,7 +2726,7 @@ function bindRecordEvents() {
 	            loaderDiv.style.height = '50%'; // 设置加载动画的高度
 	            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-	            fetch('http://18.237.173.80:7864/uploadAudio', {
+	            fetch('http://54.214.223.101:7864/uploadAudio', {
 	                method: 'POST',
 	                body: formData
 	            })

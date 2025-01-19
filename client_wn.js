@@ -30,7 +30,8 @@ function negotiate() {
                 type: offer.type,
                 avatarName: avatarName,  
                 ttsSelection: ttsSelection,            
-                avatarVoice: avatarVoice       
+                avatarVoice: avatarVoice,
+                streamType:streamType
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -63,13 +64,13 @@ function checkConnectionState() {
 
     console.log("现在的链接状态"+pc.connectionState);
 
-    if (!isConnected) {
-        console.log("连接有误继续loading");
-        showLoading(); // 显示 loading 提示
-    } else {
+    if (isConnected || pc.connectionState === "connected") {
         console.log("连接成功取消loading");
         hideLoading(); // 隐藏 loading 提示
         clearInterval(intervalId);
+    } else {
+        console.log("连接有误继续loading");
+        showLoading(); // 显示 loading 提示
     }
 }
 
