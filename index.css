@@ -185,7 +185,7 @@
 	position: absolute;
 	border: 12px solid;
 	border-color: transparent #fff transparent transparent;
-	left: 23px;
+	left: 24px;
 	top: 4px;
 }
 
@@ -596,6 +596,7 @@ body.dark-mode {
 	max-width: none;
 	margin: 0;
 	align-items: stretch;
+	--swiper-navigation-size:0;
 }
 
 .inner-container form {
@@ -1372,8 +1373,16 @@ body.dark-mode {
 	/* 初始透明度 */
 	transition: all 1s ease;
 	/* 定义过渡效果 */
-	top: 85%;
+	top: 83%;
+	width: 30px;
+	height: 50px;
 	display: none;
+}
+
+.swiper-button-prev img,
+.swiper-button-next img{
+	width: 100%;
+	height: 100%;
 }
 
 

@@ -153,8 +153,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="swiper-button-prev swiper-button-white btn_1" id="prev1"></div>
-						<div class="swiper-button-next swiper-button-white btn_1" id="next1"></div>
+						<div class="swiper-button-prev swiper-button-white btn_1" id="prev1">
+							<img src="./icon/preImg.png" alt="">
+						</div>
+						<div class="swiper-button-next swiper-button-white btn_1" id="next1">
+							<img src="./icon/nexImg.png" alt="">
+						</div>
 					</div>
 
 
@@ -164,8 +168,12 @@
 							<div class="swiper-wrapper">
 							</div>
 						</div>
-						<div class="swiper-button-prev swiper-button-white btn_2" id="prev2"></div>
-						<div class="swiper-button-next swiper-button-white btn_2" id="next2"></div>
+						<div class="swiper-button-prev swiper-button-white btn_2" id="prev2">
+							<img src="./icon/preImg.png" alt="">
+						</div>
+						<div class="swiper-button-next swiper-button-white btn_2" id="next2">
+							<img src="./icon/nexImg.png" alt="">
+						</div>
 					</div>
 
 
@@ -175,8 +183,12 @@
 							<div class="swiper-wrapper">
 							</div>
 						</div>
-						<div class="swiper-button-prev swiper-button-white btn_3" id="prev3"></div>
-						<div class="swiper-button-next swiper-button-white btn_3" id="next3"></div>
+						<div class="swiper-button-prev swiper-button-white btn_3" id="prev3">
+							<img src="./icon/preImg.png" alt="">
+						</div>
+						<div class="swiper-button-next swiper-button-white btn_3" id="next3">
+							<img src="./icon/nexImg.png" alt="">
+						</div>
 					</div>
 
 
@@ -201,8 +213,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="swiper-button-prev swiper-button-white btn_4" id="prev4"></div>
-						<div class="swiper-button-next swiper-button-white btn_4" id="next4"></div>
+						<div class="swiper-button-prev swiper-button-white btn_4" id="prev4">
+							<img src="./icon/preImg.png" alt="">
+						</div>
+						<div class="swiper-button-next swiper-button-white btn_4" id="next4">
+							<img src="./icon/nexImg.png" alt="">
+						</div>
 					</div>
 
 					<!-- 缩放后的聊天面板 -->
@@ -517,17 +533,18 @@
 
 	// 获取 form 元素
 	const form = document.getElementById('echo-form');
+	var chatContainerHeight;
 
 	// 定义一个函数来设置 chat-container 的高度
 	function setChatContainerHeightToVideo() {
 	    // 获取视频的实际显示高度
-		const videoHeight = video.offsetHeight;
+	    const videoHeight = video.offsetHeight;
 
-		// 获取 form 的高度
-		const formHeight = form.offsetHeight;
+	    // 获取 form 的高度
+	    const formHeight = form.offsetHeight;
 
-		// 计算 chat-container 的高度（视频高度减去 form 高度）
-		const chatContainerHeight = videoHeight - formHeight-15;
+	    // 计算 chat-container 的高度（视频高度减去 form 高度）
+	    chatContainerHeight = videoHeight - formHeight - 45;
 
 	    console.log("视频高度: " + videoHeight);
 	    console.log("表单高度: " + formHeight);
@@ -535,7 +552,6 @@
 
 	    // 设置 chat-container 的高度
 	    chatContainer.style.maxHeight = `${chatContainerHeight}px`;
-	    chatContainer.style.height = `${chatContainerHeight}px`;
 	}
 
 	// 监听页面加载完成事件
@@ -548,9 +564,6 @@
 	        video.addEventListener('loadedmetadata', setChatContainerHeightToVideo);
 	    }
 	});
-
-	// 监听视频尺寸变化事件（例如视频播放时尺寸改变）
-	video.addEventListener('resize', setChatContainerHeightToVideo);
 
 	/*max滑块的更改*/
 	document.getElementById('chunk-size').addEventListener('input', function (e) {
@@ -589,7 +602,7 @@
 
   		// 绑定点击事件，点击 moveWrapper 时将 ZoomClick 的 left 设置为 90%
   		moveWrapper.addEventListener('click', function () {
-  		  zoomClick.style.left = '91%';
+  		  zoomClick.style.left = '92%';
   		  //zoomClick.style.left = '91%';
   		  clearTimeout(resetTimeout);
 		
@@ -1263,12 +1276,13 @@
 		}
 
 		var chatContainer = document.querySelector('.chat-container');
-
 		// 切换当前的最大高度
 		if (chatContainer.classList.contains('active')) {
 			chatContainer.classList.remove('active');
+			chatContainer.style.maxHeight = `${chatContainerHeight}px`
 		} else {
 			chatContainer.classList.add('active');
+			chatContainer.style.maxHeight = '';
 		}
 
 	});
@@ -1581,7 +1595,7 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
-		showLoading();
+		//showLoading();
 
 		const response = await fetch(host + '/options.json');
 		const options = await response.json();
@@ -1732,7 +1746,7 @@
 		updateSwiper(swiper1);
 		updateSwiper(swiper2);
 		updateSwiper(swiper3);
-		start();
+		//start();
 	}
 
 	updateSwiper(swiper1);
@@ -2092,8 +2106,6 @@
 		if (!isRecording) return; // 如果不在录制中，直接返回
 		if (mediaRecorder && mediaRecorder.state !== 'inactive') {
 			mediaRecorder.stop(); // 停止录音
-			// mediaRecorder.stream.getTracks().forEach(track => track.stop()); // 停止音频流中的所有轨道
-
 			// 更新按钮状态
 			$(this).prop('disabled', true); // 禁用停止录制按钮
 			$('#record_wrapper').prop('disabled', false) // 启用开始录制按钮
@@ -2115,7 +2127,6 @@
 
 				// 设置音频播放器的源为刚刚的音频文件
 				$('#audio-player').attr('src', audioUrl);
-
 				// 设置文件名显示为上传的文件名
 				$('#file-name').text(fileName);
 
@@ -2144,9 +2155,7 @@
 					canSubmit = 1; // 设置可发送标志为1
 					// 自动调用 simulateSubmit 函数发送消息
 					simulateSubmit(data.res);
-				
-					// submitBtn.prop('disabled', false); // 启用提交按钮
-					// submitBtn.find('img').attr('src', submitImg); // 更换按钮的箭头为绿色的
+
 					isRecording = false; // 重置录制状态
 				})
 				.catch(error => {
@@ -2370,6 +2379,8 @@
 
 
         }
+
+		
 
         // 初始检查
         updatezoomListeners();
