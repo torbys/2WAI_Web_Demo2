@@ -64,7 +64,7 @@ function checkConnectionState() {
 
     console.log("现在的链接状态"+pc.connectionState);
 
-    if (isConnected || pc.connectionState === "connected") {
+    if (isConnected /*|| pc.connectionState === "connected"*/) {
         console.log("连接成功取消loading");
         hideLoading(); // 隐藏 loading 提示
         clearInterval(intervalId);
@@ -134,7 +134,7 @@ function start() {
         //     }
         // ]
 
-        //1.15日服务器
+        //1.15日turn
         config.iceServers=[
             {
                 urls: "turn:3.137.204.36:3478",
@@ -151,11 +151,13 @@ function start() {
     pc.addEventListener('track', (evt) => {
         isConnected = true
         if (evt.track.kind == 'video') {
+            console.log("视频被加载了")
 			var videoElement = document.getElementById('video');
 			        videoElement.srcObject = evt.streams[0];
 			        videoElement.loop = false; 
             // document.getElementById('video').srcObject = evt.streams[0];
         } else {
+            console.log("音频被加载了")
             document.getElementById('audio').srcObject = evt.streams[0];
             // document.getElementById('audio').play().catch(error => {
             //     console.error('无法自动播放音频:', error);

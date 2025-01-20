@@ -23,15 +23,7 @@
 	<audio src="./soundEffect/swiperScroll.mp3" style="display: none;" id="ScrollVoice"></audio>
 
 	<div class="outer-container">
-		<!-- <div class="main-title">
-        <h1>2WAI Demo</h1>
-        <div class="theme-toggle">
-            <button id="theme-toggle-btn">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </div> -->
-
+	
 		<div class="inner-container">
 
 			<!-- z左侧视频面板 -->
@@ -313,7 +305,7 @@
 
 					<div id="recordGroup1" class="hidden">
 						<div id="record_wrapper">
-							<img id="recording" src="./icon/recording.png" alt="microphone" />
+							<img id="recording" src="./icon/voice_dark.png" alt="microphone" />
 						</div>
 						<img id="recordLine" src="./icon/recordLine.png" alt="Line" />
 					</div>
@@ -429,6 +421,8 @@
 	</div>
 
 
+
+
 </body>
 
 <script>
@@ -453,7 +447,7 @@
 	// const host = 'http://18.237.173.80:7862'
 
 	//1.19日服务器
-	const host='http://54.214.223.101:7862'
+	const host='http://52.40.208.108:7862'
 
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
@@ -467,7 +461,7 @@
 	var sessionid = "";				//会话id
 	var isConnected = false;		//链接状态
 	var canSubmit = 0; 				// 提交标志，默认为0
-	var streamType = "LLM_ONLY"     // 推流方式
+	var streamType = "AUDIO_VIDEO"     // 推流方式
 
 	//推流方式
 	// LLM_ONLY   
@@ -515,6 +509,49 @@
 <script src="swiper.min.js"></script>
 
 <script>
+	// 获取视频元素
+	const video = document.getElementById('video');
+
+	// 获取 chat-container 元素
+	const chatContainer = document.querySelector('.chat-container');
+
+	// 获取 form 元素
+	const form = document.getElementById('echo-form');
+
+	// 定义一个函数来设置 chat-container 的高度
+	function setChatContainerHeightToVideo() {
+	    // 获取视频的实际显示高度
+		const videoHeight = video.offsetHeight;
+
+		// 获取 form 的高度
+		const formHeight = form.offsetHeight;
+
+		// 计算 chat-container 的高度（视频高度减去 form 高度）
+		const chatContainerHeight = videoHeight - formHeight-15;
+
+	    console.log("视频高度: " + videoHeight);
+	    console.log("表单高度: " + formHeight);
+	    console.log("聊天容器高度: " + chatContainerHeight);
+
+	    // 设置 chat-container 的高度
+	    chatContainer.style.maxHeight = `${chatContainerHeight}px`;
+	    chatContainer.style.height = `${chatContainerHeight}px`;
+	}
+
+	// 监听页面加载完成事件
+	window.addEventListener('DOMContentLoaded', () => {
+	    // 确保视频已加载元数据
+	    if (video.readyState > 0) {
+	        setChatContainerHeightToVideo();
+	    } else {
+	        // 如果视频尚未加载元数据，监听 'loadedmetadata' 事件
+	        video.addEventListener('loadedmetadata', setChatContainerHeightToVideo);
+	    }
+	});
+
+	// 监听视频尺寸变化事件（例如视频播放时尺寸改变）
+	video.addEventListener('resize', setChatContainerHeightToVideo);
+
 	/*max滑块的更改*/
 	document.getElementById('chunk-size').addEventListener('input', function (e) {
 		var value = e.target.value;
@@ -552,7 +589,8 @@
 
   		// 绑定点击事件，点击 moveWrapper 时将 ZoomClick 的 left 设置为 90%
   		moveWrapper.addEventListener('click', function () {
-  		  zoomClick.style.left = '91%';
+  		  //zoomClick.style.left = '91%';
+  		  zoomClick.style.left = '97%';
   		  clearTimeout(resetTimeout);
 		
   		  // 禁用 zoomIcon 的滚轮事件
@@ -1070,18 +1108,18 @@
     				}
         		},
 				slideChangeTransitionEnd: function () {
-					console.log("切换人物", this.activeIndex)
+					console.log("切换人物", this.realIndex)
 
 					for (var i = 0; i < this.slides.length; i++) {
 						this.slides[i].classList.remove('swiper-slide-active');
 					}
 					// 给当前选中的滑块添加边框样式
-					this.slides[this.activeIndex].classList.add('swiper-slide-active');
+					this.slides[this.realIndex].classList.add('swiper-slide-active');
 
 					
 					let len = 4; // 只展示前四个角色
 
-					let index = this.activeIndex % len; // 计算当前索引在0到3之间的值
+					let index = this.realIndex % len; // 计算当前索引在0到3之间的值
 
 					// let len = dataAvatars.length - 1
 
@@ -1523,22 +1561,22 @@
 	// 在现有的 JavaScript 代码中添加
 
 	function updateSwiper(swiper) {
-    if (window.innerWidth < 1000) {
-        // 当屏幕宽度小于1000像素时，设置slidesPerView为3，spaceBetween为20
-        if (swiper.params.slidesPerView !== 3) {
-            swiper.params.slidesPerView = 3;
-            swiper.params.spaceBetween = 25;
-            swiper.update();
-        }
-    } else {
-        // 当屏幕宽度大于或等于1000像素时，恢复slidesPerView为5，spaceBetween为30
-        if (swiper.params.slidesPerView !== 3) {
-            swiper.params.slidesPerView = 5;
-            swiper.params.spaceBetween = 30;
-            swiper.update();
-        }
-    }
-}
+	    if (window.innerWidth < 1000) {
+	        // 当屏幕宽度小于1000像素时，设置slidesPerView为3，spaceBetween为20
+	        if (swiper.params.slidesPerView !== 3) {
+	            swiper.params.slidesPerView = 3;
+	            swiper.params.spaceBetween = 25;
+	            swiper.update();
+	        }
+	    } else {
+	        // 当屏幕宽度大于或等于1000像素时，恢复slidesPerView为5，spaceBetween为30
+	        if (swiper.params.slidesPerView !== 3) {
+	            swiper.params.slidesPerView = 5;
+	            swiper.params.spaceBetween = 30;
+	            swiper.update();
+	        }
+	    }
+	}
 	console.log("选项初始化链接开始")
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
@@ -1559,6 +1597,7 @@
 
 		options.avatars.forEach(avatar => {
 			if (countAvatar < 4) { // 只处理前四个元素
+				//const imgSrc = `./icon/${vimgs[aindex]}.png`;
 				const imgSrc = `./icon/${vimgs[aindex]}.png`;
 				console.log('create avatar', imgSrc);
 
@@ -2091,7 +2130,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://54.214.223.101:7864/uploadAudio', {
+				fetch('http://52.40.208.108:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
@@ -2726,14 +2765,13 @@ function bindRecordEvents() {
 	            loaderDiv.style.height = '50%'; // 设置加载动画的高度
 	            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-	            fetch('http://54.214.223.101:7864/uploadAudio', {
+	            fetch('http://52.40.208.108:7864/uploadAudio', {
 	                method: 'POST',
 	                body: formData
 	            })
 	            .then(response => response.json())
 	            .then(data => {
 	                console.log('返回的数据是:', data); // 打印保存结果
-
 	                // 请求成功后恢复原来的图片
 	                const newVoiceImageZoom = document.createElement('img');
 	                newVoiceImageZoom.id = 'voice-image-zoom';
