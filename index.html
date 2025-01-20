@@ -589,8 +589,8 @@
 
   		// 绑定点击事件，点击 moveWrapper 时将 ZoomClick 的 left 设置为 90%
   		moveWrapper.addEventListener('click', function () {
+  		  zoomClick.style.left = '91%';
   		  //zoomClick.style.left = '91%';
-  		  zoomClick.style.left = '97%';
   		  clearTimeout(resetTimeout);
 		
   		  // 禁用 zoomIcon 的滚轮事件
