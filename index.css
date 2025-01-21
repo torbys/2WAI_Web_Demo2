@@ -22,8 +22,8 @@
 	background: #ffffff;
 	border-radius: 20px;
 	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-	padding: 25px;
 	border: none;
+	display: flex;
 }
 
 .main-title {
@@ -580,6 +580,8 @@ body.dark-mode {
 .dark-mode .option-line label {
 	color: white;
 }
+
+
 
 .control-panel {
 	display: none;
@@ -1842,13 +1844,6 @@ body.dark-mode {
 		display: none;
 	}
 
-	.panel {
-		position: absolute;
-		width: 100%;
-		top: 80%;
-		/* background-color: transparent; */
-	}
-
 	.panel-left{
 		border-radius: 12px;
 	}
@@ -2192,8 +2187,8 @@ body.dark-mode {
 	#swiper2,
 	#swiper3 {
 		width: 250px;
-		top: 32%;
-		left: 13%;
+		top: 36%;
+		left: 15%;
 	}
 
 	#swiper2 .swiper-slide,
@@ -2236,6 +2231,8 @@ body.dark-mode {
 
 	#media{
 		border-radius: 12px;
+		height: 100vh;
+		width: 100%;
 	}
 
 	#speak-button {
