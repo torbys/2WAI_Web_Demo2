@@ -7,8 +7,6 @@
 	font-style: normal;
 }
 
-
-
 * {
 	/*font-family: Gotham Rounded, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;*/
 	font-family: 'MiSans', sans-serif;
@@ -16,14 +14,21 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+html,body{
+	height: 100vh;
+}
+
 .outer-container {
 	max-width: 1200px;
-	margin: 30px auto;
+	width: 880px;
+	margin: 0 auto;
 	background: #ffffff;
 	border-radius: 20px;
 	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 	border: none;
 	display: flex;
+	flex: 1;
+	height: 710px;
 }
 
 .main-title {
@@ -144,11 +149,11 @@
 
 .message-content {
 	padding: 15px 17px;
-	font-family: Gotham Rounded;
+	/* font-family: Gotham Rounded; */
 	border-radius: 12px;
 	/* flex: 1; */
 	font-weight: 350;
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.6;
 	/* letter-spacing: 0.2px; */
 	word-wrap: break-word;
@@ -210,6 +215,7 @@
 	background-color: #f9f9f9;
 	border-radius: 8px;
 	margin-bottom: 15px;
+	
 }
 
 .welcome-message img {
@@ -219,7 +225,7 @@
 }
 
 .welcome-message span {
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: 400;
 	letter-spacing: 0.2px;
 	line-height: 1.6;
@@ -253,7 +259,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
-	gap: 15px;
+	gap: 5px;
 }
 
 .option-item {
@@ -295,12 +301,13 @@
 
 .slider-with-input input[type="number"] {
 	text-align: center;
-	width: 60px;
+	width: 40px;
+	height: 20px;
 	color: #fff;
 	padding: 4px 8px;
 	background-color: #5a5e68;
 	border-radius: 4px;
-	font-size: 14px;
+	font-size: 10px;
 	font-weight: 400;
 	letter-spacing: 0.2px;
 }
@@ -311,7 +318,7 @@
 }
 
 .slider-container input[type="range"] {
-	max-width: 400px;
+	max-width: 350px;
 	width: 100%;
 	margin: 0;
 	height: 6px;
@@ -346,11 +353,10 @@
 #media video {
 	position: relative;
 	width: 100%;
-	height: auto;
 	background: #f2f2f2;
 	border-radius: 12px 0 0 12px;
+	height:720px;
 	overflow: hidden;
-	/* 隐藏超出部分 */
 }
 
 .theme-toggle {
@@ -591,10 +597,11 @@ body.dark-mode {
 /*-------------------------------------------------------------修改部分------------------------------------------------------------*/
 
 /*上半部分整体布局*/
+
+
 .inner-container {
 	position: relative;
 	display: flex;
-	padding: 0;
 	max-width: none;
 	margin: 0;
 	align-items: stretch;
@@ -827,7 +834,7 @@ body.dark-mode {
 
 /*板块布局*/
 .panel-left {
-	flex: 50%;
+	flex: 45%;
 	border: none;
 	border-radius: 16px 0px 0px 16px;
 	background-color: #f2f2f2;
@@ -840,7 +847,7 @@ body.dark-mode {
 }
 
 .panel {
-	flex: 50%;
+	flex: 55%;
 	border: none;
 	border-radius: 0px 16px 16px 0px;
 	background-color: #f2f2f2;
@@ -911,7 +918,8 @@ body.dark-mode {
 	justify-content: center;
 	width: 30px;
 	height: 30px;
-	margin-left: 15px;
+	margin-left: 10px;
+	margin-right: 20px;
 	margin-top: 2px;
 }
 
@@ -930,7 +938,7 @@ body.dark-mode {
 	position: absolute;
 	left: 3%;
 	top: 2%;
-	font-size: 30px;
+	font-size: 24px;
 	font-weight: 700;
 	display: flex;
 	align-items: center;
@@ -958,7 +966,7 @@ body.dark-mode {
 	position: absolute;
 	left: 30%;
 	top: 9%;
-	font-size: 26px;
+	font-size: 20px;
 	font-weight: 600;
 	z-index: 102;
 }
@@ -974,8 +982,8 @@ body.dark-mode {
 	height: auto;
 	z-index: 102;
 	position: absolute;
-	left: 118px;
-	top: 150px;
+	left: 90px;
+	top: 135px;
 	overflow: hidden;
 }
 
@@ -984,16 +992,16 @@ body.dark-mode {
 }
 
 .selection-item {
-	margin-left: 12px;
+	margin-left: 0px;
 	transition: all 1s;
 	display: flex;
 	align-items: center;
 	padding: 10px;
-	width: 280px;
-	height: 60px;
+	width: 200px;
+	height: 40px;
 	border-radius: 50px;
-	font-size: 36px;
-	font-weight: 650;
+	font-size: 26px;
+	font-weight: 600;
 }
 
 .selection-item:hover {
@@ -1015,8 +1023,8 @@ body.dark-mode {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	left: 61%;
-	top: 10%;
+	left: 68%;
+	top: 9%;
 	width: 20px;
 	height: 20px;
 	background-color: #d9d9d9;
@@ -1073,8 +1081,8 @@ body.dark-mode {
 .Featureitem {
 	border-radius: 50%;
 	display: flex;
-	height: 60px;
-	width: 60px;
+	height: 50px;
+	width: 50px;
 	align-items: center;
 	justify-content: center;
 	background-color: white;
@@ -1082,8 +1090,8 @@ body.dark-mode {
 }
 
 #FeatureArea img {
-	height: 35px;
-	width: 35px;
+	height: 30px;
+	width: 30px;
 }
 
 #hand_item img {
@@ -1115,17 +1123,43 @@ body.dark-mode {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: 600;
 	position: absolute;
-	left: 80%;
-	top: 95%;
+	left: 75%;
+	top: 92%;
 	z-index: 10;
 }
 
 .bottom-icon img {
 	width: 30px;
 	height: 30px;
+}
+
+.moveWrapper{
+	width: 40px;
+	height: 40px;
+	background-color: #ebebeb;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-self: center;
+	margin-left: 5px;
+	transition: all 0.5s;
+}
+
+.moveWrapper img{
+	margin-top: 1px;
+	margin-left: 5px;
+	margin-right: 2px;
+}
+
+.moveWrapper:hover{
+	background-color: #868686;
+}
+
+.moveWrapper:active{
+	transform: scale(1.1);
 }
 
 
@@ -1156,7 +1190,7 @@ body.dark-mode {
 	align-items: center;
 	/* 垂直居中对齐 */
 	justify-content: center;
-	gap: 20px;
+	gap: 5px;
 }
 
 .option-item {
@@ -1164,7 +1198,7 @@ body.dark-mode {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin: 0px 10px;
+	margin: 0px 5px;
 	width: 100px;
 	
 }
@@ -1180,8 +1214,8 @@ body.dark-mode {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 80px;
-	width: 80px;
+	height: 70px;
+	width: 70px;
 	background-color: #d9d9d9;
 	border-radius: 12px;
 	transition: all 0.3s;
@@ -1206,6 +1240,10 @@ body.dark-mode {
 	height: 50px;
 }
 
+.option-line label{
+	font-size: 10px;
+}
+
 .number-box-container {
 	position: absolute;
 	top: 50%;
@@ -1218,6 +1256,7 @@ body.dark-mode {
 
 /*语音改变功能*/
 #voice-image {
+	margin-left: 32px;
 	transition: opacity 0.3s ease-in-out;
 	/* 平滑过渡效果 */
 	display: block;
@@ -1237,14 +1276,14 @@ body.dark-mode {
 }
 
 .swiper-container {
-	width: 500px;
+	width: 300px;
 	height: auto;
 	padding: 90px 0;
 	margin-left: auto;
 	margin-right: auto;
 	position: absolute;
-	bottom: 0%;
-	left: 8%;
+	top:68%;
+	left: 12%;
 	visibility: hidden;
 	/* 初始不可见 */
 	opacity: 0;
@@ -1253,9 +1292,12 @@ body.dark-mode {
 	/* 定义过渡效果 */
 }
 
+
+
 #swiper2,
 #swiper3 {
-	bottom: 1%;
+	top:71%;
+	left:11%
 }
 
 #swiper1 .swiper-slide {
@@ -1263,13 +1305,11 @@ body.dark-mode {
 	font-size: 18px;
 	background: #fff;
 
-	width: 100px;
-	height: 120px;
+	width: 70px;
+	height: 80px;
 	border-radius: 12px;
 	overflow: hidden;
-	/*  border: 1px solid white; */
 
-	/* Center slide text vertically */
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -1288,11 +1328,11 @@ body.dark-mode {
 #swiper2 .swiper-slide,
 #swiper3 .swiper-slide {
 	text-align: center;
-	font-size: 18px;
+	font-size: 9px;
 	background: #fff;
 
-	width: 80px;
-	height: 80px;
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
 	overflow: hidden;
 
@@ -1311,11 +1351,6 @@ body.dark-mode {
 	align-items: center;
 	transition-property: all;
 }
-
-/* #swiper3 .swiper-slide{
-		width: 100px;
-		height: 100px;
-	} */
 
 #swiper4 .swiper-slide {
 	text-align: center;
@@ -1365,8 +1400,8 @@ body.dark-mode {
 }
 
 #swiper2 img {
-	width: 40px;
-	height: 40px;
+	width: 20px;
+	height: 20px;
 }
 
 .swiper-button-prev,
@@ -1541,7 +1576,7 @@ body.dark-mode {
 }
 
 .voice_img {
-	margin-right: 2px;
+	margin-right: 5px;
 	width: 100%;
 	height: 100%;
 	border-radius: 50%;
@@ -1648,11 +1683,6 @@ body.dark-mode {
 	/* 更深的阴影效果 */
 }
 
-
-
-
-
-
 /*下方的maxlength部件*/
 .slider-container {
 	position: relative;
@@ -1666,7 +1696,6 @@ body.dark-mode {
 	bottom: 20px;
 	z-index: 100;
 	font-size: 1em;
-	/* 其他样式根据您的设计调整 */
 }
 
 /* #chunk-size::before{
@@ -1734,33 +1763,9 @@ body.dark-mode {
 	-ms-user-select: none; /* Internet Explorer/Edge */
 }
 
-.moveWrapper{
-	width: 40px;
-	height: 40px;
-	background-color: #ebebeb;
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-	justify-self: center;
-	margin-left: 5px;
-	transition: all 0.5s;
-}
 
-.moveWrapper img{
-	margin-top: 1px;
-	margin-left: 5px;
-	margin-right: 2px;
-}
 
-.moveWrapper:hover{
-	background-color: #868686;
-}
-
-.moveWrapper:active{
-	transform: scale(1.1);
-}
-
-@media (min-width: 1100px){
+@media (min-width: 1101px){
 
 	.Hint{
 		display: none;
@@ -1805,36 +1810,13 @@ body.dark-mode {
 		margin-top: 10px;
 	}
 
-	/* .zoom-in-2{
-		width: 60px;
-		height: 90px;
-		background-color: #e1e1e1;
+	.panel-zoom{
+		display: none;
+	}
+
+	.ZoomClick{
 		display: flex;
-		justify-content: center;
-		border-radius: 10px 10px 0 0;
 	}
-
-	.zoom-out-2{
-		width: 60px;
-		height: 90px;
-		background-color: white;
-		display: flex;
-		justify-content: center;
-		border-radius: 0 0 10px 10px;
-	}
-
-	.zoom-in-2 img , .zoom-out-2 img{
-		width: 20px;
-		height: 20px;
-	}
-
-	.zoom-in-2 img{
-		margin-top: 10px;
-	}
-
-	.zoom-out-2 img{
-		margin-top: auto;
-	} */
 
 }
 
@@ -2370,24 +2352,7 @@ body.dark-mode {
 		width: 80%;
 		font-size: 16px;
 	}
-
-
-    		/* .fade-out-up {
-    			animation: fadeOutUp 1s forwards;
-    		}
-    
-    		@keyframes fadeOutUp {
-    			from {
-    				opacity: 1;
-    				transform: translateY(0);
-    			}
-    			to {
-    				opacity: 0;
-    				transform: translateY(-20px);
-    			}
-    		} */
     	
-    }
-    
-    
-    /* 更多的CSS样式可以根据需要进行添加，以确保视觉效果符合设计要求。 */
+}
+
+/* 更多的CSS样式可以根据需要进行添加，以确保视觉效果符合设计要求。 */
