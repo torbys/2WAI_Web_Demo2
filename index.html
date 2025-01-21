@@ -1985,29 +1985,59 @@
 		return `${timestamp}_${randomPart}${extension}`;
 	}
 
+	
+
 	function addMessage(message, isUser) {
-			const messageDiv = $('<div>')
-				.addClass('message')
-				.addClass(isUser ? 'user-message' : 'bot-message');
-
-			// 确定头像路径
-			let avatarPath = './icon/icon.png'; // 默认头像路径
-			if (!isUser) {
-				avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
-			}
-
-			const avatar = $('<img>')
-				.addClass('message-avatar')
-				.attr('src', avatarPath)
-				.attr('alt', isUser ? 'User' : 'Bot');
-
-			const content = $('<div>')
-				.addClass('message-content')
-				.text(message);
-
-			messageDiv.append(avatar).append(content);
-			$('#chat-messages').append(messageDiv);
-			$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+		const messageDiv = $('<div>')
+			.addClass('message')
+			.addClass(isUser ? 'user-message' : 'bot-message')
+			.css({
+        		opacity: 0, // 初始透明度为0
+        		transform: 'translateY(20px)', // 初始位置在下方20px
+        		transition: 'opacity 0.5s, transform 0.5s' // 定义过渡动画
+    		});
+		// 确定头像路径
+		let avatarPath = './icon/icon.png'; // 默认头像路径
+		if (!isUser) {
+			avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
+		}
+		const avatar = $('<img>')
+			.addClass('message-avatar')
+			.attr('src', avatarPath)
+			.attr('alt', isUser ? 'User' : 'Bot');
+		const content = $('<div>')
+			.addClass('message-content')
+			.text(message);
+		messageDiv.append(avatar).append(content);
+		$('#chat-messages').append(messageDiv);
+		$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+		 // 使用CSS动画实现渐隐滑入效果
+		 messageDiv.css({
+    	    opacity: 1, // 透明度变为1
+    	    transform: 'translateY(0)' // 位置回到初始位置
+    	});
+		if(!isUser){
+			// 按字符分割消息内容
+			const characters = message.split(""); // 将字符串分割成单个字符数组
+			let currentCharIndex = 0;
+			// 逐个字符动态显示消息内容
+			const displayNextChar = () => {
+			    if (currentCharIndex < characters.length) {
+			        // 如果是第一个字符，直接设置内容；否则在现有内容后追加字符
+			        if (currentCharIndex === 0) {
+			            content.text(characters[currentCharIndex]);
+			        } else {
+			            content.text(content.text() + characters[currentCharIndex]);
+			        }
+				
+			        currentCharIndex++;
+			        // 使用 setTimeout 递归调用，实现逐个字符显示的效果
+			        setTimeout(displayNextChar, 40); 
+			    }
+			};
+			// 开始逐个字符显示消息内容
+			displayNextChar();
+		}
 	}
 
 	function simulateSubmit(message) {
