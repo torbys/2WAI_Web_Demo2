@@ -474,8 +474,8 @@
 
 	var ttsSelection = "tts1";   	//会话模块
 	var avatarVoice = "voice1"; 	//会话声音
-	// var sessionid = "";				//会话id
-	var sessionid = "17695382";		//本地测试
+	var sessionid = "";				//会话id
+	// var sessionid = "17695382";		//本地测试
 	var isConnected = false;		//链接状态
 	var canSubmit = 0; 				// 提交标志，默认为0
 	var streamType = "AUDIO_VIDEO"     // 推流方式
@@ -1631,7 +1631,7 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
-		//showLoading();
+		showLoading();
 
 		const response = await fetch(host + '/options.json');
 		const options = await response.json();
@@ -1780,7 +1780,7 @@
 		updateSwiper(swiper1);
 		updateSwiper(swiper2);
 		updateSwiper(swiper3);
-		//start();
+		start();
 	}
 
 	updateSwiper(swiper1);
@@ -2494,7 +2494,12 @@
 			
 			const messageDiv = $('<div>')
 				.addClass('message')
-				.addClass(isUser ? 'user-message' : 'bot-message');
+				.addClass(isUser ? 'user-message' : 'bot-message')
+				.css({
+            		opacity: 0, // 初始透明度为0
+            		transform: 'translateY(20px)', // 初始位置在下方20px
+            		transition: 'opacity 0.5s, transform 0.5s' // 定义过渡动画
+        		});
 
 			// 确定头像路径
 			let avatarPath = './icon/icon.png'; // 默认头像路径
@@ -2522,6 +2527,39 @@
 			const scrollPosition = chatAreaHeight - messageHeight;
 			// 将滚动条滚动到刚刚发出的消息的顶部
 			$('#chat-messages-zoom').scrollTop(scrollPosition);
+
+			 // 使用CSS动画实现渐隐滑入效果
+			 messageDiv.css({
+    		    opacity: 1, // 透明度变为1
+    		    transform: 'translateY(0)' // 位置回到初始位置
+    		});
+
+			if(!isUser){
+				// 按字符分割消息内容
+				const characters = message.split(""); // 将字符串分割成单个字符数组
+				let currentCharIndex = 0;
+
+				// 逐个字符动态显示消息内容
+				const displayNextChar = () => {
+				    if (currentCharIndex < characters.length) {
+				        // 如果是第一个字符，直接设置内容；否则在现有内容后追加字符
+				        if (currentCharIndex === 0) {
+				            content.text(characters[currentCharIndex]);
+				        } else {
+				            content.text(content.text() + characters[currentCharIndex]);
+				        }
+					
+				        currentCharIndex++;
+				        // 使用 setTimeout 递归调用，实现逐个字符显示的效果
+				        setTimeout(displayNextChar, 40); 
+				    }
+				};
+
+				// 开始逐个字符显示消息内容
+				displayNextChar();
+			}
+
+
 		}
 
 	
