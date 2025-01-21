@@ -1659,7 +1659,7 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
-		// showLoading();
+		showLoading();
 
 		const response = await fetch(host + '/options.json');
 		const options = await response.json();
@@ -1808,7 +1808,7 @@
 		updateSwiper(swiper1);
 		updateSwiper(swiper2);
 		updateSwiper(swiper3);
-		// start();
+		start();
 	}
 
 	updateSwiper(swiper1);
