@@ -23,7 +23,7 @@ html,body{
 	width: 70px;
 	display: block;
 	position: absolute;
-	top: 84%;
+	top: 87%;
 	left: 62%;
 	z-index: 1000;
 }
@@ -2113,21 +2113,36 @@ body.dark-mode {
 		left: 61%;
 		top: 10%;
 	}
+
+	.expanded {
+		max-height: 1000px;
+	}
 	
 	.TTS-item {
 		transition: all 1s;
-		max-height: 0px;
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
-		gap: 10px;
-		width: 100%;
+		gap: 8px;
+		width: 200px;
 		height: auto;
 		z-index: 102;
 		position: absolute;
-		left: 118px;
-		top: 150px;
-		overflow: hidden;
+		left: 2000;
+		top: 14%;
+	}
+
+	.selection-item {
+		margin-left: 0px;
+		transition: all 1s;
+		display: flex;
+		align-items: center;
+		padding: 10px;
+		width: 100px;
+		height: 10px;
+		border-radius: 50px;
+		font-size: 16px;
+		font-weight: 600;
 	}
 
 	.user-message {
@@ -2187,7 +2202,7 @@ body.dark-mode {
 		/* 初始透明度 */
 		transition: all 1s ease;
 		/* 定义过渡效果 */
-		top: 50%;
+		top: 45%;
 		z-index: 100;
 		display: none;
 	}
@@ -2200,16 +2215,16 @@ body.dark-mode {
 	}
 
 	#swiper1{
-		width: 250px;
-		top: 32%;
-		left: 15%;
+		width: 225px;
+		top: 28%;
+		left: 22%;
 	}
 
 	#swiper2,
 	#swiper3 {
-		width: 250px;
-		top: 36%;
-		left: 15%;
+		width: 255px;
+		top: 31%;
+		left: 18%;
 	}
 
 	#swiper2 .swiper-slide,

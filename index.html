@@ -78,12 +78,6 @@
 					<div class="Featureitem" id="clothes_item">
 						<img src="./icon/clothes.png" alt="" />
 					</div>
-					<!-- <div class="Featureitem" id="hand_item">
-					<img src="./icon/hand.png" alt="" />
-				</div> -->
-					<!-- <div class="Featureitem" id="like_item">
-					<img src="./icon/like.png" alt="" />
-				</div> -->
 				</div>
 
 
@@ -483,6 +477,7 @@
 	var sessionid = "";				//会话id
 	// var sessionid = "17695382";		//本地测试
 	var isConnected = false;		//链接状态
+	var noticeFlag=false;			//Hint标志
 	var canSubmit = 0; 				// 提交标志，默认为0
 	var streamType = "AUDIO_VIDEO"     // 推流方式
 
@@ -498,10 +493,10 @@
 	// 检查并显示 Hint 的函数
 	function checkAndShowHint() {
 		const mediaQuery = window.matchMedia('(max-width: 1000px)');
-	    if (mediaQuery.matches) {
-	        // 屏幕宽度小于1000px且加载完成，显示 Hint
+	    if (mediaQuery.matches && !noticeFlag) {
 	        const hint = document.querySelector('.Hint');
 	        hint.style.display = 'flex';
+			noticeFlag=true;
 	    } else {
 	        // 否则，隐藏 Hint
 	        const hint = document.querySelector('.Hint');
@@ -1251,6 +1246,8 @@
 
 		document.querySelector('.btn_wrapper').addEventListener('click', function () {
 
+			console.log("展开TTS");
+
 			// 获取TTS-item元素
 			var ttsItem = document.querySelector('.TTS-item');
 
@@ -1714,6 +1711,7 @@
 			const selectionItem = document.createElement('div');
 			selectionItem.className = 'selection-item';
 			selectionItem.textContent = tts.label; // 设置显示的文字描述
+			console.log("创建了"+tts.label);
 			selectionItem.setAttribute('data-value', tts.value); // 存储值，可以通过getAttribute('data-value')访问
 
 			// 为选择项添加点击事件
