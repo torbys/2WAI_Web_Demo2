@@ -409,10 +409,6 @@ function changeAvatarVoice(val)
         console.error('请求失败，错误信息是：', error);
         hideLoading(); 
     });
-
-
-    // isChange=true;
-    // start();
 } 
 
 /*切换背景的请求*/

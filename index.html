@@ -124,6 +124,7 @@
 					<audio id="audio" autoplay="false"></audio>
 					<video id="video" autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
 
+					<div id="activeLineZoom" class="visualizer-container hidden1"></div>
 
 
 					<!-- 背景更换区 -->
@@ -236,6 +237,7 @@
 					<div class="zoom-bottom">
 
 						<!-- <audio src="" style="display: none;" id="zoomVoice"></audio> -->
+						
 						<button id="speak-button" class="hidden1">Hold on and speak</button>
 						
 						<textarea class="form-control" id="message2"
@@ -244,8 +246,7 @@
 					
 						<div id="image-container-zoom"
 							style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
-							<img id="voice-image-zoom" class="voice_img" src="./icon/voice-zoom.png" alt="voice"
-								style="width: 50%;height: 50%;" />
+							<img id="voice-image-zoom" class="voice_img" src="./icon/voice-zoom.png" alt="voice"/>
 						</div>
 
 					</div>
@@ -330,7 +331,9 @@
 						<div id="stop_wrapper">
 							<div id="stop_record"></div>
 						</div>
-						<img id="activeLine" src="./icon/vioce_active.gif" alt="动画演示">
+
+						<div id="activeLinePC" class="visualizer-container"></div>
+						<!-- <img id="activeLine" src="./icon/vioce_active.gif" alt="动画演示"> -->
 						<!-- <div class="wave"></div> -->
 						<div id="recordTime">0.00</div>
 					</div>
@@ -463,7 +466,10 @@
 	// const host = 'http://18.237.173.80:7862'
 
 	//1.19日服务器
-	const host='http://52.40.208.108:7862'
+	// const host='http://52.40.208.108:7862'
+
+	//1.22日服务器
+	const host='http://18.246.161.188:7862'
 
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
@@ -474,8 +480,8 @@
 
 	var ttsSelection = "tts1";   	//会话模块
 	var avatarVoice = "voice1"; 	//会话声音
-	var sessionid = "";				//会话id
-	// var sessionid = "17695382";		//本地测试
+	// var sessionid = "";				//会话id
+	var sessionid = "17695382";		//本地测试
 	var isConnected = false;		//链接状态
 	var canSubmit = 0; 				// 提交标志，默认为0
 	var streamType = "AUDIO_VIDEO"     // 推流方式
@@ -524,6 +530,7 @@
 <!-- <script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script> -->
 <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
 <script src="swiper.min.js"></script>
+<script src="audioVisualizer.js"></script>
 
 <script>
 	function setHeightToVideo() {
@@ -632,7 +639,7 @@
   		// 绑定点击事件，点击 moveWrapper 时将 ZoomClick 的 left 设置为 90%
   		moveWrapper.addEventListener('click', function () {
   		//   zoomClick.style.left = '92%';
-  		  zoomClick.style.left = '89%';
+  		  zoomClick.style.left = '90%';
   		  clearTimeout(resetTimeout);
 		
   		  // 禁用 zoomIcon 的滚轮事件
@@ -1869,13 +1876,6 @@
 		document.body.classList.toggle('dark-mode');
 		flag = !flag;
 		changeImagedark()
-		// if (document.body.classList.contains('dark-mode')) {
-		// 	themeIcon.classList.replace('fa-moon', 'fa-sun');
-		// 	localStorage.setItem('theme', 'dark');
-		// } else {
-		// 	themeIcon.classList.replace('fa-sun', 'fa-moon');
-		// 	localStorage.setItem('theme', 'light');
-		// }
 	});
 
 
@@ -2143,6 +2143,8 @@
 	    }
 	}
 
+	const visualizerPC = window.AudioVisualizer;
+
 	$('#record_wrapper').click(function () {
     	if (isRecording) return; // 如果已经在录制中，直接返回
 		
@@ -2160,12 +2162,18 @@
 	                isRecording = false; // 重置录制状态
 	            });
 	    } else {
+			
 	        startRecording(); // 直接开始录音
 	    }
 
 	});
 	
 	function startRecording() {
+
+		
+		visualizerPC.init('activeLinePC',"PCcanves")
+		visualizerPC.startVisualization(audioStream)
+
 	    if (audioStream) {
 	        mediaRecorder = new MediaRecorder(audioStream);
 	        mediaRecorder.ondataavailable = (event) => {
@@ -2202,6 +2210,8 @@
 			$(this).prop('disabled', true); // 禁用停止录制按钮
 			$('#record_wrapper').prop('disabled', false) // 启用开始录制按钮
 
+			visualizerPC.stop();
+
 			// 保存录音文件
 			mediaRecorder.onstop = () => {
 				console.log("录音结束....");
@@ -2233,7 +2243,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://52.40.208.108:7864/uploadAudio', {
+				fetch('http://18.246.161.188:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
@@ -2610,13 +2620,14 @@
 				$('#message2').removeClass('hidden1');
 				$('#speak-button').addClass('hidden1');
 			}
-		
 			// 检查当前图片的 src 属性
 			if (voiceImage.src.includes('submitzoom.png')) {
     		    return;
     		} else if (voiceImage.src.includes('voice-zoom.png')) {
+				$('#chat-messages-zoom').addClass('hidden');
     		    voiceImage.src = './icon/pan.png';
     		} else {
+				$('#chat-messages-zoom').removeClass('hidden');
     		    voiceImage.src = './icon/voice-zoom.png';
     		}
 
@@ -2732,8 +2743,6 @@
 		}
 
 
-
-
 </script>
 
 <!-- 说话进度条的加载，和图片转化 -->
@@ -2811,6 +2820,7 @@ function bindRecordEvents() {
     console.log("绑定录音事件");
 
 	const media = document.getElementById('media');
+	const visualizer = window.AudioVisualizer;
 
     $('#speak-button').on('touchstart', function (event) {
 	    console.log("触摸开始....");
@@ -2837,6 +2847,12 @@ function bindRecordEvents() {
 	            mediaRecorder.start(); // 开始录制
 	            audioChunks = []; // 初始化音频数据数组
 	            isRecording = true; // 设置录制状态为 true
+				$('#activeLineZoom').removeClass('hidden1');
+				$('#myCanvas').removeClass('hidden1');
+				visualizer.init('activeLineZoom',"myCanvas"); // 初始化可视化
+				visualizer.startVisualization(audioStream); // 启动可视化
+
+
 	        } 
 	    }, longPressThreshold);
 	});
@@ -2887,7 +2903,10 @@ function bindRecordEvents() {
 	            loaderDiv.style.height = '50%'; // 设置加载动画的高度
 	            voiceImageZoomParent.replaceChild(loaderDiv, voiceImageZoom); // 用加载动画替换图片
 
-	            fetch('http://52.40.208.108:7864/uploadAudio', {
+				$('#myCanvas').addClass('hidden1');
+				visualizer.stop();
+
+	            fetch('http://18.246.161.188:7864/uploadAudio', {
 	                method: 'POST',
 	                body: formData
 	            })

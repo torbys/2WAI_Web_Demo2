@@ -18,6 +18,26 @@ html,body{
 	height: 100vh;
 }
 
+#myCanvas{
+	height: 30px;
+	width: 70px;
+	display: block;
+	position: absolute;
+	top: 86%;
+	left: 62%;
+	z-index: 1000;
+}
+
+#PCcanves{
+	width: 120px;
+	height: 30px;
+	display: block;
+	z-index: 1000;
+	position: absolute;
+	top: 10px;
+	left: 50px;
+}
+
 .outer-container {
 	max-width: 1200px;
 	width: 880px;
@@ -1246,13 +1266,38 @@ body.dark-mode {
 
 .number-box-container {
 	position: absolute;
-	top: 50%;
-	right: 80%;
-	transform: translateY(-50%);
-	display: inline-block;
+	top: -5px; /* 调整数值框在滑块上方的距离 */
+	transform: translateX(-50%);
+	padding: 4px 8px;
+	border-radius: 4px;
+	display: none;
 	z-index: 1000;
 }
 
+/* .number-box-container::after {
+	content: '';
+	position: absolute;
+	bottom: -5px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #fff;
+} */
+
+.number-box-container input {
+	width: 30px;
+	border: none;
+	text-align: center;
+	outline: none;
+}
+
+.slider-container {
+	position: relative;
+	width: 100%;
+}
 
 /*语音改变功能*/
 #voice-image {
@@ -1763,7 +1808,13 @@ body.dark-mode {
 	-ms-user-select: none; /* Internet Explorer/Edge */
 }
 
-
+#activeLineZoom {
+	position: absolute;
+	top: 100px; /* 将 activeLineZoom 定位到按钮上方 */
+	left: 20px; /* 水平对齐 */
+	width: 50px;
+	z-index: 1200;
+}
 
 @media (min-width: 1101px){
 
@@ -1861,6 +1912,7 @@ body.dark-mode {
 	}
 
 	.outer-container {
+		height: auto;
 		width: 100%;
 		margin: 0px;
 		padding: 0px;
@@ -1935,6 +1987,7 @@ body.dark-mode {
 		display: flex;
 		flex-direction: column;
 		position: absolute;
+		transition: all 0.5s;
 		left: 2.5%;
 		top: -300px;
 		width: calc(100% - 5% - 50px);
@@ -2352,7 +2405,14 @@ body.dark-mode {
 		width: 80%;
 		font-size: 16px;
 	}
-    	
+
+	#voice-image-zoom{
+		margin-left: 5px;
+		height: 50%;
+		width: 50%;
+		object-fit: cover;
+	}
+
 }
 
 /* 更多的CSS样式可以根据需要进行添加，以确保视觉效果符合设计要求。 */
