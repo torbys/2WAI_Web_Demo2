@@ -1666,7 +1666,7 @@
 
 	/*---------------------------动态调整轮播图数量-----------------------------*/
 	async function loadOptions() {
-		showLoading();
+		// showLoading();
 
 		const response = await fetch(host + '/options.json');
 		const options = await response.json();
@@ -1815,7 +1815,7 @@
 		updateSwiper(swiper1);
 		updateSwiper(swiper2);
 		updateSwiper(swiper3);
-		start();
+		// start();
 	}
 
 	updateSwiper(swiper1);
@@ -2144,6 +2144,7 @@
 	}
 
 	const visualizerPC = window.AudioVisualizer;
+	
 
 	$('#record_wrapper').click(function () {
     	if (isRecording) return; // 如果已经在录制中，直接返回
@@ -2167,11 +2168,16 @@
 	    }
 
 	});
+
+	let isinitPC = false;
 	
 	function startRecording() {
 
+		if(!isinitPC){
+			visualizerPC.init('activeLinePC',"PCcanves");
+			isinitPC=true;
+		}
 		
-		visualizerPC.init('activeLinePC',"PCcanves")
 		visualizerPC.startVisualization(audioStream)
 
 	    if (audioStream) {
@@ -2813,6 +2819,8 @@ let Record_flag = true; //判断是停止还是录音
 const longPressThreshold = 500; // 长按阈值，单位为毫秒
 // 长按定时器
 let longPressTimer = null;
+let isVisualizerInitialized = false; // 初始化标志
+const visualizer = window.AudioVisualizer;
 
 
 // 绑定录音事件
@@ -2820,7 +2828,6 @@ function bindRecordEvents() {
     console.log("绑定录音事件");
 
 	const media = document.getElementById('media');
-	const visualizer = window.AudioVisualizer;
 
     $('#speak-button').on('touchstart', function (event) {
 	    console.log("触摸开始....");
@@ -2847,12 +2854,12 @@ function bindRecordEvents() {
 	            mediaRecorder.start(); // 开始录制
 	            audioChunks = []; // 初始化音频数据数组
 	            isRecording = true; // 设置录制状态为 true
-				$('#activeLineZoom').removeClass('hidden1');
-				$('#myCanvas').removeClass('hidden1');
-				visualizer.init('activeLineZoom',"myCanvas"); // 初始化可视化
+				if (!isVisualizerInitialized) {
+                	visualizer.init('activeLineZoom', "myCanvas"); // 初始化可视化
+                	isVisualizerInitialized = true; // 标记为已初始化
+          		}
+				  $('#myCanvas').removeClass('hidden1');
 				visualizer.startVisualization(audioStream); // 启动可视化
-
-
 	        } 
 	    }, longPressThreshold);
 	});

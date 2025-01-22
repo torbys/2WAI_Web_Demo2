@@ -57,6 +57,8 @@ const AudioVisualizer = {
 
   startVisualization(stream) {
     if (!this.audioContext) this.init('activeLine');
+
+    console.log("开始音频检查")
     
     const source = this.audioContext.createMediaStreamSource(stream);
     source.connect(this.analyser);
