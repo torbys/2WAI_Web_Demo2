@@ -303,8 +303,8 @@
 
 				<div class="chat-container" id="chat-messages">
 					<div class="welcome-message">
-						<span>Welcome! You can click the <img src="./icon/voice.png" alt="" class="voice_img" /> icon
-							below or enter text to talk to me</span>
+						<!-- <span>Welcome! You can click the <img src="./icon/voice.png" alt="" class="voice_img" /> icon
+							below or enter text to talk to me</span> -->
 					</div>
 					<!-- 聊天消息将在这里动态添加 -->
 				</div>
@@ -466,10 +466,10 @@
 	// const host = 'http://18.237.173.80:7862'
 
 	//1.19日服务器
-	// const host='http://52.40.208.108:7862'
+	const host='http://52.40.208.108:7862'
 
 	//1.22日服务器
-	const host='http://18.246.161.188:7862'
+	// const host='http://18.246.161.188:7862'
 
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
@@ -480,8 +480,8 @@
 
 	var ttsSelection = "tts1";   	//会话模块
 	var avatarVoice = "voice1"; 	//会话声音
-	// var sessionid = "";				//会话id
-	var sessionid = "17695382";		//本地测试
+	var sessionid = "";				//会话id
+	// var sessionid = "17695382";		//本地测试
 	var isConnected = false;		//链接状态
 	var canSubmit = 0; 				// 提交标志，默认为0
 	var streamType = "AUDIO_VIDEO"     // 推流方式
@@ -2243,7 +2243,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://18.246.161.188:7864/uploadAudio', {
+				fetch('http://52.40.208.108:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
@@ -2906,7 +2906,7 @@ function bindRecordEvents() {
 				$('#myCanvas').addClass('hidden1');
 				visualizer.stop();
 
-	            fetch('http://18.246.161.188:7864/uploadAudio', {
+	            fetch('http://52.40.208.108:7864/uploadAudio', {
 	                method: 'POST',
 	                body: formData
 	            })
