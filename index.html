@@ -88,6 +88,30 @@
 
 					<div class="Hint">
 
+
+						<svg width="359" height="346" viewBox="0 0 359 346" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M85.5322 169.5C82.5322 165 73.0322 150.5 84.0322 140.5C81.0724 138 67.4919 114.5 62.9919 107.5C58.4919 100.5 34.992 71.5004 20.492 55.0004C5.99197 38.5004 0.491974 27.5004 0.991974 13.0004C1.26462 5.09382 10.9973 0.526636 16.4609 1.00037C21.0171 1.39541 21.0816 5.99951 24.492 8.50045C31.992 14.0004 51.492 38.0004 64.492 49.5004C77.492 61.0004 87.992 71.5005 103.492 83.5005C96.992 77.0005 95.492 67.0004 107.492 62.0004C117.092 58.0004 134.519 63.6671 142.032 67.0005C143.699 64.8338 149.932 59.0004 159.532 59.0004C171.532 59.0004 196.532 70.0005 208.532 76.5005C216.032 77.0005 223.032 77.0005 245.032 80.5005C267.032 84.0005 273.532 95.5005 276.032 106C278.532 116.5 308.032 203 321.532 218.5C350.532 248 357.532 257.5 358.532 275.5C359.532 293.5 341.532 307 330.532 317C312.032 337 303.532 345 286.532 345.5C269.532 346 252.532 329 245.032 319C237.532 309 204.532 283.5 188.032 279C159.532 272 115.532 231 112.532 228.5C109.532 226 107.532 225 104.532 218.5C101.532 212 88.5322 174 85.5322 169.5Z" fill="url(#paint0_radial_1115_845)"/>
+							<defs>
+							<radialGradient id="paint0_radial_1115_845" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(23.492 17.5004) rotate(48.5069) scale(491.299 513.333)">
+							<stop stop-color="white"/>
+							<stop offset="0.447917" stop-color="#F8F8F8" stop-opacity="0.7"/>
+							<stop offset="1" stop-color="white" stop-opacity="0.3"/>
+							</radialGradient>
+							</defs>
+						</svg>	
+
+						<div class="loader3">
+							<div class="box">
+							  <div class="logo">
+								
+							  </div>
+							</div>
+
+							<div class="box"></div>
+							<div class="box"></div>
+						  </div>
+  
+
 						<div class="Hint-message">
 							Long press for two seconds to activate the zoom
 						</div>
@@ -459,23 +483,21 @@
 	//1.15的服务器
 	// const host = 'http://18.237.173.80:7862'
 
-	//1.19日服务器
-	const host='http://52.40.208.108:7862'
-
 	//1.22日服务器
-	// const host='http://18.246.161.188:7862'
+	const host='http://18.246.161.188:7862'
 
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
 
+
+	//1.19日服务器
+	// const host='http://52.40.208.108:7862'
+
+	
 	var avatarName = "avatar1";  	//会话人物
-	// var avatarName = 'avatar5';		//临时默认角色
-
-
 	var ttsSelection = "tts1";   	//会话模块
 	var avatarVoice = "voice1"; 	//会话声音
 	var sessionid = "";				//会话id
-	// var sessionid = "17695382";		//本地测试
 	var isConnected = false;		//链接状态
 	var noticeFlag=false;			//Hint标志
 	var canSubmit = 0; 				// 提交标志，默认为0
@@ -1813,6 +1835,7 @@
 		updateSwiper(swiper1);
 		updateSwiper(swiper2);
 		updateSwiper(swiper3);
+
 		start();
 	}
 
@@ -2629,9 +2652,14 @@
     		    return;
     		} else if (voiceImage.src.includes('voice-zoom.png')) {
 				$('#chat-messages-zoom').addClass('hidden');
+				voiceImage.style.width="60%";
+				voiceImage.style.height="50%";
+				voiceImage.style.borderRadius="0";
     		    voiceImage.src = './icon/pan.png';
     		} else {
 				$('#chat-messages-zoom').removeClass('hidden');
+				voiceImage.style.width="50%";
+				voiceImage.style.borderRadius="50%";
     		    voiceImage.src = './icon/voice-zoom.png';
     		}
 

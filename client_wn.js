@@ -1,7 +1,6 @@
 var pc = null;
 var isChange = false;
 
-
 function negotiate() {
     pc.addTransceiver('video', { direction: 'recvonly' });
     pc.addTransceiver('audio', { direction: 'recvonly' });
@@ -24,6 +23,7 @@ function negotiate() {
         });
     }).then(() => {
         var offer = pc.localDescription; 
+        // console.log(offer.sdp);
         return fetch(host+'/offer', {
             body: JSON.stringify({
                 sdp: offer.sdp,
@@ -38,16 +38,11 @@ function negotiate() {
             },
             method: 'POST'
         });
-
-        
     }).then((response) => {
         return response.json();
     }).then((answer) => {
-        
         sessionid = answer.sessionid
-        
         return pc.setRemoteDescription(answer);
-
     }).catch((e) => {
         alert(e);
     });
@@ -159,9 +154,6 @@ function start() {
         } else {
             console.log("音频被加载了")
             document.getElementById('audio').srcObject = evt.streams[0];
-            // document.getElementById('audio').play().catch(error => {
-            //     console.error('无法自动播放音频:', error);
-            // });
         }
     });
 
@@ -191,18 +183,18 @@ function start() {
 
 }
 
-function stop() {
-    console.log("********************666***********************************");
-    // document.getElementById('stop').style.display = 'none';
-    console.log("********************777***********************************");
+// function stop() {
+//     console.log("********************666***********************************");
+//     // document.getElementById('stop').style.display = 'none';
+//     console.log("********************777***********************************");
 
-    // close peer connection
-    setTimeout(() => {
-        pc.close();
-    }, 500);
+//     // close peer connection
+//     setTimeout(() => {
+//         pc.close();
+//     }, 500);
 
-    console.log("********************888***********************************");
-}
+//     console.log("********************888***********************************");
+// }
 
 function stop2() {
 
