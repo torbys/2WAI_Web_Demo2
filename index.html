@@ -343,6 +343,7 @@
 							<img id="recording" src="./icon/voice_dark.png" alt="microphone" />
 						</div>
 						<img id="recordLine" src="./icon/recordLine.png" alt="Line" />
+						<div id="recordTime_base">0.00</div>
 					</div>
 
 					<div id="recordGroup2" class="hidden">
@@ -619,30 +620,51 @@
 	});
 
 	/*max滑块的更改*/
-	document.getElementById('chunk-size').addEventListener('input', function (e) {
-		var value = e.target.value;
-		var numberBoxContainer = document.querySelector('.number-box-container');
+	const chunkSize = document.getElementById('chunk-size');
+    const chunkSizeInput = document.getElementById('chunk-size-input');
+    const numberBoxContainer = document.querySelector('.number-box-container');
+    const sliderContainer = document.querySelector('.slider-container');
 
-		// 确保.number-box-container是可见的
-		numberBoxContainer.style.display = 'block';
+    // 处理滑块移动事件
+    chunkSize.addEventListener('input', function(e) {
+    	  const value = e.target.value;
+    	  numberBoxContainer.style.display = 'block';
+		
+    	  // 获取滑块的实际位置
+    	  const rect = e.target.getBoundingClientRect();
+    	  const thumbWidth = 18; // 滑块的宽度
+    	  const containerRect = sliderContainer.getBoundingClientRect();
+		
+    	  // 计算滑块中心点的位置
+    	  const percentage = (value - e.target.min) / (e.target.max - e.target.min);
+    	  const thumbLeft = percentage * (rect.width - thumbWidth) + thumbWidth / 2;
+		
+    	  // 设置数值框的位置，使其对齐滑块中心
+    	  numberBoxContainer.style.left = `${thumbLeft}px`;
+    	  numberBoxContainer.textContent = value;
 
-		var sliderWidth = e.target.offsetWidth;
-		var numberBoxLeft = (value / e.target.max) * (sliderWidth - 70) + 'px';
+    	  if (numberBoxContainer.timeoutId) {
+    	    clearTimeout(numberBoxContainer.timeoutId);
+    	  }
 
-		console.log(numberBoxLeft);
+    	  numberBoxContainer.timeoutId = setTimeout(() => {
+    	    numberBoxContainer.style.display = 'none';
+    	  }, 500);
+    	});
 
-		numberBoxContainer.style.left = numberBoxLeft;
+    	// 同步滑块和输入框的值
+    	chunkSize.addEventListener('input', function(e) {
+    	  chunkSizeInput.value = e.target.value;
+    	});
 
-		// 清除之前的定时器
-		if (numberBoxContainer.timeoutId) {
-			clearTimeout(numberBoxContainer.timeoutId);
-		}
-
-		// 设置一个短暂的延迟，然后隐藏.number-box-container
-		numberBoxContainer.timeoutId = setTimeout(function () {
-			numberBoxContainer.style.display = 'none';
-		}, 500); // 1000毫秒后隐藏，可以根据需要调整这个时间
-	});
+    	chunkSizeInput.addEventListener('input', function(e) {
+    	  let value = parseInt(e.target.value);
+    	  if (value < 0) value = 0;
+    	  if (value > 30) value = 30;
+    	  if (!isNaN(value)) {
+    	    chunkSize.value = value;
+    	  }
+    });
 
 	/*PC端的滑轮缩放*/
 	document.addEventListener('DOMContentLoaded', function () {
@@ -707,7 +729,7 @@
 
 	/*移动端zoom的点击事件*/
 	document.addEventListener('DOMContentLoaded', function () {
-		const media = document.getElementById('media');
+		const media = document.getElementById('video');
         const zoomOutButton = document.getElementById('Zoom-out2');
         const zoomInButton = document.getElementById('Zoom-in2');
 		const zoomGroup = document.querySelector('.ZoomGroup2');
@@ -1035,11 +1057,6 @@
 				this.slides[this.activeIndex].classList.add('swiper-slide-active');
 
 				console.log("切换衣服", this.activeIndex)
-				//    let index = this.activeIndex > datatVoices.length ? (this.activeIndex - datatVoices.length ) : this.activeIndex
-
-				// if(datatVoices.length > 0 && datatVoices[index]){
-				//     avatarVoice = datatVoices[index].value;  
-				// }
 			}
 		},
 		navigation: {
@@ -1071,21 +1088,17 @@
 					for (i = 0; i < slides.length; i++) {
 						slide = slides.eq(i)
 						progress = slides[i].progress
-						//slide.html(progress.toFixed(2)); 看清楚progress是怎么变化的
 						slide.css({ 'opacity': '', 'background': '' }); slide.transform('');//清除样式
-
 						if (effect == 1) {
 							slide.transform('scale(' + (1 - Math.abs(progress) / 8) + ')');
 						} else if (effect == 2) {
 							slide.css('opacity', (1 - Math.abs(progress) / 6));
 							slide.transform('translate3d(0,' + Math.abs(progress) * 20 + 'px, 0)');
-						}
-						else if (effect == 3) {
+						} else if (effect == 3) {
 							slide.transform('rotate(' + progress * 30 + 'deg)');
 						} else if (effect == 4) {
 							slide.css('background', 'rgba(' + (255 - Math.abs(progress) * 20) + ',' + (127 + progress * 32) + ',' + Math.abs(progress) * 64 + ')');
 						}
-
 					}
 				},
 				setTransition: function (transition) {
@@ -1182,14 +1195,9 @@
 					// 给当前选中的滑块添加边框样式
 					this.slides[this.realIndex].classList.add('swiper-slide-active');
 
-					
 					let len = 4; // 只展示前四个角色
 
 					let index = this.realIndex % len; // 计算当前索引在0到3之间的值
-
-					// let len = dataAvatars.length - 1
-
-					// let index = this.activeIndex % len;//this.activeIndex > len ? (this.activeIndex - len ) : this.activeIndex
 
 					if (dataAvatars.length > 0 && dataAvatars[index] && isConnected) {
 						changeAvatar(dataAvatars[index].value);//切换角色
@@ -1238,15 +1246,15 @@
 			 nextButton.classList.remove('show');
 		 	
 			 if (swiperBox4.classList.contains('show')) {
-					 // 如果swiper4是显示的，隐藏它
-					 swiperBox4.classList.remove('show');
-					 prevButton4.classList.remove('show');
-					 nextButton4.classList.remove('show');
-				 } else {
-					 swiperBox4.classList.add('show');
-					 prevButton4.classList.add('show');
-					 nextButton4.classList.add('show');
-				 }*/
+			 	// 如果swiper4是显示的，隐藏它
+			 	swiperBox4.classList.remove('show');
+			 	prevButton4.classList.remove('show');
+			 	nextButton4.classList.remove('show');
+			} else {
+			 	swiperBox4.classList.add('show');
+			 	prevButton4.classList.add('show');
+			 	nextButton4.classList.add('show');
+			}*/
 		});
 
 		// 获取 #video-mask 元素
@@ -1365,9 +1373,7 @@
 	setupHoverEvents('#custom-player');
 	setupHoverEvents('#zoomIcon');
 	setupHoverEvents('.ZoomClick');
-
-
-	
+	setupHoverEvents('.btn_wrapper');
 
     // 封装检查和切换视频遮罩高度的函数
     function TVideoMask() {
@@ -1380,7 +1386,7 @@
         }
     }
 
-
+	
 
 	/*功能元素选中*/
 	$(document).ready(function () {
@@ -1705,9 +1711,10 @@
 				const imgSrc = `./icon/${avatar.value}.png`;
 				console.log('create avatar', imgSrc);
 
-				avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="" />  </div>`;
+				avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
 				aindex++; // 更新索引
 				countAvatar++; // 增加已处理元素的计数
+
 				if (aindex >= vimgs.length) {
 					aindex = 0; // 如果索引超出数组长度，重置为0
 				}
@@ -1859,22 +1866,7 @@
 	// Initialize options
 	loadOptions();
 
-	// 同步滑块和输入框的值
-	const chunkSizeSlider = document.getElementById('chunk-size');
-	const chunkSizeInput = document.getElementById('chunk-size-input');
-
-	chunkSizeSlider.addEventListener('input', function (e) {
-		chunkSizeInput.value = e.target.value;
-	});
-
-	chunkSizeInput.addEventListener('input', function (e) {
-		let value = parseInt(e.target.value);
-		if (value < 0) value = 0;
-		if (value > 30) value = 30;
-		if (!isNaN(value)) {
-			chunkSizeSlider.value = value;
-		}
-	});
+	
 </script>
 
 <!-- ----------------------------切换黑暗模式------------------------------ -->
@@ -2284,7 +2276,7 @@
 					canSubmit = 1; // 设置可发送标志为1
 					// 自动调用 simulateSubmit 函数发送消息
 					simulateSubmit(data.res);
-
+					$('#message').val('');
 					isRecording = false; // 重置录制状态
 				})
 				.catch(error => {
@@ -2307,9 +2299,13 @@
 						image.src = newSrc;
 						image.classList.remove('changing');
 					}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
+
+					$('#message').val('');
+
 					console.error('Error saving audio:', error); // 打印保存错误信息
 					alert('Failed to upload audio file'); // 弹出提示框，提示用户保存音频文件失败
-					isRecording = false; // 确保在错误情况下也重置状态
+
+					isRecording = false; // 确保在错误情况下也重置状态	
 				});
 
 			};

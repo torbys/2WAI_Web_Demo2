@@ -940,7 +940,7 @@ body.dark-mode {
 /*左上表示栏*/
 .demo {
 	position: absolute;
-	left: 3%;
+	left: 1%;
 	top: 2%;
 	font-size: 24px;
 	font-weight: 700;
@@ -948,7 +948,23 @@ body.dark-mode {
 	align-items: center;
 	justify-content: center;
 	margin: 0px 15px;
-	z-index: 102;
+	z-index: 2;
+}
+
+.tips {
+	margin-left: 5px;
+	margin-top: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 41px;
+	height: 11px;
+	padding: 5px;
+	font-size: 11px;
+	font-weight: 500;
+	color: #7e7e7e;
+	background-color: white;
+	border-radius: 50px;
 }
 
 #video-mask {
@@ -997,7 +1013,7 @@ body.dark-mode {
 
 .selection-item {
 	margin-left: 0px;
-	transition: all 1s;
+	transition: all 0.2s;
 	display: flex;
 	align-items: center;
 	padding: 10px;
@@ -1028,17 +1044,12 @@ body.dark-mode {
 	align-items: center;
 	justify-content: center;
 	left: 68%;
-	top: 9%;
+	top: 9.5%;
 	width: 20px;
 	height: 20px;
 	background-color: #d9d9d9;
 	border-radius: 50%;
 	z-index: 103;
-}
-
-.btn_wrapper:hover {
-	transform: scale(1.1);
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn_wrapper:active {
@@ -1054,21 +1065,7 @@ body.dark-mode {
 	object-fit: cover;
 }
 
-.tips {
-	margin-left: 5px;
-	margin-top: 5px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 41px;
-	height: 11px;
-	padding: 5px;
-	font-size: 11px;
-	font-weight: 500;
-	color: #7e7e7e;
-	background-color: white;
-	border-radius: 50px;
-}
+
 
 #FeatureArea {
 	display: flex;
@@ -1248,28 +1245,34 @@ body.dark-mode {
 	font-size: 10px;
 }
 
+/* 数值显示框 */
 .number-box-container {
 	position: absolute;
-	top: -5px; /* 调整数值框在滑块上方的距离 */
-	transform: translateX(-50%);
+	display: none;
+	background-color: #5a5e68;
+	color: white;
 	padding: 4px 8px;
 	border-radius: 4px;
-	display: none;
+	font-size: 12px;
+	pointer-events: none;
 	z-index: 1000;
+	transform: translate(-50%, -200%); /* 调整垂直偏移 */
+	white-space: nowrap;
+	min-width: 20px;
+	text-align: center;
+	top: 20px; /* 调整顶部位置以对齐滑块中心 */
 }
 
-/* .number-box-container::after {
+.number-box-container::after {
 	content: '';
 	position: absolute;
-	bottom: -5px;
+	bottom: -3px;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 0;
-	height: 0;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-top: 5px solid #fff;
-} */
+	border-width: 8px 10px 0 10px;
+	border-style: solid;
+	border-color: #5a5e68 transparent transparent transparent;
+}
 
 .number-box-container input {
 	width: 30px;
@@ -1305,20 +1308,17 @@ body.dark-mode {
 }
 
 .swiper-container {
-	width: 300px;
+	width: 310px;
 	height: auto;
 	padding: 90px 0;
 	margin-left: auto;
 	margin-right: auto;
 	position: absolute;
 	top:66%;
-	left: 12%;
+	left: 9%;
 	visibility: hidden;
-	/* 初始不可见 */
 	opacity: 0;
-	/* 初始透明度 */
 	transition: all 1s ease;
-	/* 定义过渡效果 */
 }
 
 
@@ -1326,7 +1326,7 @@ body.dark-mode {
 #swiper2,
 #swiper3 {
 	top:68%;
-	left:11%
+	left:9%
 }
 
 #swiper1 .swiper-slide {
@@ -1410,7 +1410,7 @@ body.dark-mode {
 }
 
 .swiper-slide-active {
-	border: 5px solid white;
+	border: 4px solid white;
 	/* 根据需要调整边框宽度和颜色 */
 }
 
@@ -1519,7 +1519,7 @@ body.dark-mode {
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
-	left: 100px;
+	left: 70px;
 	top: 8px;
 }
 
@@ -1528,7 +1528,7 @@ body.dark-mode {
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
-	left: 100px;
+	left: 70px;
 	top: 8px;
 	z-index: 100;
 }
@@ -1560,13 +1560,12 @@ body.dark-mode {
 	margin-left: 2px;
 	margin-bottom: 6px;
 	object-fit: cover;
-	/* 保持图片的宽高比，可能会裁剪图片 */
 }
 
 #recordLine {
 	margin-top: 15px;
 	height: 20px;
-	width: 150px;
+	width: 120px;
 }
 
 #activeLine {
@@ -1579,7 +1578,13 @@ body.dark-mode {
 }
 
 #recordTime,
-#recordTime2 {
+#recordTime2{
+	position: absolute;
+	left: 190px;
+	margin-top: 13px;
+}
+
+#recordTime_base{
 	position: absolute;
 	left: 190px;
 	margin-top: 13px;
@@ -1623,7 +1628,7 @@ body.dark-mode {
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
-	left: 100px;
+	left: 70px;
 	top: 8px;
 	z-index: 100;
 }
