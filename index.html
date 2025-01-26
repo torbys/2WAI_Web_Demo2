@@ -485,14 +485,14 @@
 	// const host = 'http://18.237.173.80:7862'
 
 	//1.22日服务器
-	const host='http://18.246.161.188:7862'
+	// const host='http://18.246.161.188:7862'
 
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
 
 
 	//1.19日服务器
-	// const host='http://52.40.208.108:7862'
+	const host='http://52.40.208.108:7862'
 
 	
 	var avatarName = "avatar1";  	//会话人物
@@ -1192,15 +1192,15 @@
 					for (var i = 0; i < this.slides.length; i++) {
 						this.slides[i].classList.remove('swiper-slide-active');
 					}
-					// 给当前选中的滑块添加边框样式
+
 					this.slides[this.realIndex].classList.add('swiper-slide-active');
 
-					let len = 4; // 只展示前四个角色
+					let len = 4;
 
-					let index = this.realIndex % len; // 计算当前索引在0到3之间的值
+					let index = this.realIndex % len; 
 
 					if (dataAvatars.length > 0 && dataAvatars[index] && isConnected) {
-						changeAvatar(dataAvatars[index].value);//切换角色
+						changeAvatar(dataAvatars[index].value);
 					}
 				},
 			},
@@ -1701,25 +1701,18 @@
 		const avatarSelect = document.getElementById('avatar-name');
 
 		let avatars = '';
-		let vimgs = ['avatar1', 'avatar2', 'avatar3', 'avatar4'], aindex = 0;
 		let countAvatar = 0; // 用于跟踪已处理的元素数量 
+
 		console.log(options.avatars);
 
 		options.avatars.forEach(avatar => {
-			if (countAvatar < 4) { // 只处理前四个元素
-				//const imgSrc = `./icon/${vimgs[aindex]}.png`;
+			if (countAvatar < 4) { 
 				const imgSrc = `./icon/${avatar.value}.png`;
 				console.log('create avatar', imgSrc);
-
 				avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
-				aindex++; // 更新索引
-				countAvatar++; // 增加已处理元素的计数
-
-				if (aindex >= vimgs.length) {
-					aindex = 0; // 如果索引超出数组长度，重置为0
-				}
+				countAvatar++; 
 			} else {
-				return; // 一旦处理了四个元素，就退出循环
+				return; 
 			}
 		});
 

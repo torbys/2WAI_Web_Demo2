@@ -315,9 +315,7 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
-
     updateAvatarVoice(avatarName); // 自动更新声音设置
-
     console.log("AvatarName is:", avatarName);
     isChange=true;
     start();
