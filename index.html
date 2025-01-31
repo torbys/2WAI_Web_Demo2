@@ -490,14 +490,18 @@
 	//index2的https请求
 	// const host='https://waverlyc4.xiaomy.net'
 
-
 	//1.19日服务器
-	const host='http://52.40.208.108:7862'
+	// const host='http://52.40.208.108:7862'
 
-	
-	var avatarName = "avatar1";  	//会话人物
+	//1.31日服务器
+	const host = 'http://18.237.179.127:7862'
+
+	//var avatarName = "avatar1";  	//会话人物
+
+	var avatarName = "avatar11"		//Miami会话默认
 	var ttsSelection = "tts1";   	//会话模块
 	var avatarVoice = "voice1"; 	//会话声音
+
 	var sessionid = "";				//会话id
 	var isConnected = false;		//链接状态
 	var noticeFlag=false;			//Hint标志
@@ -1195,7 +1199,7 @@
 
 					this.slides[this.realIndex].classList.add('swiper-slide-active');
 
-					let len = 4;
+					let len = dataAvatars.length;
 
 					let index = this.realIndex % len; 
 
@@ -1706,14 +1710,10 @@
 		console.log(options.avatars);
 
 		options.avatars.forEach(avatar => {
-			if (countAvatar < 4) { 
-				const imgSrc = `./icon/${avatar.value}.png`;
-				console.log('create avatar', imgSrc);
-				avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
-				countAvatar++; 
-			} else {
-				return; 
-			}
+			const imgSrc = `./icon/${avatar.value}.png`;
+			console.log('create avatar', imgSrc);
+			avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
+			countAvatar++; 
 		});
 
 		dataAvatars = options.avatars;
@@ -1754,7 +1754,6 @@
 		let ttsVoices = "";
 		let vcolors = ['#dc4b4b', '#4bc05e', '#4b66c0', '#ffda48', '#aa6de8'], vindex = 0;
 		options.ttsVoices.forEach(voice => {
-
 
 			const nameInBrackets = voice.label.match(/\((.*?)\)/) ? voice.label.match(/\((.*?)\)/)[1] : '';
 			console.log('Create sound: ' + voice.value + nameInBrackets);
@@ -2255,7 +2254,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://52.40.208.108:7864/uploadAudio', {
+				fetch('http://18.237.179.127:7864/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})
@@ -2928,7 +2927,7 @@ function bindRecordEvents() {
 				$('#myCanvas').addClass('hidden1');
 				visualizer.stop();
 
-	            fetch('http://52.40.208.108:7864/uploadAudio', {
+	            fetch('http://18.237.179.127:7864/uploadAudio', {
 	                method: 'POST',
 	                body: formData
 	            })

@@ -238,13 +238,18 @@ function resetSwiper1ToFirstSlide() {
 }
 
 // 映射关系
+
 const avatarVoiceMapping = {
     'avatar1': 'voice1',
     'avatar5': 'voice1',
     'avatar2': 'voice2',
     'avatar3': 'voice3',
     'avatar4': 'voice4',
-    'avatar8': 'voice4'
+    'avatar8': 'voice4',
+    'avatar11': 'voice1',
+    'avatar12': 'voice2',
+    'avatar13': 'voice3',
+    'avatar15': 'voice3'
 };
 
 
