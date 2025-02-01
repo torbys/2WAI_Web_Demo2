@@ -246,9 +246,10 @@ const avatarVoiceMapping = {
     'avatar3': 'voice3',
     'avatar4': 'voice4',
     'avatar8': 'voice4',
-    'avatar11': 'voice1',
-    'avatar12': 'voice2',
-    'avatar13': 'voice3',
+    'avatar11':' voice3',
+    'avatar12':' voice1',
+    'avatar13':' voice3',
+    'avatar14':' voice2',
     'avatar15': 'voice3'
 };
 
@@ -269,7 +270,6 @@ function updateAvatarVoice(avatarName) {
         swiper2.slideTo(voiceIndex);
     }
 
-    showLoading();
     fetch(host + '/change_property', {
         method: 'POST',
         body: JSON.stringify(
@@ -283,11 +283,9 @@ function updateAvatarVoice(avatarName) {
     .then(response => response.json())
     .then(data => {
         console.log('请求成功，返回的数据是：', data);
-        hideLoading(); 
     })
     .catch(error => {
         console.error('请求失败，错误信息是：', error);
-        hideLoading(); 
     });
 }
 

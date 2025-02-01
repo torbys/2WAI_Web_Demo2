@@ -1704,20 +1704,36 @@
 		// 填充 Digital Human 选项框 人物切换
 		const avatarSelect = document.getElementById('avatar-name');
 
+		// 定义需要筛选的 value 值
+		const targetValues = ["avatar1", "avatar11", "avatar12", "avatar13", "avatar14", "avatar15"];
+
 		let avatars = '';
 		let countAvatar = 0; // 用于跟踪已处理的元素数量 
 
 		console.log(options.avatars);
 
-		options.avatars.forEach(avatar => {
-			const imgSrc = `./icon/${avatar.value}.png`;
-			console.log('create avatar', imgSrc);
-			avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
-			countAvatar++; 
+		// 使用 filter 方法筛选出符合条件的 avatars
+		const filteredAvatars = options.avatars.filter(avatar => targetValues.includes(avatar.value));
+
+		filteredAvatars.forEach(avatar => {
+		  const imgSrc = `./icon/${avatar.value}.png`;
+		  console.log('create avatar', imgSrc);
+		  avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
+		  countAvatar++;
 		});
 
-		dataAvatars = options.avatars;
+		// options.avatars.forEach(avatar => {
+		// 	const imgSrc = `./icon/${avatar.value}.png`;
+		// 	console.log('create avatar', imgSrc);
+		// 	avatars += `<div class="swiper-slide">  <img src="${imgSrc}" alt="${imgSrc}" />  </div>`;
+		// 	countAvatar++; 
+		// });
+
+		// 将筛选后的数据存储到 dataAvatars 中
+		dataAvatars = filteredAvatars;
 		datatVoices = options.ttsVoices;
+
+		console.log(dataAvatars); // 输出筛选后的数据内容
 
 		$('#swiper3 .swiper-wrapper').html(avatars);
 
@@ -1778,8 +1794,7 @@
 
 		// 设置默认选中项
 		if (options.avatars.length > 0) {
-			// avatarName = options.avatars[0].value;
-			avatarName = 'avatar5'
+			avatarName = options.avatars[0].value;
 		}
 		if (options.ttsModules.length > 0) {
 			ttsSelection = options.ttsModules[0].value;
