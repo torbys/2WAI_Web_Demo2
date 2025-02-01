@@ -246,11 +246,11 @@ const avatarVoiceMapping = {
     'avatar3': 'voice3',
     'avatar4': 'voice4',
     'avatar8': 'voice4',
-    'avatar11':' voice3',
-    'avatar12':' voice1',
-    'avatar13':' voice3',
-    'avatar14':' voice2',
-    'avatar15': 'voice3'
+    'avatar11':' voice11',
+    'avatar12':' voice12',
+    'avatar13':' voice13',
+    'avatar14':' voice14',
+    'avatar15': 'voice15'
 };
 
 
