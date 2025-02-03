@@ -332,12 +332,14 @@ function updateAvatarVoice(avatarName) {
   // 安全跳转
   if (targetIndex !== -1) {
     swiper.slideTo(targetIndex + 1, 500, false);
-    changeAvatarVoice(newVoice);
+    console.log("AvatarName is:", avatarName);
+    avatarVoice=newVoice
+    isChange=true;
+    start();
   } else {
     console.error("未找到匹配的声音:", newVoice);
   }
 
-  //changeAvatarVoice(newVoice);
 }
 
 /*更换角色*/
@@ -357,7 +359,7 @@ function changeAvatar(val)
     else if(avatarName == val){
         return;
     }else{ 
-       avatarName = val;//'';
+       avatarName = val;
     }
 
     // 更新显示逻辑
@@ -369,12 +371,7 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
-    
-    updateAvatarVoice(avatarName); // 自动更新声音设置
-
-    console.log("AvatarName is:", avatarName);
-    isChange=true;
-    start();
+    updateAvatarVoice(avatarName);
 }
 
 /*更换ttsSelection  如：changeTtsSelection('tts2')*/
