@@ -301,7 +301,7 @@ function updateAvatarVoice(avatarName) {
 
   const newVoice = avatarVoiceMapping[avatarName];
 
-  if(newVoice == "voice1"){
+  if(newVoice == "voice1" && avatarName == 'avatar1' || avatarName == 'avatar5'){
     isChange=true;
     start();
   }
