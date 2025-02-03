@@ -246,47 +246,62 @@ const avatarVoiceMapping = {
     'avatar3': 'voice3',
     'avatar4': 'voice4',
     'avatar8': 'voice4',
-    'avatar11':' voice11',
-    'avatar12':' voice12',
-    'avatar13':' voice13',
-    'avatar14':' voice14',
-    'avatar15': 'voice15'
+    'avatar11':'voice11',
+    'avatar12':'voice12',
+    'avatar13':'voice13',
+    'avatar14':'voice14',
+    'avatar15':'voice15'
 };
+
+/*更换 声音*/
+function changeAvatarVoice(val)
+{
+    
+    if(avatarVoice == val){
+        return;
+    }
+
+    avatarVoice = val;
+    console.log("AvatarVoice is:", avatarVoice);
+
+    showLoading();
+    fetch(host+'/change_property',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                sessionid: sessionid,
+                ttsSelection: ttsSelection,
+                avatarVoice: avatarVoice,
+            })
+        }
+    ).then(response => response.json()) // 处理请求成功的情况
+    .then(data => {
+        console.log('请求成功，返回的数据是：', data);
+        hideLoading(); 
+    })
+    .catch(error => {
+        console.error('请求失败，错误信息是：', error);
+        hideLoading(); 
+    });
+} 
 
 
 function updateAvatarVoice(avatarName) {
 
     const newVoice = avatarVoiceMapping[avatarName];
+    console.log("newVoice"+newVoice);
     if (avatarVoice === newVoice) {
         return;
     }
-
-    avatarVoice = newVoice;
-    console.log("re AvatarVoice is:", avatarVoice);
-
+    
     const voiceIndex = datatVoices.findIndex(voice => voice.value === newVoice);
     if (voiceIndex !== -1) {
-        // 切换到对应的声音 slide
-        swiper2.slideTo(voiceIndex);
+        swiper2.slideTo(voiceIndex,false);
     }
 
-    fetch(host + '/change_property', {
-        method: 'POST',
-        body: JSON.stringify(
-            {
-                sessionid:sessionid,
-                ttsSelection: ttsSelection,
-                avatarVoice: avatarVoice,
-            }
-        )
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('请求成功，返回的数据是：', data);
-    })
-    .catch(error => {
-        console.error('请求失败，错误信息是：', error);
-    });
+    changeAvatarVoice(newVoice);
 }
 
 /*更换角色*/
@@ -318,7 +333,9 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
+
     updateAvatarVoice(avatarName); // 自动更新声音设置
+
     console.log("AvatarName is:", avatarName);
     isChange=true;
     start();
@@ -369,40 +386,7 @@ function changeTtsSelection(val)
 }
 
 
-/*更换 声音*/
-function changeAvatarVoice(val)
-{
-    
-    if(avatarVoice == val){
-        return;
-    }
 
-    // stop2();
-    avatarVoice = val;//'';
-    console.log("AvatarVoice is:", avatarVoice);
-
-    showLoading();
-    fetch(host+'/change_property',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({
-                sessionid: sessionid,
-                ttsSelection: ttsSelection,
-                avatarVoice: avatarVoice,
-            })
-        }
-    ).then(response => response.json()) // 处理请求成功的情况
-    .then(data => {
-        console.log('请求成功，返回的数据是：', data);
-        hideLoading(); 
-    })
-    .catch(error => {
-        console.error('请求失败，错误信息是：', error);
-        hideLoading(); 
-    });
-} 
 
 /*切换背景的请求*/
 function changeBg(imgurl)
