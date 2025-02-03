@@ -53,6 +53,7 @@ const timeoutElement = document.querySelector('.Time-out');
 // 定义在全局作用域中
 var intervalId;
 var intervalconnecting;
+let timeoutId = null;
 
  // 这个函数用于定期检查 pc 的状态
 function checkConnectionState() {
@@ -85,13 +86,14 @@ function checkConnectioning(){
 }
 
 function cheackTimeOut(intervalId){
-    setTimeout(() => {
-        clearInterval(intervalId); // 停止定时器
-        if ( pc === null || pc.connectionState !== "connected") {
+    timeoutId = setTimeout(() => {
+        clearInterval(intervalId); 
+        if (pc === null || pc.connectionState !== "connected") {
             hideLoading(); // 隐藏 loading 提示
-            timeoutElement.classList.add('pop'); // 显示连接超时提示
+            timeoutElement.classList.add('pop'); // 显示超时提示框
         }
-    },300000); //5分钟300000
+        clearTimeout(timeoutId)
+    }, 300000); // 5分钟后检查
 }
 
 function start() {
@@ -210,6 +212,16 @@ function stop2() {
         }
     );
 
+    // fetch(host+'/stop_current_avatar',{
+    //         method: 'POST',
+    //         body: JSON.stringify(
+    //             {
+    //                 sessionid: parseInt(document.getElementById('sessionid').value),
+    //             }
+    //         )
+    //     }
+    // );
+
     if (pc) {
         pc.close();
         pc = null; 
@@ -283,7 +295,6 @@ function changeAvatarVoice(val)
     })
     .catch(error => {
         console.error('请求失败，错误信息是：', error);
-        hideLoading(); 
     });
 } 
 
@@ -333,7 +344,7 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
-
+    
     updateAvatarVoice(avatarName); // 自动更新声音设置
 
     console.log("AvatarName is:", avatarName);
