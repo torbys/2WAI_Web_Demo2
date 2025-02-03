@@ -1792,7 +1792,7 @@
 			console.log('Create sound: ' + voice.value + nameInBrackets);
 
 
-			ttsVoices += `<div class="swiper-slide">
+			ttsVoices += `<div class="swiper-slide" data-voice="${voice.value}">
                                <div class="color_img" style="background-color: ${vcolors[vindex]};">
                                  <img src="./icon/voiceLine.png" alt="" />
                                  <div>${nameInBrackets}</div> <!-- 在这里插入括号里的名字 -->

@@ -316,7 +316,7 @@ function updateAvatarVoice(avatarName) {
    let targetIndex = -1;
    slidesArray.forEach((slide, index) => {
        const voiceValue = slide.getAttribute('data-voice');
-       if (voiceValue === newVoice && !slide.classList.contains('swiper-slide-duplicate')) {
+       if (voiceValue === newVoice && !slide.classList.contains('swiper-slide-active')) {
            targetIndex = index;
        }
    });
@@ -331,7 +331,7 @@ function updateAvatarVoice(avatarName) {
 
   // 安全跳转
   if (targetIndex !== -1) {
-    swiper.slideTo(targetIndex, 500, false);
+    swiper.slideTo(targetIndex + 1, 500, false);
     changeAvatarVoice(newVoice);
   } else {
     console.error("未找到匹配的声音:", newVoice);
@@ -393,7 +393,6 @@ function changeTtsSelection(val)
     showLoading();
 
     stop2();
-
     isChange=true;
     start();
 
@@ -421,9 +420,6 @@ function changeTtsSelection(val)
     //     ttsItem.classList.remove('expanded');
     //     hideLoading(); 
     // });
-
-
-
 }
 
 /*切换背景的请求*/
