@@ -250,7 +250,6 @@ function resetSwiper1ToFirstSlide() {
 }
 
 // 映射关系
-
 const avatarVoiceMapping = {
     'avatar1': 'voice1',
     'avatar5': 'voice1',
@@ -298,21 +297,47 @@ function changeAvatarVoice(val)
     });
 } 
 
-
 function updateAvatarVoice(avatarName) {
 
-    const newVoice = avatarVoiceMapping[avatarName];
-    console.log("newVoice"+newVoice);
-    if (avatarVoice === newVoice) {
-        return;
-    }
-    
-    const voiceIndex = datatVoices.findIndex(voice => voice.value === newVoice);
-    if (voiceIndex !== -1) {
-        swiper2.slideTo(voiceIndex,false);
-    }
+  const newVoice = avatarVoiceMapping[avatarName];
+  if (!newVoice || avatarVoice === newVoice) return;
 
+  // 获取Swiper实例
+  const swiper = swiper2;
+  if (!swiper || !swiper.slides) {
+    console.error("Swiper未初始化");
+    return;
+  }
+
+   // 将 swiper.slides 转换为数组
+   const slidesArray = Array.from(swiper.slides);
+
+   // 查找目标幻灯片的真实索引
+   let targetIndex = -1;
+   slidesArray.forEach((slide, index) => {
+       const voiceValue = slide.getAttribute('data-voice');
+       if (voiceValue === newVoice && !slide.classList.contains('swiper-slide-duplicate')) {
+           targetIndex = index;
+       }
+   });
+
+  // 处理循环模式偏移
+  if (swiper.params.loop) {
+    const loopSlides = Math.floor(swiper.params.slidesPerView) * 2;
+    if (targetIndex >= loopSlides) {
+      targetIndex -= loopSlides;
+    }
+  }
+
+  // 安全跳转
+  if (targetIndex !== -1) {
+    swiper.slideTo(targetIndex, 500, false);
     changeAvatarVoice(newVoice);
+  } else {
+    console.error("未找到匹配的声音:", newVoice);
+  }
+
+  //changeAvatarVoice(newVoice);
 }
 
 /*更换角色*/
@@ -367,37 +392,39 @@ function changeTtsSelection(val)
     console.log("更换TtsSelection is:", ttsSelection);
     showLoading();
 
-    // 请求数据
-    const requestData = {
-        sessionid: sessionid,
-        ttsSelection: ttsSelection,
-        avatarVoice: avatarVoice,
-    };
+    stop2();
 
-    
+    isChange=true;
+    start();
 
-    fetch(host+'/change_property',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify(requestData)
-        }
-    ).then(response => response.json()) // 处理请求成功的情况
-    .then(data => {
-        console.log('请求成功，返回的数据是：', data);
-        ttsItem.classList.remove('expanded');
-        hideLoading(); 
-    })
-    .catch(error => {
-        console.error('请求失败，错误信息是：', error);
-        ttsItem.classList.remove('expanded');
-        hideLoading(); 
-    });
+    // // 请求数据
+    // const requestData = {
+    //     sessionid: sessionid,
+    //     ttsSelection: ttsSelection,
+    //     avatarVoice: avatarVoice,
+    // };
+    // fetch(host+'/change_property',{ 
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json' 
+    //     },
+    //     body: JSON.stringify(requestData)
+    //     }
+    // ).then(response => response.json()) // 处理请求成功的情况
+    // .then(data => {
+    //     console.log('请求成功，返回的数据是：', data);
+    //     ttsItem.classList.remove('expanded');
+    //     hideLoading(); 
+    // })
+    // .catch(error => {
+    //     console.error('请求失败，错误信息是：', error);
+    //     ttsItem.classList.remove('expanded');
+    //     hideLoading(); 
+    // });
+
+
+
 }
-
-
-
 
 /*切换背景的请求*/
 function changeBg(imgurl)
