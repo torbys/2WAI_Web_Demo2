@@ -300,6 +300,12 @@ function changeAvatarVoice(val)
 function updateAvatarVoice(avatarName) {
 
   const newVoice = avatarVoiceMapping[avatarName];
+
+  if(newVoice == "voice1"){
+    isChange=true;
+    start();
+  }
+
   if (!newVoice || avatarVoice === newVoice) return;
 
   // 获取Swiper实例
@@ -338,6 +344,8 @@ function updateAvatarVoice(avatarName) {
     start();
   } else {
     console.error("未找到匹配的声音:", newVoice);
+    isChange=true;
+    start();
   }
 
 }
@@ -363,7 +371,8 @@ function changeAvatar(val)
     }
 
     // 更新显示逻辑
-    if (avatarName == 'avatar1' || avatarName == 'avatar5' || avatarName == 'avatar4' || avatarName == 'avatar8') {
+    
+    if ( avatarName == 'avatar1' || avatarName == 'avatar5' || avatarName == 'avatar4' || avatarName == 'avatar8') {
         $('#clothes_item').show();
     } else {
         $('#clothes_item').hide();
