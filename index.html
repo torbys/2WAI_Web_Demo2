@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>2WAI Demo</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link rel="stylesheet" href="swiper.min.css">
-	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="css/swiper.min.css">
+	<link rel="stylesheet" href="css/index.css">
 
 
 </head>
@@ -109,7 +109,7 @@
 
 							<div class="box"></div>
 							<div class="box"></div>
-						  </div>
+						</div>
   
 
 						<div class="Hint-message">
@@ -133,11 +133,6 @@
 						</div>
 					</div>
 
-					
-					<!--<audio id="audio" autoplay="true"></audio> 
-				<video id="video" preload="auto" poster="./icon/loadingBackGorund.png" autoplay playsinline loop muted>
-				  <source src="./video/base.mp4" type="video/mp4"> 
-				</video>-->
 
 					<audio id="audio" autoplay="false"></audio>
 					<video id="video" autoplay="true" playsinline="true" muted src="./video/base.mp4"></video>
@@ -253,15 +248,12 @@
 
 					<!-- 输入区 -->
 					<div class="zoom-bottom">
-
-						<!-- <audio src="" style="display: none;" id="zoomVoice"></audio> -->
 						
 						<button id="speak-button" class="hidden1">Hold on and speak</button>
 						
 						<textarea class="form-control" id="message2"
 							placeholder="Type your message here..."></textarea>
 
-					
 						<div id="image-container-zoom"
 							style="margin-top: 0;margin-left: 10px;background-color: #fff;border-radius: 50%;width: 40px;height: 40px;">
 							<img id="voice-image-zoom" class="voice_img" src="./icon/voice-zoom.png" alt="voice"/>
@@ -374,20 +366,6 @@
 						</button>
 					</div>
 
-					<!-- $('#audio-preview').show(); // 显示音频预览区域
-                    $('#audio-player').attr('src', `/tmp/${fileName}`); // 设置音频播放器的源为服务器上的音频文件
-                    $('#file-name').text(fileName); // 设置文件名显示为上传的文件名
-                    $('#delete-audio').show(); // 显示删除音频的按钮 -->
-
-
-
-
-					<!-- <div>
-				    <label for="btn-record"></label>
-				    <button class="btn btn-primary" id="btn_start_record">Start Recording</button>
-				    <button class="btn btn-primary" id="btn_stop_record" disabled>Stop Recording</button>
-				</div> -->
-
 					<!-- 按钮包裹的提交 -->
 					<button type="submit" class="btn btn-default">
 						<img class="submit" src="./icon/base_submit.png" alt="submit" />
@@ -462,428 +440,32 @@
 
 </body>
 
-<script>
+<!-- 配置和第三方库 -->
+<script src="js/config.js"></script>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/swiper.min.js"></script>
 
-	// const host = 'https://wxqawnt5040hm5-7862.proxy.runpod.net'; 
-	//const host = 'http://47.96.160.235:7862'; 
-	// const host = 'https://6sme1xw3s55ryw-7862.proxy.runpod.net'; 
-	//const host='https://66.114.112.70';
-	// const host ='http://47.96.160.235:7862';
-	// const host = 'http://52.11.182.61:7862';
-
-	//aws1
-	//const host = 'http://35.89.226.131:7862';
-
-	//aws2
-	// const host= 'http://35.153.157.142:7862's
-
-	//1.13runpod
-	// const host = 'https://g754ua0bibbm8a-7862.proxy.runpod.net'
-
-	//1.15的服务器
-	// const host = 'http://18.237.173.80:7862'
-
-	//1.22日服务器
-	// const host='http://18.246.161.188:7862'
-
-	//index2的https请求
-	// const host='https://waverlyc4.xiaomy.net'
-
-	//1.19日服务器
-	// const host='http://52.40.208.108:7862'
-
-	//1.31日服务器
-	const host = 'http://18.237.179.127:7862'
-
-	//var avatarName = "avatar1";  	//会话人物
-
-	var avatarName = "avatar5"		//Miami会话默认
-	var ttsSelection = "tts1";   	//会话模块
-	var avatarVoice = "voice1"; 	//会话声音
-
-	var sessionid = "";				//会话id
-	var isConnected = false;		//链接状态
-	var noticeFlag=false;			//Hint标志
-	var canSubmit = 0; 				// 提交标志，默认为0
-	var streamType = "AUDIO_VIDEO"     // 推流方式
-
-	//推流方式
-	// LLM_ONLY   
-	// AUDIO_ONLY 
-	// AUDIO_VIDEO
-	// AUDIO_VIDEO
-
-	var dataAvatars = [];			//获取的模型人物名字集合
-	var datatVoices = [];			//获取的声音集合
-
-	let mediaRecorder;
-	let audioChunks = [];
-	let isRecording = false;  // 添加录音状态标志
-	let audioStream; // 用于存储麦克风流的全局变量
-
-	// 获取轮播区域元素
-	var buttons1 = document.querySelectorAll('.btn_1');
-	var swiperBox1 = document.getElementById('swiper1');
-	var buttons2 = document.querySelectorAll('.btn_2');
-	var swiperBox2 = document.getElementById('swiper2');
-	var buttons3 = document.querySelectorAll('.btn_3');
-	var swiperBox3 = document.getElementById('swiper3');
-
-	// 检查并显示 Hint 的函数
-	function checkAndShowHint() {
-		const mediaQuery = window.matchMedia('(max-width: 1000px)');
-	    if (mediaQuery.matches && !noticeFlag) {
-	        const hint = document.querySelector('.Hint');
-	        hint.style.display = 'flex';
-			noticeFlag=true;
-	    } else {
-	        // 否则，隐藏 Hint
-	        const hint = document.querySelector('.Hint');
-	        hint.style.display = 'none';
-	    }
-	}
-
-	// 显示 loading 提示的函数
-	function showLoading() {
-		var loadingElement = document.querySelector('.Error-Dialog');
-		loadingElement.classList.add('pop');
-		document.body.style.pointerEvents = 'none';
-	}
-
-	// 隐藏 loading 提示的函数
-	function hideLoading() {
-		var loadingElement = document.querySelector('.Error-Dialog');
-		loadingElement.classList.remove('pop');
-		checkAndShowHint();
-		document.body.style.pointerEvents = 'auto';
-	}
-
-	function hideSwiperAndButtons(swiperBox, buttons) {
-		// 如果轮播区域显示，则隐藏轮播区域和所有按钮
-		if (swiperBox.classList.contains('show')) {
-			swiperBox.classList.remove('show');
-			buttons.forEach(function (button) {
-				button.classList.remove('show');
-			});
-		}
-	}
-</script>
-
-
-<!-- <script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script> -->
-<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
-<script src="swiper.min.js"></script>
+<!-- 集成共用功能 -->
 <script src="js/audioVisualizer.js"></script>
-<script src="client_wn.js"></script>
+<script src="js/client_wn.js"></script>
 
-<script>
+<!-- PC端的功能 -->
+<script src="js/PCAreaUi.js"></script>
+<script src="js/initSwiperTeam.js"></script>
+<script src="js/Listeners.js"></script>
+<script src="js/PCChat.js" ></script>
+<script src="js/Options.js"></script>
+<script src="js/darkMod.js"></script>
+<script src="js/RecordPC.js"></script>
 
-	function cancelSelection(id) {
-	    var $selectedItem = $('#' + id);
-		$('.img_container').removeClass('selected');
-		$('.img_container img').removeClass('selected-filter'); // 移除所
-	}
-
-	function setHeightToVideo() {
-	    var video = document.getElementById('video');
-	    if (video) { // 确保视频元素存在
-	        var videoHeight = video.clientHeight;
-	        var videoWidth = video.clientWidth; // 获取视频宽度
-	        console.log("小屏视频高度：" + videoHeight + ", 宽度：" + videoWidth);
-		
-	        if (window.innerWidth <= 1100) {
-	            // 设置html和body的高度和宽度为视频的尺寸
-	            document.documentElement.style.height = videoHeight + 'px';
-	            document.documentElement.style.width = videoWidth + 'px';
-	            document.body.style.height = videoHeight + 'px';
-	            document.body.style.width = videoWidth + 'px';
-	            document.body.style.overflow = 'hidden'; // 隐藏滚动条
-	        }else{
-				document.documentElement.style.height = '';
-	            document.documentElement.style.width = '';
-	            document.body.style.height = '';
-	            document.body.style.width ='';
-	            document.body.style.overflow = ''; // 隐藏滚动条
-			}
-	    }
-	}
-	
-	window.addEventListener('resize', setHeightToVideo);
-	window.addEventListener('load', setHeightToVideo);
+<!-- 移动端缩放区域 -->
+<script src="js/ProgressBarLoading.js"></script>
+<script src="js/ZoomAreaUI.js"></script>
+<script src="js/MobileRecording.js"></script>
+<script src="js/LongPresstoZoom.js"></script>
 
 
-	// 获取视频元素
-	const video = document.getElementById('video');
-	const chatContainer = document.querySelector('.chat-container');
-	const form = document.getElementById('echo-form');
-	var chatContainerHeight;
-
-	// 定义一个函数来设置 chat-container 的高度
-	function setChatContainerHeightToVideo() {
-	    // 获取视频的实际显示高度
-	    const videoHeight = video.offsetHeight;
-
-	    // 获取 form 的高度
-	    const formHeight = form.offsetHeight;
-
-	    // 计算 chat-container 的高度（视频高度减去 form 高度）
-	    chatContainerHeight = videoHeight - formHeight;
-
-	    console.log("视频高度: " + videoHeight);
-	    console.log("表单高度: " + formHeight);
-	    console.log("聊天容器高度: " + chatContainerHeight);
-
-	    // 设置 chat-container 的高度
-	    chatContainer.style.maxHeight = `${chatContainerHeight}px`;
-	}
-
-	// 监听页面加载完成事件
-	window.addEventListener('DOMContentLoaded', () => {
-	    // 确保视频已加载元数据
-	    if (video.readyState > 0) {
-	        setChatContainerHeightToVideo();
-	    } else {
-	        video.addEventListener('loadedmetadata', setChatContainerHeightToVideo);
-	    }
-	});
-
-	/*max滑块的更改*/
-	const chunkSize = document.getElementById('chunk-size');
-    const chunkSizeInput = document.getElementById('chunk-size-input');
-    const numberBoxContainer = document.querySelector('.number-box-container');
-    const sliderContainer = document.querySelector('.slider-container');
-
-    // 处理滑块移动事件
-    chunkSize.addEventListener('input', function(e) {
-    	  const value = e.target.value;
-    	  numberBoxContainer.style.display = 'block';
-		
-    	  // 获取滑块的实际位置
-    	  const rect = e.target.getBoundingClientRect();
-    	  const thumbWidth = 18; // 滑块的宽度
-    	  const containerRect = sliderContainer.getBoundingClientRect();
-		
-    	  // 计算滑块中心点的位置
-    	  const percentage = (value - e.target.min) / (e.target.max - e.target.min);
-    	  const thumbLeft = percentage * (rect.width - thumbWidth) + thumbWidth / 2;
-		
-    	  // 设置数值框的位置，使其对齐滑块中心
-    	  numberBoxContainer.style.left = `${thumbLeft}px`;
-    	  numberBoxContainer.textContent = value;
-
-    	  if (numberBoxContainer.timeoutId) {
-    	    clearTimeout(numberBoxContainer.timeoutId);
-    	  }
-
-    	  numberBoxContainer.timeoutId = setTimeout(() => {
-    	    numberBoxContainer.style.display = 'none';
-    	  }, 500);
-    });
-    // 同步滑块和输入框的值
-    chunkSize.addEventListener('input', function(e) {
-    	  chunkSizeInput.value = e.target.value;
-    });
-
-    chunkSizeInput.addEventListener('input', function(e) {
-    	let value = parseInt(e.target.value);
-    	if (value < 0) value = 0;
-    	if (value > 30) value = 30;
-    	if (!isNaN(value)) {
-    	  chunkSize.value = value;
-    	}
-    });
-
-	/*PC端的滑轮缩放*/
-	document.addEventListener('DOMContentLoaded', function () {
-		const media = document.getElementById('video');
-  		const zoomClick = document.querySelector('.ZoomClick');
-  		const moveWrapper = document.querySelector('.moveWrapper');
-  		const zoomIcon = document.getElementById('zoomIcon');
-
-  		let resetTimeout = null;
-
-  		// 绑定点击事件，点击 moveWrapper 时将 ZoomClick 的 left 设置为 90%
-  		moveWrapper.addEventListener('click', function () {
-  		//   zoomClick.style.left = '92%';
-  		  zoomClick.style.left = '90%';
-  		  clearTimeout(resetTimeout);
-		
-  		  // 禁用 zoomIcon 的滚轮事件
-  		  zoomIcon.removeEventListener('wheel', handleWheel);
-		
-  		  // 重置定时器
-  		  resetTimeout = setTimeout(() => {
-  		    zoomClick.style.left = '120%';
-  		    // 重新启用 zoomIcon 的滚轮事件
-  		    zoomIcon.addEventListener('wheel', handleWheel);
-  		  }, 3000);
-  		});
-	
-  		// 绑定操作事件，当用户在 ZoomClick 内部进行操作时重置定时器
-  		zoomClick.addEventListener('click', function () {
-  		  clearTimeout(resetTimeout);
-  		  resetTimeout = setTimeout(() => {
-  		    zoomClick.style.left = '120%';
-  		    // 重新启用 zoomIcon 的滚轮事件
-  		    zoomIcon.addEventListener('wheel', handleWheel);
-  		  }, 3000);
-  		});
-	
-  		// 滚轮事件处理函数
-  		const handleWheel = (event) => {
-  		  	event.preventDefault(); // 阻止默认的滚动行为
-			
-  		  	const scaleFactor = 1.1; // 缩放因子
-  		  	let currentScale = media.style.transform ? parseFloat(media.style.transform.match(/scale\(([^)]+)\)/)[1]) : 1;
-			
-  		  	// 根据滚轮方向更新缩放比例
-  		  	if (event.deltaY < 0) {
-  		  	  currentScale *= scaleFactor;
-  		  	} else {
-  		  	  currentScale /= scaleFactor;
-  		  	  // 防止缩放过小导致视频不可见
-  		  	  if (currentScale < 0.1) currentScale = 0.1;
-  		  	}
-		  
-  		  	// 应用缩放变换，设置缩放原点为顶部 10% 的位置
-  		  	media.style.transformOrigin = 'center 10%'; 
-  		  	media.style.transform = `scale(${currentScale})`;
-  		};
-	
-  		// 初始绑定滚轮事件
-  		zoomIcon.addEventListener('wheel', handleWheel);
-	});
-
-	/*移动端zoom的点击事件*/
-	document.addEventListener('DOMContentLoaded', function () {
-		const media = document.getElementById('video');
-        const zoomOutButton = document.getElementById('Zoom-out2');
-        const zoomInButton = document.getElementById('Zoom-in2');
-		const zoomGroup = document.querySelector('.ZoomGroup2');
-
-        const scaleLevels = [0.5, 0.75, 1.0, 1.5, 2.0]; // 缩放挡位
-        let currentScaleIndex = 2; // 初始索引为2，对应100%
-		let tem=(currentScaleIndex / (scaleLevels.length - 1)) * 100;
-      
-        // 初始化缩放比例
-        media.style.transformOrigin = 'center 10%'; 
-        media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
-    
-         // 更新 .ZoomGroup 的背景颜色
-		 const updateZoomGroupBackground = () => {
-  		  const percentage = (currentScaleIndex / (scaleLevels.length - 1)) * 100;
-				
-  		  // 逐步更新背景颜色
-  		  const step = 1; // 每次变化的百分比
-  		  const interval = 10; // 每次变化的间隔时间（毫秒）
-				
-  		  const intervalId = setInterval(() => {
-  		    if (tem < percentage) {
-  		      tem += step;
-  		      if (tem > percentage) tem = percentage;
-  		    } else if (tem > percentage) {
-  		      tem -= step;
-  		      if (tem < percentage) tem = percentage;
-  		    }
-		
-  		    const gradient = `linear-gradient(to bottom, #e1e1e1 ${100 - tem}%, white ${100-tem}%)`;
-  		    zoomGroup.style.background = gradient;
-		
-  		    if (tem === percentage) {
-  		      clearInterval(intervalId);
-  		    }
-  		  }, interval);
-  		};
-
-	
-  		// 监听 Zoom-out 按钮的点击事件
-  		zoomOutButton.addEventListener('click', function (event) {
-  		  if (currentScaleIndex < scaleLevels.length - 1) {
-  		    currentScaleIndex++;
-  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
-  		    updateZoomGroupBackground();
-  		  }
-  		});
-	
-  		// 监听 Zoom-in 按钮的点击事件
-  		zoomInButton.addEventListener('click', function (event) {
-  		  if (currentScaleIndex > 0) {
-  		    currentScaleIndex--;
-  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
-  		    updateZoomGroupBackground();
-  		  }
-  		});
-	
-  		// 初始背景更新
-  		updateZoomGroupBackground();
-	});
-
-	/*PC端zoom的点击事件*/
-	document.addEventListener('DOMContentLoaded', function () {
-		const media = document.getElementById('video');
-        const zoomOutButton = document.getElementById('Zoom-out');
-        const zoomInButton = document.getElementById('Zoom-in');
-		const zoomGroup = document.querySelector('.ZoomGroup');
-
-        const scaleLevels = [0.5, 0.75, 1.0, 1.5, 2.0]; // 缩放挡位
-        let currentScaleIndex = 2; // 初始索引为2，对应100%
-		let tem=(currentScaleIndex / (scaleLevels.length - 1)) * 100;
-      
-        // 初始化缩放比例
-        media.style.transformOrigin = 'center 10%'; 
-        media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
-    
-         // 更新 .ZoomGroup 的背景颜色
-		 const updateZoomGroupBackground = () => {
-  		  const percentage = (currentScaleIndex / (scaleLevels.length - 1)) * 100;
-				
-  		  // 逐步更新背景颜色
-  		  const step = 1; // 每次变化的百分比
-  		  const interval = 10; // 每次变化的间隔时间（毫秒）
-				
-  		  const intervalId = setInterval(() => {
-  		    if (tem < percentage) {
-  		      tem += step;
-  		      if (tem > percentage) tem = percentage;
-  		    } else if (tem > percentage) {
-  		      tem -= step;
-  		      if (tem < percentage) tem = percentage;
-  		    }
-		
-  		    const gradient = `linear-gradient(to bottom, #e1e1e1 ${100 - tem}%, white ${100-tem}%)`;
-  		    zoomGroup.style.background = gradient;
-		
-  		    if (tem === percentage) {
-  		      clearInterval(intervalId);
-  		    }
-  		  }, interval);
-  		};
-
-	
-  		// 监听 Zoom-out 按钮的点击事件
-  		zoomOutButton.addEventListener('click', function (event) {
-  		  if (currentScaleIndex < scaleLevels.length - 1) {
-  		    currentScaleIndex++;
-  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
-  		    updateZoomGroupBackground();
-  		  }
-  		});
-	
-  		// 监听 Zoom-in 按钮的点击事件
-  		zoomInButton.addEventListener('click', function (event) {
-  		  if (currentScaleIndex > 0) {
-  		    currentScaleIndex--;
-  		    media.style.transform = `scale(${scaleLevels[currentScaleIndex]})`;
-  		    updateZoomGroupBackground();
-  		  }
-  		});
-	
-  		// 初始背景更新
-  		updateZoomGroupBackground();
-	});
-
-</script>
-
+<!-- 弃置代码 -->
 <script>
 	
 
@@ -945,224 +527,5 @@
 	// setInterval(adjustChatContainerHeight, 100);
 
 </script>
-
-<script src="js/initSwiperTeam.js"></script>
-<script src="js/Listeners.js"></script>
-
-<!-- =----------------PC端的发送回复功能--------------------= -->
-<script type="text/javascript" charset="utf-8">
-
-
-
-	$(document).ready(function () {
-		// var host = window.location.hostname
-		// var ws = new WebSocket("ws://"+host+":8000/humanecho");
-		// //document.getElementsByTagName("video")[0].setAttribute("src", aa["video"]);
-		// ws.onopen = function() {
-		// console.log('Connected');
-		// };
-		// ws.onmessage = function(e) {
-		// console.log('Received: ' + e.data);
-		// data = e
-		// var vid = JSON.parse(data.data); 
-		// console.log(typeof(vid),vid)
-		// //document.getElementsByTagName("video")[0].setAttribute("src", vid["video"]);
-
-		// };
-		// ws.onclose = function(e) {
-		// console.log('Closed');
-		// };
-
-		var submitBtn = $('button[type="submit"]');
-		var messageTextarea = $('#message');
-		var submitImg = './icon/submit.png'; // 绿色按钮的图片路径
-		var baseSubmitImg = './icon/base_submit.png'; // 灰色按钮的图片路径
-
-
-		// 监听textarea输入事件
-		messageTextarea.on('input', function () {
-			var message = $(this).val().trim();
-			if (message === '') {
-				// 如果textarea为空，设置flag为0，显示灰色图片，禁用按钮
-				canSubmit = 0;
-				submitBtn.prop('disabled', true);
-				submitBtn.find('img').attr('src', baseSubmitImg);
-			} else {
-				// 如果textarea不为空，设置flag为1，显示绿色图片，启用按钮
-				canSubmit = 1;
-				submitBtn.prop('disabled', false);
-				submitBtn.find('img').attr('src', submitImg);
-			}
-		});
-
-		// 监听textarea回车键事件
-		messageTextarea.on('keydown', function (e) {
-			if (e.which === 13) { // 检查是否是回车键（键码为13）
-				e.preventDefault(); // 阻止默认行为
-				if (canSubmit === 1) {
-					$('#echo-form').trigger('submit'); // 手动触发表单提交事件
-				}
-			}
-		});
-
-		function addMessage(message, isUser) {
-			const messageDiv = $('<div>')
-				.addClass('message')
-				.addClass(isUser ? 'user-message' : 'bot-message')
-				.css({
-            		opacity: 0, // 初始透明度为0
-            		transform: 'translateY(20px)', // 初始位置在下方20px
-            		transition: 'opacity 0.5s, transform 0.5s' // 定义过渡动画
-        		});
-
-			// 确定头像路径
-			let avatarPath = './icon/icon.png'; // 默认头像路径
-			if (!isUser) {
-				avatarPath = `./icon/${avatarName}.png`; // 设置为对应的头像路径
-			}
-
-			const avatar = $('<img>')
-				.addClass('message-avatar')
-				.attr('src', avatarPath)
-				.attr('alt', isUser ? 'User' : 'Bot');
-
-			const content = $('<div>')
-				.addClass('message-content')
-				.text(message);
-
-			messageDiv.append(avatar).append(content);
-			$('#chat-messages').append(messageDiv);
-			$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
-
-			 // 使用CSS动画实现渐隐滑入效果
-			 messageDiv.css({
-    		    opacity: 1, // 透明度变为1
-    		    transform: 'translateY(0)' // 位置回到初始位置
-    		});
-
-			if(!isUser){
-				// 按字符分割消息内容
-				const characters = message.split(""); // 将字符串分割成单个字符数组
-				let currentCharIndex = 0;
-
-				// 逐个字符动态显示消息内容
-				const displayNextChar = () => {
-				    if (currentCharIndex < characters.length) {
-				        // 如果是第一个字符，直接设置内容；否则在现有内容后追加字符
-				        if (currentCharIndex === 0) {
-				            content.text(characters[currentCharIndex]);
-				        } else {
-				            content.text(content.text() + characters[currentCharIndex]);
-				        }
-					
-				        currentCharIndex++;
-				        // 使用 setTimeout 递归调用，实现逐个字符显示的效果
-				        setTimeout(displayNextChar, 40); 
-				    }
-				};
-
-				// 开始逐个字符显示消息内容
-				displayNextChar();
-			}
-
-		}
-
-		$('#echo-form').on('submit', function (e) {
-			e.preventDefault();
-			if (canSubmit === 1) {
-
-				$('#submitPlayer')[0].play();
-				// 获取 audio-preview 元素
-				var audioPreview = $('.audio-preview');
-
-				
-
-				// 检查 audio-preview 是否没有 hidden 类
-				if (!audioPreview.hasClass('hidden')) {
-					// 如果没有 hidden 类，则添加 hidden 类
-					audioPreview.addClass('hidden');
-					messageTextarea.removeClass('hidden');
-					// 获取 voice-image 元素
-					var image = document.getElementById('voice-image');
-
-					// 设置 voiceFlag 为 true，以便将图标更换为 voice.png
-					voiceFlag = true;
-
-					// 设置图片新源为 voice.png
-					var newSrc = './icon/voice.png';
-
-					// 添加过渡效果
-					image.classList.add('changing');
-
-					// 移除过渡效果类，这将在 CSS 中触发过渡
-					setTimeout(function () {
-						// 设置图片新源
-						image.src = newSrc;
-						image.classList.remove('changing');
-					}, 300); // 300毫秒后移除，与 CSS 中的过渡时间相匹配
-				}
-
-				var message = $('#message').val();
-				// 添加用户消息到聊天框
-				addMessage(message, true);
-
-				console.log('Sending: ' + message);
-				console.log('sessionid: ', sessionid);
-
-				const audio = document.getElementById('audio');
-        		audio.play().catch(error => {
-        		    console.error('无法自动播放音频:', error);
-        		});
-
-
-				/*网络获取机械人回复*/
-				fetch(host + '/human', {
-					body: JSON.stringify({
-						text: message,
-						type: 'chat',
-						interrupt: true,
-						sessionid: sessionid,
-						avatarName: avatarName,
-						ttsSelection: ttsSelection,
-						avatarVoice: avatarVoice,
-						chunkSize: "10"
-					}),
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					method: 'POST'
-				})
-				.then(response => response.json())
-				.then(data => {
-					// 添加机器人的回复消息
-					const llmResponse = data.res || "No valid response was returned！";
-					addMessage(llmResponse, false);
-				})
-				.catch(error => {
-					console.error('Error:', error);
-					// 可选：显示错误消息
-					addMessage("Sorry, an error occurred. Please try again later.", false);
-				});
-
-				
-
-				// 清空入框并将焦点重新放在输入框上
-				$('#message').val('');
-				canSubmit = 0;
-				submitBtn.find('img').attr('src', baseSubmitImg);
-			}
-		});
-
-	});
-</script>
-
-
-<script src="js/Options.js"></script>
-<script src="js/darkMod.js"></script>
-<script src="js/RecordPC.js"></script>
-<script src="js/ProgressBarLoading.js"></script>
-<script src="js/ZoomAreaUI.js"></script>
-<script src="js/MobileRecording.js"></script>
-<script src="js/LongPresstoZoom.js"></script>
 
 </html>

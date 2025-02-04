@@ -1,8 +1,5 @@
 var pc = null;
 var isChange = false;
-var SDP="";
-
-
 
 function negotiate() {
     pc.addTransceiver('video', { direction: 'recvonly' });
@@ -26,33 +23,27 @@ function negotiate() {
         });
     }).then(() => {
         var offer = pc.localDescription; 
-        const requestData = {
-            "sdp": offer.sdp,
-            "avatarName": avatarName,
-            "ttsSelection": ttsSelection,
-            "avatarVoice": avatarVoice,
-        };
-        
-        console.log('Sending data:', requestData);
-
-        return fetch(host+'/getWebrtcConnection', {
-          body: JSON.stringify(requestData),
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          method: 'POST'
+        // console.log(offer.sdp);
+        return fetch(host+'/offer', {
+            body: JSON.stringify({
+                sdp: offer.sdp,
+                type: offer.type,
+                avatarName: avatarName,  
+                ttsSelection: ttsSelection,            
+                avatarVoice: avatarVoice,
+                streamType:streamType
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
         });
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json(); // 解析JSON字符串
-    }).then(data => {
-        console.log("获取到的sessionid:", data.sessionid);
-        sessionid = data.sessionid; // 赋值sessionid
-
-        return pc.setRemoteDescription(data);
-    }).catch(e => {
+    }).then((response) => {
+        return response.json();
+    }).then((answer) => {
+        sessionid = answer.sessionid
+        return pc.setRemoteDescription(answer);
+    }).catch((e) => {
         alert(e);
     });
     
@@ -62,19 +53,20 @@ const timeoutElement = document.querySelector('.Time-out');
 // 定义在全局作用域中
 var intervalId;
 var intervalconnecting;
+let timeoutId = null;
 
  // 这个函数用于定期检查 pc 的状态
 function checkConnectionState() {
 
     console.log("现在的链接状态"+pc.connectionState);
 
-    if (!isConnected) {
-        console.log("连接有误继续loading");
-        showLoading(); // 显示 loading 提示
-    } else {
+    if (isConnected /*|| pc.connectionState === "connected"*/) {
         console.log("连接成功取消loading");
         hideLoading(); // 隐藏 loading 提示
         clearInterval(intervalId);
+    } else {
+        console.log("连接有误继续loading");
+        showLoading(); // 显示 loading 提示
     }
 }
 
@@ -86,7 +78,7 @@ function checkConnectioning(){
         console.log("更换中loading");
         showLoading(); // 显示加载提示
     } else if(pc.connectionState === "connected"){
-        console.log("连接完成，隐藏loading");
+        console.log("连接完成或断开，隐藏loading");
         hideLoading(); // 隐藏加载提示
         clearInterval(intervalconnecting);
     }
@@ -94,13 +86,14 @@ function checkConnectioning(){
 }
 
 function cheackTimeOut(intervalId){
-    setTimeout(() => {
-        clearInterval(intervalId); // 停止定时器
-        if ( pc === null || pc.connectionState !== "connected") {
+    timeoutId = setTimeout(() => {
+        clearInterval(intervalId); 
+        if (pc === null || pc.connectionState !== "connected") {
             hideLoading(); // 隐藏 loading 提示
-            timeoutElement.classList.add('pop'); // 显示连接超时提示
+            timeoutElement.classList.add('pop'); // 显示超时提示框
         }
-    },300000); //5分钟300000
+        clearTimeout(timeoutId)
+    }, 300000); // 5分钟后检查
 }
 
 function start() {
@@ -111,8 +104,7 @@ function start() {
     };
 
     if (document.getElementById('use-stun').checked) {
-
-        //aws1
+       //aws1
         // config.iceServers=[
         //     {
         //         urls: "turn:35.89.226.131:3478",
@@ -122,20 +114,11 @@ function start() {
         // ]
 
         //aws2
-        config.iceServers=[
-            {
-                urls: "turn:35.153.157.142:3478",
-                username: "webrtc.aws.com",
-                credential: "repcun-xikdov-6kohdE",
-            }
-        ]
-
-        //1.15日服务器
         // config.iceServers=[
         //     {
-        //         urls: "turn:3.137.204.36:3478",
+        //         urls: "turn:35.153.157.142:3478",
         //         username: "webrtc.aws.com",
-        //         credential: "repcun-xikdov-6kohdE"
+        //         credential: "repcun-xikdov-6kohdE",
         //     }
         // ]
 
@@ -148,6 +131,15 @@ function start() {
         //     }
         // ]
 
+        //1.15日turn
+        config.iceServers=[
+            {
+                urls: "turn:3.137.204.36:3478",
+                username: "webrtc.aws.com",
+                credential: "repcun-xikdov-6kohdE"
+            }
+        ]
+
     }
 
     pc = new RTCPeerConnection(config);    
@@ -156,18 +148,18 @@ function start() {
     pc.addEventListener('track', (evt) => {
         isConnected = true
         if (evt.track.kind == 'video') {
+            console.log("视频被加载了")
 			var videoElement = document.getElementById('video');
 			        videoElement.srcObject = evt.streams[0];
 			        videoElement.loop = false; 
             // document.getElementById('video').srcObject = evt.streams[0];
         } else {
+            console.log("音频被加载了")
             document.getElementById('audio').srcObject = evt.streams[0];
-            // document.getElementById('audio').play().catch(error => {
-            //     console.error('无法自动播放音频:', error);
-            // });
         }
     });
-    
+
+
     negotiate();
 
     console.log("Start现在的链接状态"+pc.connectionState);
@@ -193,18 +185,18 @@ function start() {
 
 }
 
-function stop() {
-    console.log("********************666***********************************");
-    // document.getElementById('stop').style.display = 'none';
-    console.log("********************777***********************************");
+// function stop() {
+//     console.log("********************666***********************************");
+//     // document.getElementById('stop').style.display = 'none';
+//     console.log("********************777***********************************");
 
-    // close peer connection
-    setTimeout(() => {
-        pc.close();
-    }, 500);
+//     // close peer connection
+//     setTimeout(() => {
+//         pc.close();
+//     }, 500);
 
-    console.log("********************888***********************************");
-}
+//     console.log("********************888***********************************");
+// }
 
 function stop2() {
 
@@ -219,6 +211,16 @@ function stop2() {
             )
         }
     );
+
+    // fetch(host+'/stop_current_avatar',{
+    //         method: 'POST',
+    //         body: JSON.stringify(
+    //             {
+    //                 sessionid: parseInt(document.getElementById('sessionid').value),
+    //             }
+    //         )
+    //     }
+    // );
 
     if (pc) {
         pc.close();
@@ -254,46 +256,100 @@ const avatarVoiceMapping = {
     'avatar2': 'voice2',
     'avatar3': 'voice3',
     'avatar4': 'voice4',
-    'avatar8': 'voice4'
+    'avatar8': 'voice4',
+    'avatar11':'voice11',
+    'avatar12':'voice12',
+    'avatar13':'voice13',
+    'avatar14':'voice14',
+    'avatar15':'voice15',
+    'avatar21':'voice1'
 };
 
-
-function updateAvatarVoice(avatarName) {
-
-    const newVoice = avatarVoiceMapping[avatarName];
-    if (avatarVoice === newVoice) {
+/*更换 声音*/
+function changeAvatarVoice(val)
+{
+    
+    if(avatarVoice == val){
         return;
     }
 
-    avatarVoice = newVoice;
-    console.log("re AvatarVoice is:", avatarVoice);
-
-    const voiceIndex = datatVoices.findIndex(voice => voice.value === newVoice);
-    if (voiceIndex !== -1) {
-        // 切换到对应的声音 slide
-        swiper2.slideTo(voiceIndex);
-    }
+    avatarVoice = val;
+    console.log("AvatarVoice is:", avatarVoice);
 
     showLoading();
-    fetch(host + '/change_property', {
-        method: 'POST',
-        body: JSON.stringify(
-            {
-                sessionid:sessionid,
+    fetch(host+'/change_property',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                sessionid: sessionid,
                 ttsSelection: ttsSelection,
                 avatarVoice: avatarVoice,
-            }
-        )
-    })
-    .then(response => response.json())
+            })
+        }
+    ).then(response => response.json()) // 处理请求成功的情况
     .then(data => {
         console.log('请求成功，返回的数据是：', data);
         hideLoading(); 
     })
     .catch(error => {
         console.error('请求失败，错误信息是：', error);
-        hideLoading(); 
     });
+} 
+
+function updateAll(avatarName) {
+
+  const newVoice = avatarVoiceMapping[avatarName];
+
+  if(newVoice == "voice1" && avatarName == 'avatar1' || avatarName == 'avatar5'){
+    isChange=true;
+    start();
+    return;
+  }
+
+  if (!newVoice || avatarVoice === newVoice) return;
+
+  // 获取Swiper实例
+  const swiper = swiper2;
+  if (!swiper || !swiper.slides) {
+    console.error("Swiper未初始化");
+    return;
+  }
+
+   // 将 swiper.slides 转换为数组
+   const slidesArray = Array.from(swiper.slides);
+
+   // 查找目标幻灯片的真实索引
+   let targetIndex = -1;
+   slidesArray.forEach((slide, index) => {
+       const voiceValue = slide.getAttribute('data-voice');
+       if (voiceValue === newVoice && !slide.classList.contains('swiper-slide-active')) {
+           targetIndex = index;
+       }
+   });
+
+  // 处理循环模式偏移
+  if (swiper.params.loop) {
+    const loopSlides = Math.floor(swiper.params.slidesPerView) * 2;
+    if (targetIndex >= loopSlides) {
+      targetIndex -= loopSlides;
+    }
+  }
+
+  // 安全跳转
+  if (targetIndex !== -1) {
+    swiper.slideTo(targetIndex + 1, 500, false);
+    console.log("AvatarName is:", avatarName);
+    avatarVoice=newVoice
+    isChange=true;
+    start();
+  } else {
+    console.error("未找到匹配的声音:", newVoice);
+    isChange=true;
+    start();
+  }
+
 }
 
 /*更换角色*/
@@ -313,11 +369,12 @@ function changeAvatar(val)
     else if(avatarName == val){
         return;
     }else{ 
-       avatarName = val;//'';
+       avatarName = val;
     }
 
     // 更新显示逻辑
-    if (avatarName == 'avatar1' || avatarName == 'avatar5' || avatarName == 'avatar4' || avatarName == 'avatar8') {
+    
+    if ( avatarName == 'avatar1' || avatarName == 'avatar5' || avatarName == 'avatar4' || avatarName == 'avatar8') {
         $('#clothes_item').show();
     } else {
         $('#clothes_item').hide();
@@ -325,12 +382,8 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
+    updateAll(avatarName);
 
-    updateAvatarVoice(avatarName); // 自动更新声音设置
-
-    console.log("AvatarName is:", avatarName);
-    isChange=true;
-    start();
 }
 
 /*更换ttsSelection  如：changeTtsSelection('tts2')*/
@@ -347,78 +400,36 @@ function changeTtsSelection(val)
     ttsSelection = val; 
     console.log("更换TtsSelection is:", ttsSelection);
     showLoading();
-    fetch(host+'/change_property',{
-        method: 'POST',
-        body: JSON.stringify(
-                {
-                    sessionid:sessionid,
-                    ttsSelection: ttsSelection,
-                    avatarVoice: avatarVoice,
-                }
-            )
-        }
-    ).then(response => response.json()) // 处理请求成功的情况
-    .then(data => {
-        console.log('请求成功，返回的数据是：', data);
-        ttsItem.classList.remove('expanded');
-        hideLoading(); 
-    })
-    .catch(error => {
-        console.error('请求失败，错误信息是：', error);
-        ttsItem.classList.remove('expanded');
-        hideLoading(); 
-    });
 
+    stop2();
+    isChange=true;
+    start();
 
-    // isChange=true;
-    // start();
+    // // 请求数据
+    // const requestData = {
+    //     sessionid: sessionid,
+    //     ttsSelection: ttsSelection,
+    //     avatarVoice: avatarVoice,
+    // };
+    // fetch(host+'/change_property',{ 
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json' 
+    //     },
+    //     body: JSON.stringify(requestData)
+    //     }
+    // ).then(response => response.json()) // 处理请求成功的情况
+    // .then(data => {
+    //     console.log('请求成功，返回的数据是：', data);
+    //     ttsItem.classList.remove('expanded');
+    //     hideLoading(); 
+    // })
+    // .catch(error => {
+    //     console.error('请求失败，错误信息是：', error);
+    //     ttsItem.classList.remove('expanded');
+    //     hideLoading(); 
+    // });
 }
-
-
-/*更换 声音*/
-function changeAvatarVoice(val)
-{
-    
-    if(avatarVoice == val){
-        return;
-    }
-
-    // stop2();
-    avatarVoice = val;
-    console.log("AvatarVoice is:", avatarVoice);
-
-    showLoading();
-    // 请求数据
-    const requestData = {
-        sessionid: sessionid,
-        ttsSelection: ttsSelection,
-        avatarVoice: avatarVoice,
-    };
-
-    // 打印请求数据
-    console.log('声音发送的请求数据：', requestData);
-
-    fetch(host+'/change_property',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(requestData)
-        }
-    ).then(response => response.json()) // 处理请求成功的情况
-    .then(data => {
-        console.log('请求成功，返回的数据是：', data);
-        hideLoading(); 
-    })
-    .catch(error => {
-        console.error('请求失败，错误信息是：', error);
-        hideLoading(); 
-    });
-
-
-    // isChange=true;
-    // start();
-} 
 
 /*切换背景的请求*/
 function changeBg(imgurl)
@@ -428,27 +439,21 @@ function changeBg(imgurl)
     console.log("切换到"+arr[arr.length - 1] );
     if(isConnected && sessionid){
         showLoading();
-        fetch(host+'/changeBG',{
+        fetch(host+'/background',{
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({
                 sessionid: sessionid,
-                imgName: arr[arr.length - 1] 
+                img_url: 'web/backgrounds/'+arr[arr.length - 1] 
             })
         }
         )
         .then(response => {
-
             if (response.ok) {
                 console.log('Request successful');
-                response.json().then(data => {
-                console.log(data); // 打印返回的数据
-                });
                 hideLoading(); 
-            }   
-
+            } else {
+                throw new Error('Request failed with status: ' + response.status);
+            }
         })
         .catch(error => {
             hideLoading(); 

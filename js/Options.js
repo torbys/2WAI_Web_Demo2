@@ -140,7 +140,7 @@
 
 		// 设置默认选中项
 		if (options.avatars.length > 0) {
-			avatarName = options.avatars[0].value;
+			avatarName = dataAvatars[0].value;
 		}
 		if (options.ttsModules.length > 0) {
 			ttsSelection = options.ttsModules[0].value;
