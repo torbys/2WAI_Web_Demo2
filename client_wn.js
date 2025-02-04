@@ -297,13 +297,14 @@ function changeAvatarVoice(val)
     });
 } 
 
-function updateAvatarVoice(avatarName) {
+function updateAll(avatarName) {
 
   const newVoice = avatarVoiceMapping[avatarName];
 
   if(newVoice == "voice1" && avatarName == 'avatar1' || avatarName == 'avatar5'){
     isChange=true;
     start();
+    return;
   }
 
   if (!newVoice || avatarVoice === newVoice) return;
@@ -380,7 +381,8 @@ function changeAvatar(val)
 
     stop2();
     resetSwiper1ToFirstSlide();
-    updateAvatarVoice(avatarName);
+    updateAll(avatarName);
+
 }
 
 /*更换ttsSelection  如：changeTtsSelection('tts2')*/

@@ -2094,12 +2094,11 @@ body.dark-mode {
 	}
 
 	.selected-filter {
-		filter: invert(100%) brightness(200%);
+		filter: invert(50%) brightness(200%);
 	}
 
 	.img_container.selected {
 		background-color: #0d0d10;
-		/* 选中时的背景颜色 */
 	}
 
 	#TTS-title {
@@ -2228,14 +2227,18 @@ body.dark-mode {
 	#swiper1{
 		width: 225px;
 		top: 28%;
-		left: 22%;
+		left: 16%;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
 
 	#swiper2,
 	#swiper3 {
 		width: 245px;
 		top: 31%;
-		left: 18%;
+		left: 15.5%;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
 
 	#swiper2 .swiper-slide,
