@@ -1022,6 +1022,7 @@ body.dark-mode {
 	border-radius: 50px;
 	font-size: 26px;
 	font-weight: 600;
+	padding:20px;
 }
 
 .selection-item:hover {
@@ -1321,12 +1322,15 @@ body.dark-mode {
 	transition: all 1s ease;
 }
 
-
+#swiper1{
+	padding-right: 10px;
+}
 
 #swiper2,
 #swiper3 {
 	top:68%;
-	left:9%
+	left:9%;
+	padding-right: 10px;
 }
 
 #swiper1 .swiper-slide {
