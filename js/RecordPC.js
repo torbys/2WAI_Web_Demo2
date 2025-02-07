@@ -92,8 +92,6 @@
 		return `${timestamp}_${randomPart}${extension}`;
 	}
 
-	
-
 	function addMessage(message, isUser) {
 		const messageDiv = $('<div>')
 			.addClass('message')
@@ -224,7 +222,6 @@
 
 	const visualizerPC = window.AudioVisualizer;
 	
-
 	$('#record_wrapper').click(function () {
     	if (isRecording) return; // 如果已经在录制中，直接返回
 		
@@ -328,7 +325,7 @@
 				loading.innerHTML = ''; // 清空按钮内的内容
 				loading.appendChild(loaderDiv); // 添加加载动画
 
-				fetch('http://18.237.179.127:7864/uploadAudio', {
+				fetch('https://www.2wai-demo.com/api-s/uploadAudio', {
 					method: 'POST',
 					body: formData
 				})

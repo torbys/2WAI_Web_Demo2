@@ -1,8 +1,8 @@
 @font-face {  
 	font-family: 'MiSans';  /* 定义一个新的字体名称 */  
 	src: 
-		url('font/MiSans/MiSans-Bold.woff') format('woff2'),  
-		url('font/MiSans/MiSans-Bold.woff') format('woff');
+		url('../font/MiSans/MiSans-Bold.woff') format('woff2'),  
+		url('../font/MiSans/MiSans-Bold.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -997,7 +997,6 @@ body.dark-mode {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	gap: 10px;
 	width: 100%;
 	height: auto;
 	z-index: 102;
@@ -1005,6 +1004,7 @@ body.dark-mode {
 	left: 90px;
 	top: 135px;
 	overflow: hidden;
+	padding-left: 20px;
 }
 
 .expanded {
@@ -1012,7 +1012,7 @@ body.dark-mode {
 }
 
 .selection-item {
-	margin-left: 0px;
+	margin-bottom: 10px;
 	transition: all 0.2s;
 	display: flex;
 	align-items: center;
@@ -1022,7 +1022,6 @@ body.dark-mode {
 	border-radius: 50px;
 	font-size: 26px;
 	font-weight: 600;
-	padding:20px;
 }
 
 .selection-item:hover {

@@ -3,7 +3,9 @@
 // const host='http://52.40.208.108:7862'
 
 //1.31日服务器
-const host = 'http://18.237.179.127:7862'
+// const host = 'http://18.237.179.127:7862'
+
+const host = 'https://www.2wai-demo.com/api-ai'
 
 //var avatarName = "avatar1";  	//会话人物
 

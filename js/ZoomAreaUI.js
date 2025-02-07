@@ -1,5 +1,5 @@
 
-function checkWindowSize() {
+    function checkWindowSize() {
     const panelZoom = document.querySelector('.panel-zoom');
     const labels = document.querySelectorAll('.option-item label');
     if (window.innerWidth < 1000) {
@@ -20,32 +20,31 @@ function checkWindowSize() {
         panelZoom.style.display = 'flex'; // 或者使用 'flex' 等其他布局方式，根据你的具体需求
     }
 
-}
-// 初始检查
-checkWindowSize();
-// 监听窗口大小变化
-window.addEventListener('resize', checkWindowSize);
-
-function toggleFilter(event) {
-        // 获取当前点击的 img_container
-const container = event.target.closest('.img_container');
-if (container) {
-    // 获取当前点击的 img
-    const currentImg = container.querySelector('img');
-    
-    // 移除除当前点击的 img 之外的所有 img 的 selected-filter 类
-    document.querySelectorAll('.img_container img').forEach(img => {
-        if (img !== currentImg) {
-            img.classList.remove('selected-filter');
-            
-        }
-    });
-
-    // 切换当前点击的 img 的 selected-filter 类
-    if (currentImg) {
-        currentImg.classList.toggle('selected-filter');
     }
-}
+    // 初始检查
+    checkWindowSize();
+    // 监听窗口大小变化
+    window.addEventListener('resize', checkWindowSize);
+    
+    function toggleFilter(event) {
+            // 获取当前点击的 img_container
+    const container = event.target.closest('.img_container');
+    if (container) {
+        // 获取当前点击的 img
+        const currentImg = container.querySelector('img');
+
+        // 移除除当前点击的 img 之外的所有 img 的 selected-filter 类
+        document.querySelectorAll('.img_container img').forEach(img => {
+            if (img !== currentImg) {
+                img.classList.remove('selected-filter');
+            }
+        });
+
+        // 切换当前点击的 img 的 selected-filter 类
+        if (currentImg) {
+            currentImg.classList.toggle('selected-filter');
+        }
+    }
     }
 
     function updateEventListeners() {

@@ -31,7 +31,7 @@
 		const avatarSelect = document.getElementById('avatar-name');
 
 		// 定义需要筛选的 value 值
-		const targetValues = ["avatar21", "avatar11", "avatar12", "avatar13", "avatar14", "avatar15"];
+		const targetValues = ["avatar5"];
 
 		let avatars = '';
 		let countAvatar = 0; // 用于跟踪已处理的元素数量 

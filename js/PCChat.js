@@ -1,22 +1,5 @@
 	
 	$(document).ready(function () {
-		// var host = window.location.hostname
-		// var ws = new WebSocket("ws://"+host+":8000/humanecho");
-		// //document.getElementsByTagName("video")[0].setAttribute("src", aa["video"]);
-		// ws.onopen = function() {
-		// console.log('Connected');
-		// };
-		// ws.onmessage = function(e) {
-		// console.log('Received: ' + e.data);
-		// data = e
-		// var vid = JSON.parse(data.data); 
-		// console.log(typeof(vid),vid)
-		// //document.getElementsByTagName("video")[0].setAttribute("src", vid["video"]);
-
-		// };
-		// ws.onclose = function(e) {
-		// console.log('Closed');
-		// };
 
 		var submitBtn = $('button[type="submit"]');
 		var messageTextarea = $('#message');
@@ -158,7 +141,6 @@
         		audio.play().catch(error => {
         		    console.error('无法自动播放音频:', error);
         		});
-
 
 				/*网络获取机械人回复*/
 				fetch(host + '/human', {

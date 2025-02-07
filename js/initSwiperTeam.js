@@ -70,7 +70,7 @@ var swiper1 = new Swiper('#swiper1', {
             cancelSelection('avatar-background');
             // 打印图片的src属性
             console.log("执行切换" + activeImage.src);
-            changeBg(activeImage.src); // 假设这是你定义的函数，用于改变背景图片
+            changeBg(activeImage.src); 
         }
     },
     navigation: {
@@ -301,6 +301,7 @@ function initSwiper() {
             
                 hideSwiperAndButtons(swiperBox3, buttons3);
                 cancelSelection('avatar-name');
+                
                 // 后续业务逻辑
                 if (dataAvatars.length > 0 && dataAvatars[effectiveIndex] && isConnected) {
                   changeAvatar(dataAvatars[effectiveIndex].value);

@@ -50,7 +50,6 @@ function negotiate() {
 }
 
 const timeoutElement = document.querySelector('.Time-out');
-// 定义在全局作用域中
 var intervalId;
 var intervalconnecting;
 let timeoutId = null;
@@ -88,7 +87,9 @@ function checkConnectioning(){
 function cheackTimeOut(intervalId){
     timeoutId = setTimeout(() => {
         clearInterval(intervalId); 
-        if (pc === null || pc.connectionState !== "connected") {
+        if (pc.connectionState !== "connected" && !isConnected) {
+            console.log("现在的链接状态"+pc.connectionState);
+            console.log("链接超时")
             hideLoading(); // 隐藏 loading 提示
             timeoutElement.classList.add('pop'); // 显示超时提示框
         }
@@ -171,7 +172,7 @@ function start() {
         checkConnectionState();
         intervalId = setInterval(checkConnectionState, 2000);
         cheackTimeOut(intervalId);
-    } 
+    }
 
     if(isChange){
         var textElement = document.querySelector('.Error-Dialog .text');
@@ -185,19 +186,6 @@ function start() {
 
 }
 
-// function stop() {
-//     console.log("********************666***********************************");
-//     // document.getElementById('stop').style.display = 'none';
-//     console.log("********************777***********************************");
-
-//     // close peer connection
-//     setTimeout(() => {
-//         pc.close();
-//     }, 500);
-
-//     console.log("********************888***********************************");
-// }
-
 function stop2() {
 
     console.log("********************stop***********************************");
@@ -206,21 +194,11 @@ function stop2() {
             method: 'POST',
             body: JSON.stringify(
                 {
-                    sessionid: sessionid,    //parseInt(document.getElementById('sessionid').value),
+                    sessionid: sessionid,    
                 }
             )
         }
     );
-
-    // fetch(host+'/stop_current_avatar',{
-    //         method: 'POST',
-    //         body: JSON.stringify(
-    //             {
-    //                 sessionid: parseInt(document.getElementById('sessionid').value),
-    //             }
-    //         )
-    //     }
-    // );
 
     if (pc) {
         pc.close();
@@ -246,7 +224,7 @@ function resetSwiper1ToFirstSlide() {
     });
      setTimeout(function() {
         swiper1.slideTo(5, 1000, false); // 将 Swiper 滑动到第5个幻灯片
-    }, 1000); // 延迟1000毫秒（即1秒）执行
+    }, 1000); // 1秒执行
 }
 
 // 映射关系
@@ -288,7 +266,7 @@ function changeAvatarVoice(val)
                 avatarVoice: avatarVoice,
             })
         }
-    ).then(response => response.json()) // 处理请求成功的情况
+    ).then(response => response.json()) 
     .then(data => {
         console.log('请求成功，返回的数据是：', data);
         hideLoading(); 
@@ -302,54 +280,63 @@ function updateAll(avatarName) {
 
   const newVoice = avatarVoiceMapping[avatarName];
 
-  if(newVoice == "voice1" && avatarName == 'avatar1' || avatarName == 'avatar5'){
-    isChange=true;
+  // 检查
+  if (!newVoice) {
+    console.error("未找到对应声音:", avatarName);
+    isChange = true;
     start();
     return;
   }
 
-  if (!newVoice || avatarVoice === newVoice) return;
+  // 声音无变化（换装情况）
+  if (avatarVoice === newVoice) {
+    isChange = true;
+    start();
+    return;
+  }
 
-  // 获取Swiper实例
+  // 声音需要切换时处理Swiper
   const swiper = swiper2;
-  if (!swiper || !swiper.slides) {
+  if (!swiper?.slides) { // 使用可选链简化判断
     console.error("Swiper未初始化");
+    isChange = true;
+    start();
     return;
   }
 
-   // 将 swiper.slides 转换为数组
-   const slidesArray = Array.from(swiper.slides);
+  // 使用findIndex查找目标页
+  const targetSlide = Array.from(swiper.slides).find(slide => 
+    slide.getAttribute('data-voice') === newVoice && 
+    !slide.classList.contains('swiper-slide-active')
+  );
 
-   // 查找目标幻灯片的真实索引
-   let targetIndex = -1;
-   slidesArray.forEach((slide, index) => {
-       const voiceValue = slide.getAttribute('data-voice');
-       if (voiceValue === newVoice && !slide.classList.contains('swiper-slide-active')) {
-           targetIndex = index;
-       }
-   });
-
-  // 处理循环模式偏移
-  if (swiper.params.loop) {
-    const loopSlides = Math.floor(swiper.params.slidesPerView) * 2;
-    if (targetIndex >= loopSlides) {
-      targetIndex -= loopSlides;
-    }
-  }
-
-  // 安全跳转
-  if (targetIndex !== -1) {
-    swiper.slideTo(targetIndex + 1, 500, false);
-    console.log("AvatarName is:", avatarName);
-    avatarVoice=newVoice
-    isChange=true;
-    start();
-  } else {
+  if (!targetSlide) {
     console.error("未找到匹配的声音:", newVoice);
-    isChange=true;
+    isChange = true;
     start();
+    return;
   }
 
+  // 处理循环模式偏移（需要实际索引）
+  let targetIndex = Array.from(swiper.slides).indexOf(targetSlide);
+  if (swiper.params.loop) {
+    const loopSlides = swiper.params.slidesPerView * 2;
+    targetIndex = (targetIndex + loopSlides) % swiper.slides.length;
+  }
+
+  // 执行切换
+  swiper.slideTo(targetIndex + 1, 500 , false); // 直接使用实际索引
+  avatarVoice = newVoice;
+  isChange = true;
+  start();
+
+}
+
+const avatarClothsMapping = {
+    'avatar21':'avatar5',
+    'avatar5':'avatae21',
+    'avatar8':'avatar4',
+    'avatar4':'avatar8'
 }
 
 /*更换角色*/
@@ -357,12 +344,15 @@ function changeAvatar(val)
 { 
     if(!val){
         
-        if (avatarName == 'avatar1' || avatarName == 'avatar5') {
-            avatarName = avatarName == 'avatar1' ? 'avatar5' : 'avatar1';
+        if (avatarName == 'avatar21' || avatarName == 'avatar5') {
+            avatarName = avatarClothsMapping[avatarName]
             dataAvatars[0].value = avatarName;
         } else if (avatarName == 'avatar4' || avatarName == 'avatar8') {
-            avatarName = avatarName == 'avatar4' ? 'avatar8' : 'avatar4';
+            avatarName = avatarClothsMapping[avatarName]
             dataAvatars[3].value = avatarName;
+        } else if(avatarName == 'avatar1' || avatarName == 'avatar5'){
+            avatarName = avatarClothsMapping[avatarName]
+            dataAvatars[0].value = avatarName;
         }
         
     }
@@ -381,6 +371,7 @@ function changeAvatar(val)
     }
 
     stop2();
+
     resetSwiper1ToFirstSlide();
     updateAll(avatarName);
 
@@ -393,42 +384,14 @@ function changeTtsSelection(val)
         return;
     }
 
-    // 获取TTS-item元素
-	var ttsItem = document.querySelector('.TTS-item')
-
-    // stop2();
     ttsSelection = val; 
     console.log("更换TtsSelection is:", ttsSelection);
     showLoading();
 
     stop2();
+    resetSwiper1ToFirstSlide();
     isChange=true;
     start();
-
-    // // 请求数据
-    // const requestData = {
-    //     sessionid: sessionid,
-    //     ttsSelection: ttsSelection,
-    //     avatarVoice: avatarVoice,
-    // };
-    // fetch(host+'/change_property',{ 
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json' 
-    //     },
-    //     body: JSON.stringify(requestData)
-    //     }
-    // ).then(response => response.json()) // 处理请求成功的情况
-    // .then(data => {
-    //     console.log('请求成功，返回的数据是：', data);
-    //     ttsItem.classList.remove('expanded');
-    //     hideLoading(); 
-    // })
-    // .catch(error => {
-    //     console.error('请求失败，错误信息是：', error);
-    //     ttsItem.classList.remove('expanded');
-    //     hideLoading(); 
-    // });
 }
 
 /*切换背景的请求*/

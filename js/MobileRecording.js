@@ -99,7 +99,7 @@ function bindRecordEvents() {
 				$('#myCanvas').addClass('hidden1');
 				visualizer.stop();
 
-	            fetch('http://18.237.179.127:7864/uploadAudio', {
+	            fetch('https://www.2wai-demo.com/api-s/uploadAudio', {
 	                method: 'POST',
 	                body: formData
 	            })
