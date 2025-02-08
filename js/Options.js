@@ -23,7 +23,7 @@
 	async function loadOptions() {
 		showLoading();
 
-		const response = await fetch(host + '/options.json');
+		const response = await fetch(host+ '/options.json');
 		const options = await response.json();
 		window.appConfig = options;
 
